@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194b6416e2c41514984d0126cd02fd2e, type: 3}
+  m_Name: H_Muddy
+  m_EditorClassIdentifier: 
+  Name: 
+  health: 80
+  haveShield: 0
+  shieldHealth: 0
+  walkType: 0
+  moveSpeed: 2
+  defence: 0
+  isBoss: 0
+  attackType: 0
+  attackSpeed: 1.5
+  attackDamage: 3
+  chaseField: 5
+  attackField: 0.8
+  knockbackForce: 0
+  knockbackTime: 1
+  shootingType: 0
+  projectileFlySpeed: 0
+  difficulty: 2
+  coins: []
+  lootings: []
+  wreckage: []
+  EnemyObject: {fileID: 4847229356752660979, guid: 153955a5d0c1d2a4f9d5e0fba7e6b491, type: 3}
+  projectile: {fileID: 0}

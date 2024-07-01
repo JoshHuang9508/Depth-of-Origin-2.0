@@ -1,0 +1,937 @@
+fileFormatVersion: 2
+guid: c60981998e589724e99cf7879a19ffa2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2006577162025096105
+    second: SI_Cellar_D_0
+  - first:
+      213: -207093502005051499
+    second: SI_Cellar_D_1
+  - first:
+      213: -2926204926830304755
+    second: SI_Cellar_D_2
+  - first:
+      213: 407511656514514982
+    second: SI_Cellar_D_3
+  - first:
+      213: -674428808817222136
+    second: SI_Cellar_D_4
+  - first:
+      213: -2990193584365666858
+    second: SI_Cellar_D_5
+  - first:
+      213: -1247729501711918261
+    second: SI_Cellar_D_6
+  - first:
+      213: -931780266823026467
+    second: SI_Cellar_D_7
+  - first:
+      213: -3894560554315025883
+    second: SI_Cellar_D_8
+  - first:
+      213: 2786206326646690051
+    second: SI_Cellar_D_9
+  - first:
+      213: 1616409389432427646
+    second: SI_Cellar_D_10
+  - first:
+      213: -4262610793475942913
+    second: SI_Cellar_D_11
+  - first:
+      213: 2019485323737724902
+    second: SI_Cellar_D_12
+  - first:
+      213: 41293230950775956
+    second: SI_Cellar_D_13
+  - first:
+      213: -5991060851341362402
+    second: SI_Cellar_D_14
+  - first:
+      213: 6464797736590076998
+    second: SI_Cellar_D_15
+  - first:
+      213: 8264087316393330694
+    second: SI_Cellar_D_16
+  - first:
+      213: -2676662946531793376
+    second: SI_Cellar_D_17
+  - first:
+      213: -655299831628909741
+    second: SI_Cellar_D_18
+  - first:
+      213: 2107900877776676665
+    second: SI_Cellar_D_19
+  - first:
+      213: -8526525702950495049
+    second: SI_Cellar_D_20
+  - first:
+      213: 7244933474443245046
+    second: SI_Cellar_D_21
+  - first:
+      213: -1967266827444059567
+    second: SI_Cellar_D_22
+  - first:
+      213: 7773284821251919801
+    second: SI_Cellar_D_23
+  - first:
+      213: -4418425794020302772
+    second: SI_Cellar_D_24
+  - first:
+      213: 7411827122803696937
+    second: SI_Cellar_D_25
+  - first:
+      213: 5292002859337003360
+    second: SI_Cellar_D_26
+  - first:
+      213: 7462315003188129851
+    second: SI_Cellar_D_27
+  - first:
+      213: -4540858833122759823
+    second: SI_Cellar_D_28
+  - first:
+      213: 206206001082100770
+    second: SI_Cellar_D_29
+  - first:
+      213: -7518234875699711374
+    second: SI_Cellar_D_30
+  - first:
+      213: 8497297159736291589
+    second: SI_Cellar_D_31
+  - first:
+      213: -232169948971959332
+    second: SI_Cellar_D_32
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SI_Cellar_D_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 415
+        width: 97
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a3daec2c4bc8db10800000000000000
+      internalID: 2006577162025096105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_1
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 415
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59f72b1ae81402df0800000000000000
+      internalID: -207093502005051499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_2
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 415
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02284c6f180467d0800000000000000
+      internalID: -2926204926830304755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_3
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 365
+        width: 134
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 620f06841b5c7a500800000000000000
+      internalID: 407511656514514982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_4
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 335
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80ed8285292f3a6f0800000000000000
+      internalID: -674428808817222136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_5
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 319
+        width: 98
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd7b3a17c2b086d0800000000000000
+      internalID: -2990193584365666858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_6
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 333
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b9fa201ac2faee0800000000000000
+      internalID: -1247729501711918261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 191
+        width: 97
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd87b4bb8c6a113f0800000000000000
+      internalID: -931780266823026467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_8
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 81
+        width: 98
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522fdc36fcdb3f9c0800000000000000
+      internalID: -3894560554315025883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_9
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 191
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 301d8b264e79aa620800000000000000
+      internalID: 2786206326646690051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_10
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 207
+        width: 68
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e74d9bc86c3ae6610800000000000000
+      internalID: 1616409389432427646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_11
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 111
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff5de1f411a28d4c0800000000000000
+      internalID: -4262610793475942913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_12
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 109
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e77086c337a60c10800000000000000
+      internalID: 2019485323737724902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_13
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 111
+        width: 68
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49cf27a89f3b29000800000000000000
+      internalID: 41293230950775956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_14
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 81
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b7c00d5e97bdca0800000000000000
+      internalID: -5991060851341362402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_15
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 65
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64c633a1a4397b950800000000000000
+      internalID: 6464797736590076998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_16
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 65
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6088f6611afefa270800000000000000
+      internalID: 8264087316393330694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_17
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 15
+        width: 34
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026a5805b359adad0800000000000000
+      internalID: -2676662946531793376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_18
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 15
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 353b26a6648e7e6f0800000000000000
+      internalID: -655299831628909741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_19
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 15
+        width: 34
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 937ec912ea4c04d10800000000000000
+      internalID: 2107900877776676665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_20
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 15
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bcd5637c02bba980800000000000000
+      internalID: -8526525702950495049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_21
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f5b6851c9c2b8460800000000000000
+      internalID: 7244933474443245046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_22
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15289c35e3dd2b4e0800000000000000
+      internalID: -1967266827444059567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_23
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 17
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bf08ac3c5140eb60800000000000000
+      internalID: 7773284821251919801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_24
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c402ff076299ea2c0800000000000000
+      internalID: -4418425794020302772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_25
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 925e157af791cd660800000000000000
+      internalID: 7411827122803696937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_26
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0613225ff88f07940800000000000000
+      internalID: 5292002859337003360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_27
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b30b81755f77f8760800000000000000
+      internalID: 7462315003188129851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_28
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 17
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17be58423f0abf0c0800000000000000
+      internalID: -4540858833122759823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_29
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c6d05f3479cd200800000000000000
+      internalID: 206206001082100770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_30
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 31
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27237ffb63dd9a790800000000000000
+      internalID: -7518234875699711374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_31
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 1
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50174050fb67ce570800000000000000
+      internalID: 8497297159736291589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Cellar_D_32
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 1
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdb710859aa27ccf0800000000000000
+      internalID: -232169948971959332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SI_Cellar_D_0: 2006577162025096105
+      SI_Cellar_D_1: -207093502005051499
+      SI_Cellar_D_10: 1616409389432427646
+      SI_Cellar_D_11: -4262610793475942913
+      SI_Cellar_D_12: 2019485323737724902
+      SI_Cellar_D_13: 41293230950775956
+      SI_Cellar_D_14: -5991060851341362402
+      SI_Cellar_D_15: 6464797736590076998
+      SI_Cellar_D_16: 8264087316393330694
+      SI_Cellar_D_17: -2676662946531793376
+      SI_Cellar_D_18: -655299831628909741
+      SI_Cellar_D_19: 2107900877776676665
+      SI_Cellar_D_2: -2926204926830304755
+      SI_Cellar_D_20: -8526525702950495049
+      SI_Cellar_D_21: 7244933474443245046
+      SI_Cellar_D_22: -1967266827444059567
+      SI_Cellar_D_23: 7773284821251919801
+      SI_Cellar_D_24: -4418425794020302772
+      SI_Cellar_D_25: 7411827122803696937
+      SI_Cellar_D_26: 5292002859337003360
+      SI_Cellar_D_27: 7462315003188129851
+      SI_Cellar_D_28: -4540858833122759823
+      SI_Cellar_D_29: 206206001082100770
+      SI_Cellar_D_3: 407511656514514982
+      SI_Cellar_D_30: -7518234875699711374
+      SI_Cellar_D_31: 8497297159736291589
+      SI_Cellar_D_32: -232169948971959332
+      SI_Cellar_D_4: -674428808817222136
+      SI_Cellar_D_5: -2990193584365666858
+      SI_Cellar_D_6: -1247729501711918261
+      SI_Cellar_D_7: -931780266823026467
+      SI_Cellar_D_8: -3894560554315025883
+      SI_Cellar_D_9: 2786206326646690051
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

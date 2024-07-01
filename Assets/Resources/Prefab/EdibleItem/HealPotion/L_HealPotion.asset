@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56923d6e9b5418b4891aee1f5f708943, type: 3}
+  m_Name: L_HealPotion
+  m_EditorClassIdentifier: 
+  Name: Heal Potion
+  Description: A potion that save you when you have no health
+  IsStackable: 1
+  isStorable: 1
+  MaxStackSize: 20
+  Rarity: 4
+  sellPrice: 7200
+  buyPrice: 18000
+  Image: {fileID: -4500579907181081424, guid: b2f9abfc7009743449fd618eff2ad5c4, type: 3}
+  DefaultParameterList: []
+  E_heal: 2160
+  E_maxHealth: 0
+  E_strength: 0
+  E_walkSpeed: 0
+  E_defence: 0
+  E_critRate: 0
+  E_critDamage: 0
+  effectTime: 0

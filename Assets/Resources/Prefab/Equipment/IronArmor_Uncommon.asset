@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11c25631472e5b4c978f7360224a659, type: 3}
+  m_Name: IronArmor_Uncommon
+  m_EditorClassIdentifier: 
+  Name: Iron Armor
+  Description: 
+  IsStackable: 0
+  isStorable: 1
+  MaxStackSize: 1
+  Rarity: 1
+  sellPrice: 300
+  buyPrice: 750
+  Image: {fileID: 407737273, guid: 00179cf562e9a524eb51b6a316369553, type: 3}
+  DefaultParameterList: []
+  equipmentType: 0
+  E_maxHealth: 80
+  E_strength: 0
+  E_walkSpeed: 0
+  E_defence: 50
+  E_critRate: 0
+  E_critDamage: 10

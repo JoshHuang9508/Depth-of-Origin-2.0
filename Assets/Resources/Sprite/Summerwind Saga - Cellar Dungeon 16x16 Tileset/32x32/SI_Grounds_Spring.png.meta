@@ -1,0 +1,462 @@
+fileFormatVersion: 2
+guid: b3760b71e6b8fde4da9231e85e6b3689
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 65955291673705033
+    second: SI_Grounds_Spring_0
+  - first:
+      213: -3984967915853401291
+    second: SI_Grounds_Spring_1
+  - first:
+      213: -6615822972352544242
+    second: SI_Grounds_Spring_2
+  - first:
+      213: -2867179955097217336
+    second: SI_Grounds_Spring_3
+  - first:
+      213: -3438621441566989535
+    second: SI_Grounds_Spring_4
+  - first:
+      213: -4656344230456150634
+    second: SI_Grounds_Spring_5
+  - first:
+      213: -3895069664446763647
+    second: SI_Grounds_Spring_6
+  - first:
+      213: -1268597949882513520
+    second: SI_Grounds_Spring_7
+  - first:
+      213: 5451068793190744966
+    second: SI_Grounds_Spring_8
+  - first:
+      213: -2846964130421676280
+    second: SI_Grounds_Spring_9
+  - first:
+      213: 6400135981428024384
+    second: SI_Grounds_Spring_10
+  - first:
+      213: 5544849312269807820
+    second: SI_Grounds_Spring_11
+  - first:
+      213: -175658645852146060
+    second: SI_Grounds_Spring_12
+  - first:
+      213: 4750515448542175273
+    second: SI_Grounds_Spring_13
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 145
+        width: 109
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94ab4430df15ae000800000000000000
+      internalID: 65955291673705033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_1
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 173
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 533ba363bcc82b8c0800000000000000
+      internalID: -3984967915853401291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_2
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 145
+        width: 110
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e02ce0c0f00ef24a0800000000000000
+      internalID: -6615822972352544242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_3
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 175
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c65f45950bb538d0800000000000000
+      internalID: -2867179955097217336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 15
+        width: 109
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 123ab5a74009740d0800000000000000
+      internalID: -3438621441566989535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_5
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 127
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 695b8bfb797516fb0800000000000000
+      internalID: -4656344230456150634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_6
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 15
+        width: 110
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18d2043f6cee1f9c0800000000000000
+      internalID: -3895069664446763647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_7
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 127
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 097c67ac2e8056ee0800000000000000
+      internalID: -1268597949882513520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_8
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 45
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6830a58bf2616ab40800000000000000
+      internalID: 5451068793190744966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_9
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 45
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 807efed053d8d78d0800000000000000
+      internalID: -2846964130421676280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_10
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044a63704c9d1d850800000000000000
+      internalID: 6400135981428024384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_11
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 0
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc039e6521343fc40800000000000000
+      internalID: 5544849312269807820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_12
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 0
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 476b14c646fef8df0800000000000000
+      internalID: -175658645852146060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Spring_13
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 0
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920ac5291a83de140800000000000000
+      internalID: 4750515448542175273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SI_Grounds_Spring_0: 65955291673705033
+      SI_Grounds_Spring_1: -3984967915853401291
+      SI_Grounds_Spring_10: 6400135981428024384
+      SI_Grounds_Spring_11: 5544849312269807820
+      SI_Grounds_Spring_12: -175658645852146060
+      SI_Grounds_Spring_13: 4750515448542175273
+      SI_Grounds_Spring_2: -6615822972352544242
+      SI_Grounds_Spring_3: -2867179955097217336
+      SI_Grounds_Spring_4: -3438621441566989535
+      SI_Grounds_Spring_5: -4656344230456150634
+      SI_Grounds_Spring_6: -3895069664446763647
+      SI_Grounds_Spring_7: -1268597949882513520
+      SI_Grounds_Spring_8: 5451068793190744966
+      SI_Grounds_Spring_9: -2846964130421676280
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

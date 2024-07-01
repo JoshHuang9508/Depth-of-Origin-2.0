@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8428f26531561e408a136938af2aa91, type: 3}
+  m_Name: E_Bow
+  m_EditorClassIdentifier: 
+  Name: Bow
+  Description: The only ranged weapon in this world
+  IsStackable: 0
+  isStorable: 1
+  MaxStackSize: 1
+  Rarity: 3
+  sellPrice: 2300
+  buyPrice: 5760
+  Image: {fileID: 21300000, guid: 9d447732954d7044e84749cbe971fb7a, type: 3}
+  DefaultParameterList: []
+  attackCooldown: 0.75
+  weaponDamage: 108
+  knockbackForce: 10
+  knockbackTime: 0.6
+  E_maxHealth: 100
+  E_strength: 25
+  E_walkSpeed: 35
+  E_defence: 50
+  E_critRate: 5
+  E_critDamage: 45
+  projectileObject: {fileID: 4857680875645216774, guid: dfc8f3167d1dd443faee5d6dae255b51, type: 3}
+  shootingType: 0
+  flySpeed: 15
+  splitAmount: 1

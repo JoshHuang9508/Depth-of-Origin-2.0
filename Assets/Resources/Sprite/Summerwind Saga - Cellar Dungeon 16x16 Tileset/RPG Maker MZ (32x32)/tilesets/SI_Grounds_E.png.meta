@@ -1,0 +1,537 @@
+fileFormatVersion: 2
+guid: c847e0ee7f009a84aa5e35a0eacf67ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4571063650626513992
+    second: SI_Grounds_E_0
+  - first:
+      213: 6218918118688734177
+    second: SI_Grounds_E_1
+  - first:
+      213: 3866222436599564888
+    second: SI_Grounds_E_2
+  - first:
+      213: -3876614409845999896
+    second: SI_Grounds_E_3
+  - first:
+      213: -6968126745588301378
+    second: SI_Grounds_E_4
+  - first:
+      213: 2276819036819069794
+    second: SI_Grounds_E_5
+  - first:
+      213: -4446434487732858058
+    second: SI_Grounds_E_6
+  - first:
+      213: 9122568186945256395
+    second: SI_Grounds_E_7
+  - first:
+      213: -901486690593272565
+    second: SI_Grounds_E_8
+  - first:
+      213: -8335750014608437487
+    second: SI_Grounds_E_9
+  - first:
+      213: -7052601040836706489
+    second: SI_Grounds_E_10
+  - first:
+      213: 562493279060129133
+    second: SI_Grounds_E_11
+  - first:
+      213: 7615541276125337380
+    second: SI_Grounds_E_12
+  - first:
+      213: 1682984102454537310
+    second: SI_Grounds_E_13
+  - first:
+      213: -1501233212147437670
+    second: SI_Grounds_E_14
+  - first:
+      213: 1920776476594755079
+    second: SI_Grounds_E_15
+  - first:
+      213: -2432578053576602951
+    second: SI_Grounds_E_16
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SI_Grounds_E_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 31
+        width: 97
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c2b45fb2eaf6f30800000000000000
+      internalID: 4571063650626513992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 465
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ebbea764190e4650800000000000000
+      internalID: 6218918118688734177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 31
+        width: 98
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a892c62d497a530800000000000000
+      internalID: 3866222436599564888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_3
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 465
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e6f7f1cbbf733ac0800000000000000
+      internalID: -3876614409845999896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_4
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 127
+        width: 98
+        height: 385
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb18f43c4ad3c4f90800000000000000
+      internalID: -6968126745588301378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_5
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 465
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26b9273d9d2e89f10800000000000000
+      internalID: 2276819036819069794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_6
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 369
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63313a144671b42c0800000000000000
+      internalID: -4446434487732858058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_7
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 367
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcbb62ebe6fd99e70800000000000000
+      internalID: 9122568186945256395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_8
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 369
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0d027591a64d73f0800000000000000
+      internalID: -901486690593272565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_9
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 271
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11f8ec2c687715c80800000000000000
+      internalID: -8335750014608437487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_10
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 273
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74fb06a38b0202e90800000000000000
+      internalID: -7052601040836706489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_11
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 271
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d657ce638a06ec700800000000000000
+      internalID: 562493279060129133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_12
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 175
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42796c71176dfa960800000000000000
+      internalID: 7615541276125337380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_13
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 175
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5cae65df192b5710800000000000000
+      internalID: 1682984102454537310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_14
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 175
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9feee0f85c8a2be0800000000000000
+      internalID: -1501233212147437670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_15
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 79
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7065b5c5708f7aa10800000000000000
+      internalID: 1920776476594755079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_E_16
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 79
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bac72c062fbd3ed0800000000000000
+      internalID: -2432578053576602951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SI_Grounds_E_0: 4571063650626513992
+      SI_Grounds_E_1: 6218918118688734177
+      SI_Grounds_E_10: -7052601040836706489
+      SI_Grounds_E_11: 562493279060129133
+      SI_Grounds_E_12: 7615541276125337380
+      SI_Grounds_E_13: 1682984102454537310
+      SI_Grounds_E_14: -1501233212147437670
+      SI_Grounds_E_15: 1920776476594755079
+      SI_Grounds_E_16: -2432578053576602951
+      SI_Grounds_E_2: 3866222436599564888
+      SI_Grounds_E_3: -3876614409845999896
+      SI_Grounds_E_4: -6968126745588301378
+      SI_Grounds_E_5: 2276819036819069794
+      SI_Grounds_E_6: -4446434487732858058
+      SI_Grounds_E_7: 9122568186945256395
+      SI_Grounds_E_8: -901486690593272565
+      SI_Grounds_E_9: -8335750014608437487
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

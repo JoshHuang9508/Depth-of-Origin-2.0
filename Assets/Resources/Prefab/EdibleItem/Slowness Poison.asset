@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56923d6e9b5418b4891aee1f5f708943, type: 3}
+  m_Name: Slowness Poison
+  m_EditorClassIdentifier: 
+  Name: gay
+  Description: 
+  IsStackable: 0
+  isStorable: 1
+  MaxStackSize: 1
+  Rarity: 5
+  sellPrice: 0
+  buyPrice: 0
+  Image: {fileID: 0}
+  DefaultParameterList: []
+  E_heal: 0
+  E_maxHealth: 0
+  E_strength: 0
+  E_walkSpeed: -70
+  E_defence: 0
+  E_critRate: 0
+  E_critDamage: 0
+  effectTime: 5

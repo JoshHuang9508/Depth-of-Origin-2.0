@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194b6416e2c41514984d0126cd02fd2e, type: 3}
+  m_Name: D_Skeleton
+  m_EditorClassIdentifier: 
+  Name: 
+  health: 60
+  haveShield: 0
+  shieldHealth: 0
+  walkType: 1
+  moveSpeed: 4
+  defence: 0
+  isBoss: 0
+  attackType: 1
+  attackSpeed: 1.5
+  attackDamage: 20
+  chaseField: 10
+  attackField: 15
+  knockbackForce: 3
+  knockbackTime: 0.2
+  shootingType: 0
+  projectileFlySpeed: 12
+  difficulty: 0
+  coins:
+  - coins: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
+    amount: 1
+  lootings: []
+  wreckage: []
+  EnemyObject: {fileID: 91700730297484186, guid: 4d719bd56b38d4d5e9ff799310b0e2e2, type: 3}
+  projectile: {fileID: 4857680875645216774, guid: 156e08d50d589419c8f5d06eb57403c5, type: 3}
+  angleOffset: 0

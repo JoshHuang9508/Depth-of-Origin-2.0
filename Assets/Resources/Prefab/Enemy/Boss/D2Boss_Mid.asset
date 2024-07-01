@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194b6416e2c41514984d0126cd02fd2e, type: 3}
+  m_Name: D2Boss_Mid
+  m_EditorClassIdentifier: 
+  Name: Slime King(minion)
+  health: 80000
+  haveShield: 0
+  shieldHealth: 0
+  walkType: 0
+  moveSpeed: 7
+  defence: 500
+  isBoss: 1
+  attackType: 0
+  attackSpeed: 0.75
+  attackDamage: 1000
+  chaseField: 100
+  attackField: 2
+  knockbackForce: 30
+  knockbackTime: 0.5
+  shootingType: 0
+  projectileFlySpeed: 0
+  difficulty: 0
+  coins: []
+  lootings: []
+  wreckage: []
+  EnemyObject: {fileID: 1509766308752486101, guid: f3de477175b8c454c977c771c1798808, type: 3}
+  projectile: {fileID: 0}

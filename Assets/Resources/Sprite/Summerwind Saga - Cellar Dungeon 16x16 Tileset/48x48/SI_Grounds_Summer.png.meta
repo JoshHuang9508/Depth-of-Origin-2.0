@@ -1,0 +1,462 @@
+fileFormatVersion: 2
+guid: 074ac0440da1a64429730ca2b19a85c3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5251996892842040410
+    second: SI_Grounds_Summer_0
+  - first:
+      213: 621588963756234660
+    second: SI_Grounds_Summer_1
+  - first:
+      213: 5230236360588572081
+    second: SI_Grounds_Summer_2
+  - first:
+      213: 6542646577503873091
+    second: SI_Grounds_Summer_3
+  - first:
+      213: -7984601287502393367
+    second: SI_Grounds_Summer_4
+  - first:
+      213: -1431677860923911446
+    second: SI_Grounds_Summer_5
+  - first:
+      213: -1846810022268033611
+    second: SI_Grounds_Summer_6
+  - first:
+      213: 6568273482481431576
+    second: SI_Grounds_Summer_7
+  - first:
+      213: 117109563738046830
+    second: SI_Grounds_Summer_8
+  - first:
+      213: 6152700324195136319
+    second: SI_Grounds_Summer_9
+  - first:
+      213: -6705713154459156170
+    second: SI_Grounds_Summer_10
+  - first:
+      213: 2094624645082957200
+    second: SI_Grounds_Summer_11
+  - first:
+      213: 3735539006299419529
+    second: SI_Grounds_Summer_12
+  - first:
+      213: 7377153047295702825
+    second: SI_Grounds_Summer_13
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 218
+        width: 163
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a3e1b8f6a82d17b0800000000000000
+      internalID: -5251996892842040410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_1
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 260
+        width: 98
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a75ef48ed350a800800000000000000
+      internalID: 621588963756234660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_2
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 218
+        width: 164
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5b63c4248859840800000000000000
+      internalID: 5230236360588572081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_3
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 263
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3482b07d5662cca50800000000000000
+      internalID: 6542646577503873091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 163
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef0b49ee6ff03190800000000000000
+      internalID: -7984601287502393367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_5
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 191
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae2d6d22298a12ce0800000000000000
+      internalID: -1431677860923911446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_6
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 23
+        width: 164
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5251fc110de56e0800000000000000
+      internalID: -1846810022268033611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_7
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 191
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8147cee9ee1372b50800000000000000
+      internalID: 6568273482481431576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_8
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 68
+        width: 98
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e61486a178e00a100800000000000000
+      internalID: 117109563738046830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_9
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 68
+        width: 98
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f33f411b858c26550800000000000000
+      internalID: 6152700324195136319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_10
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 0
+        width: 23
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6314cc61a6580f2a0800000000000000
+      internalID: -6705713154459156170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_11
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 23
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 095c2f3540a911d10800000000000000
+      internalID: 2094624645082957200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_12
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 0
+        width: 23
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 983b71b3fec47d330800000000000000
+      internalID: 3735539006299419529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SI_Grounds_Summer_13
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 0
+        width: 23
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92730c55c99e06660800000000000000
+      internalID: 7377153047295702825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SI_Grounds_Summer_0: -5251996892842040410
+      SI_Grounds_Summer_1: 621588963756234660
+      SI_Grounds_Summer_10: -6705713154459156170
+      SI_Grounds_Summer_11: 2094624645082957200
+      SI_Grounds_Summer_12: 3735539006299419529
+      SI_Grounds_Summer_13: 7377153047295702825
+      SI_Grounds_Summer_2: 5230236360588572081
+      SI_Grounds_Summer_3: 6542646577503873091
+      SI_Grounds_Summer_4: -7984601287502393367
+      SI_Grounds_Summer_5: -1431677860923911446
+      SI_Grounds_Summer_6: -1846810022268033611
+      SI_Grounds_Summer_7: 6568273482481431576
+      SI_Grounds_Summer_8: 117109563738046830
+      SI_Grounds_Summer_9: 6152700324195136319
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

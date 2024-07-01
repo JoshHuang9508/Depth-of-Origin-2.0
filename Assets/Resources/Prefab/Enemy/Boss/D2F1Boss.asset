@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194b6416e2c41514984d0126cd02fd2e, type: 3}
+  m_Name: D2F1Boss
+  m_EditorClassIdentifier: 
+  Name: Ogre
+  health: 1000
+  haveShield: 1
+  shieldHealth: 100
+  walkType: 0
+  moveSpeed: 3
+  defence: 100
+  isBoss: 1
+  attackType: 0
+  attackSpeed: 1
+  attackDamage: 60
+  chaseField: 10
+  attackField: 0.8
+  knockbackForce: 12
+  knockbackTime: 1
+  shootingType: 2
+  projectileFlySpeed: 15
+  difficulty: 4
+  coins:
+  - coins: {fileID: 11400000, guid: a75219c0e21414b1c870bdba565d31dd, type: 2}
+    amount: 2
+  lootings:
+  - lootings: {fileID: 11400000, guid: 9d25cf8f9411c574192c4900107d22fb, type: 2}
+    chances: 100
+    quantity: 1
+  wreckage:
+  - {fileID: 6210577483765107436, guid: d131c40cbb94cbc44b82983c8f03af13, type: 3}
+  EnemyObject: {fileID: 4019345525713264864, guid: 1819283707c313341bd682f378bc4c33, type: 3}
+  projectile: {fileID: 4857680875645216774, guid: dfc8f3167d1dd443faee5d6dae255b51, type: 3}

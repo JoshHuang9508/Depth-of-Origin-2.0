@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5fdab1992064e6987ea28b292f0e4f, type: 3}
+  m_Name: R_Machete
+  m_EditorClassIdentifier: 
+  Name: Machete
+  Description: A long iron knife. Simple and useless
+  IsStackable: 0
+  isStorable: 1
+  MaxStackSize: 1
+  Rarity: 2
+  sellPrice: 800
+  buyPrice: 2000
+  Image: {fileID: 21300000, guid: df36e5b4c29a79d46a85e765df452cac, type: 3}
+  DefaultParameterList: []
+  attackCooldown: 0.8
+  weaponDamage: 96
+  knockbackForce: 10
+  knockbackTime: 0.5
+  E_maxHealth: 0
+  E_strength: 10
+  E_walkSpeed: 10
+  E_defence: 0
+  E_critRate: 5
+  E_critDamage: 10
+  weaponObject: {fileID: 4857680875645216774, guid: 91aa8beedc05d9243b97995866405f0a, type: 3}
+  attackSpeed: 1.5
