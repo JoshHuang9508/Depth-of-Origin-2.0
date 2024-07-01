@@ -8,8 +8,12 @@ public class SceneLoaderController : MonoBehaviour
 {
     [Header("Setting")]
     public LoadType loadType = LoadType.Scene;
-    public int SceneNum = 0;
+    
+    [Header("Setting(Chunk)")]
     public GameObject transformPos;
+
+    [Header("Setting(Scene)")]
+    public int SceneNum = 0;
 
     [Header("Dynamic Data")]
     public static bool inAction = false;
@@ -21,7 +25,6 @@ public class SceneLoaderController : MonoBehaviour
     {
         Scene, Chunk
     }
-
 
     private void Start()
     {

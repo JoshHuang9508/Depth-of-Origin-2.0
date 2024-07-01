@@ -12,12 +12,12 @@ public class Interactable : MonoBehaviour
     [SerializeField] private UnityEvent interactAction, enterRangeAction, leaveRangeAction;
 
     [Header("Object Reference")]
-    [SerializeField] private GameObject interactDialogObject;
+    [SerializeField] private GameObject dialogObjectReference;
     [SerializeField] private PlayerBehaviour player;
 
     [Header("Dynamic Data")]
-    [SerializeField] private GameObject interactDialog;
-    [SerializeField] private TMP_Text interactDialogText;
+    [SerializeField] private GameObject dialogObject;
+    [SerializeField] private TMP_Text dialogText;
     [SerializeField] private bool isInRange;
 
     private void Awake()
@@ -26,15 +26,15 @@ public class Interactable : MonoBehaviour
 
         if (interactable)
         {
-            interactDialog = Instantiate(
-            interactDialogObject,
+            dialogObject = Instantiate(
+            dialogObjectReference,
             transform.position + new Vector3(0, 1.5f, 0),
             Quaternion.identity,
             transform
             );
 
-            interactDialog.SetActive(false);
-            interactDialogText = interactDialog.GetComponentInChildren<TMP_Text>();
+            dialogObject.SetActive(false);
+            dialogText = dialogObject.GetComponentInChildren<TMP_Text>();
         }
     }
 
@@ -75,8 +75,8 @@ public class Interactable : MonoBehaviour
 
             if (enabled && interactable)
             {
-                interactDialog.SetActive(true);
-                interactDialogText.text = $"Press {player.interactKey} to interact";
+                dialogObject.SetActive(true);
+                dialogText.text = $"Press {player.interactKey} to interact";
             }
         }
     }
@@ -88,12 +88,12 @@ public class Interactable : MonoBehaviour
             isInRange = false;
             leaveRangeAction.Invoke();
 
-            if (interactable) interactDialog.SetActive(false);
+            if (interactable) dialogObject.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
-        if (interactable) interactDialog.SetActive(false);
+        if (interactable) dialogObject.SetActive(false);
     }
 }

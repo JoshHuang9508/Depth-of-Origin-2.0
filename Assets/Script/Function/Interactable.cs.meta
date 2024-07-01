@@ -4,7 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - interactDialogObject: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  - dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  - player: {instanceID: 0}
+  - dialogObject: {instanceID: 0}
+  - dialogText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

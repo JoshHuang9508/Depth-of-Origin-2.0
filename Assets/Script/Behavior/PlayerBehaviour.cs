@@ -4,6 +4,7 @@ using UnityEngine;
 using Inventory.Model;
 using Inventory.UI;
 using System;
+using TMPro;
 
 public class PlayerBehaviour : MonoBehaviour, Damageable
 {
@@ -51,14 +52,17 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [SerializeField] private SummonWeapon summonWeapon;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D currentRb;
-    [SerializeField] private GameObject damageText;
-    [SerializeField] private GameObject itemDropper;
+    [SerializeField] private GameObject damageTextReference;
+    [SerializeField] private GameObject itemDropperReference;
+    [SerializeField] private GameObject dialogObjectReference;
 
     [Header("Dynamic Data")]
     public InventorySO inventoryData;
     public InventorySO equipmentData;
+    [SerializeField] private GameObject dialog;
+    [SerializeField] private TMP_Text dialogText;
 
-    public bool behaviourEnabler = true;
+    [SerializeField] private bool behaviourEnabler = true;
     public bool movementEnabler = true;
     public float movementDisableTimer = 0;
     public bool attackEnabler = true;
@@ -101,47 +105,6 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             {
                 currentHealth = 0;
                 currentCoinAmount = 0;
-
-                //disable player object
-                currentRb.bodyType = RigidbodyType2D.Static;
-                behaviourEnabler = false;
-                shopUI.SetActive(false);
-                inventoryUI.SetActive(false);
-                deathUI.SetActive(true);
-
-                //drop item
-                List<Lootings> dropList = new();
-
-
-                for (int index = 0; index < inventoryData.Size; index++)
-                {
-                    if (UnityEngine.Random.Range(0, 100) >= 50)
-                    {
-                        dropList.Add(new Lootings(
-                            inventoryData.GetItemAt(index).item,
-                            100,
-                            inventoryData.GetItemAt(index).quantity)
-                        );
-                        inventoryData.RemoveItem(index, -1);
-                    }
-                }
-
-                ItemDropper ItemDropper = Instantiate(
-                    itemDropper,
-                    new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                    Quaternion.identity,
-                    GameObject.FindWithTag("Item").transform
-                    ).GetComponent<ItemDropper>();
-                ItemDropper.DropItems(dropList);
-
-
-                //disable player object
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    Transform child = transform.GetChild(i);
-                    child.gameObject.SetActive(false);
-                }
-                
             }
         }
     }
@@ -174,6 +137,14 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     private void Awake()
     {
         currentHealth = MaxHealth;
+
+        dialog = Instantiate(
+            dialogObjectReference,
+            transform.position + new Vector3(0, 1.5f, 0),
+            Quaternion.identity,
+            transform);
+        dialog.SetActive(false);
+        dialogText = dialog.GetComponentInChildren<TMP_Text>();
     }
     
     private void Update()
@@ -193,7 +164,6 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         UpdateCurrentWeapon();
 
         //actions
-        
         if (healingEnabler && currentHealth != MaxHealth) Heal();
         if (Input.anyKey && movementEnabler) Moving();
         if (Input.GetKeyDown(sprintKey) && sprintEnabler && movementEnabler) Sprint();
@@ -248,7 +218,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     {
         float healValue = Mathf.Min(MaxHealth - currentHealth, MaxHealth * 0.05f);
         Health += healValue;
-        DamageText.InstantiateDamageText(damageText, transform.position, healValue, "Heal");
+        DamageText.InstantiateDamageText(damageTextReference, transform.position, healValue, "Heal");
         healingDisableTimer = 5;
     }
 
@@ -270,7 +240,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         audioPlayer.PlayOneShot(hitSound);
 
         //instantiate damege text
-        DamageText.InstantiateDamageText(damageText, transform.position, localDamage, "PlayerHit");
+        DamageText.InstantiateDamageText(damageTextReference, transform.position, localDamage, "PlayerHit");
 
         //camera shake
         CameraController camera = GameObject.FindWithTag("MainCamera").GetComponentInParent<CameraController>();
@@ -384,7 +354,6 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
                 currentWeapon = attackEnabler ? (WeaponSO)equipmentData.GetItemAt(4).item : currentWeapon;
                 break;
         }
-
         return currentWeapon;
     }
 
@@ -461,30 +430,65 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             float healValue = Mathf.Min(MaxHealth - currentHealth, edibleItem.E_heal);
             Health += healValue;
 
-            DamageText.InstantiateDamageText(damageText, transform.position, healValue, "Heal");
+            DamageText.InstantiateDamageText(damageTextReference, transform.position, healValue, "Heal");
 
             camEffect.SetTrigger("Heal");
         }  
     }
-
 
     public void PlayAnimator(string animatorName)
     {
         switch (animatorName)
         {
             case "Warning":
-
                 warningAnim.SetTrigger("Play");
-
                 break;
         }
     }
 
+    public void KillPlayer()
+    {
+        //disable player object
+        currentRb.bodyType = RigidbodyType2D.Static;
+        SetBehaviorEnabler(false);
+        shopUI.SetActive(false);
+        inventoryUI.SetActive(false);
+        deathUI.SetActive(true);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.gameObject.SetActive(false);
+        }
+
+        //drop item***
+        List<Lootings> dropList = new();
+        for (int index = 0; index < inventoryData.Size; index++)
+        {
+            if (UnityEngine.Random.Range(0, 100) >= 50)
+            {
+                dropList.Add(new Lootings(
+                    inventoryData.GetItemAt(index).item,
+                    100,
+                    inventoryData.GetItemAt(index).quantity)
+                );
+                inventoryData.RemoveItem(index, -1);
+            }
+        }
+        ItemDropper ItemDropper = Instantiate(
+            itemDropperReference,
+            new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            Quaternion.identity,
+            GameObject.FindWithTag("Item").transform
+            ).GetComponent<ItemDropper>();
+        ItemDropper.DropItems(dropList);
+    }
+
     public void RevivePlayer()
     {
+        //enable player object
         currentHealth = MaxHealth;
         currentRb.bodyType = RigidbodyType2D.Dynamic;
-        behaviourEnabler = true;
+        SetBehaviorEnabler(true);
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -495,12 +499,34 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public void DropItem(InventorySO inventory ,int index)
     {
         ItemDropper ItemDropper = Instantiate(
-            itemDropper,
+            itemDropperReference,
             transform.position,
             Quaternion.identity,
             GameObject.FindWithTag("Item").transform
             ).GetComponent<ItemDropper>();
-
         ItemDropper.DropItem(inventory.RemoveItem(index, -1));
+    }
+
+    public void SetBehaviorEnabler(bool value)
+    {
+        behaviourEnabler = value;
+    }
+
+    public bool IsBehaviorEnable()
+    {
+        return behaviourEnabler;
+    }
+
+    public void SetDialog(string text)
+    {
+        dialog.transform.position = transform.position + new Vector3(0, 1.5f, 0);
+        dialogText.text = text;
+        dialog.SetActive(true);
+    }
+
+    public void ClearDialog()
+    {
+        dialogText.text = "";
+        dialog.SetActive(false);
     }
 }

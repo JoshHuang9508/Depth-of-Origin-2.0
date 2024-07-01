@@ -6,14 +6,16 @@ public class SpawnerController : MonoBehaviour
 {
     [Header("Setting")]
     [SerializeField] private float spawnRange;
-    [SerializeField] private bool autoSpawn = true;
     [SerializeField] private float minSpawnDistance = 15;
     [SerializeField] private int mobsStayedLimit = 4;
     [SerializeField] private int spawnTimesLimit = -1;
-    [SerializeField] private float spawnGap = 3;
     [SerializeField] private int trySpawnTimes = -1;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private List<EnemySO> spawnList;
+
+    [Header("Setting(Auto Spawn)")]
+    [SerializeField] private bool autoSpawn = true;
+    [SerializeField] private float spawnGap = 3;
 
     [Header("Dynamic Data")]
     [SerializeField] private int spawnTimes;
@@ -57,7 +59,7 @@ public class SpawnerController : MonoBehaviour
     {
         //detect spawn restrict
         if (spawnEnabler && (stayedMobs < mobsStayedLimit || mobsStayedLimit == -1) && (spawnTimesLimit > spawnTimes || spawnTimesLimit == -1) &&
-            GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>().behaviourEnabler)
+            GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>().IsBehaviorEnable())
         {
             spawnEnabler = false;
 
