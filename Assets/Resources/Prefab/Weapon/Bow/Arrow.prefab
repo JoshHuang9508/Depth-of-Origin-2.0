@@ -84,15 +84,15 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.19608113
-        inSlope: -1.5577092
-        outSlope: -1.5577092
+        value: 0.045476884
+        inSlope: -0.19060309
+        outSlope: -0.19060309
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.69643956
+        outWeight: 0.25838926
       - serializedVersion: 3
-        time: 0.28394634
+        time: 0.80107516
         value: 0
         inSlope: 0
         outSlope: 0
@@ -208,7 +208,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5784631354390786524}

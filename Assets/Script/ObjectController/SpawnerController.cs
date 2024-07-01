@@ -59,7 +59,7 @@ public class SpawnerController : MonoBehaviour
     {
         //detect spawn restrict
         if (spawnEnabler && (stayedMobs < mobsStayedLimit || mobsStayedLimit == -1) && (spawnTimesLimit > spawnTimes || spawnTimesLimit == -1) &&
-            GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>().IsBehaviorEnable())
+            GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>().enable)
         {
             spawnEnabler = false;
 

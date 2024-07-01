@@ -30,7 +30,7 @@ public class Pickable : MonoBehaviour
     {
         bool isInventoryFull = inventoryData.IsInventoryFull(player.inventoryData, item);
 
-        if (player.IsBehaviorEnable() && (item.isStorable ? !isInventoryFull : true) && pickEnabler && Vector2.Distance(player.transform.position, this.transform.position) < pickupDistance)
+        if (player.enable && (item.isStorable ? !isInventoryFull : true) && pickEnabler && Vector2.Distance(player.transform.position, this.transform.position) < pickupDistance)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 30 * Time.deltaTime);
 

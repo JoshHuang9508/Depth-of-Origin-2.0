@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7935414256776215589}
   - component: {fileID: 2596380447608284058}
   - component: {fileID: 2716684344592604355}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Crate
   m_TagString: BreakableObject
   m_Icon: {fileID: 0}
@@ -149,8 +149,7 @@ MonoBehaviour:
   - coins: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
     amount: 2
   lootings: []
-  wreckage:
-  - {fileID: 6210577483765107436, guid: d131c40cbb94cbc44b82983c8f03af13, type: 3}
+  wreckage: []
   hitSound: {fileID: 8300000, guid: b36c3f4eeb64e47bb9e02c21fee65075, type: 3}
   breakSound: {fileID: 8300000, guid: 13c084cbb971c4613ae31bdac7b32888, type: 3}
   audioPlayer: {fileID: 0}

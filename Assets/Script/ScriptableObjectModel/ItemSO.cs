@@ -95,7 +95,7 @@ namespace Inventory.Model
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
             if (player != null)
             {
-                player.DropItem(inventory, index);
+                player.DropItem(inventory, index, -1);
             }
             return false;
         }

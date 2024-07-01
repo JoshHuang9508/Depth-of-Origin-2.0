@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  interactKey: 101
   interactAction:
     m_PersistentCalls:
       m_Calls:
@@ -218,9 +217,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  interactDialogObject: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
-  interactDialogText: {fileID: 0}
-  interactDialog: {fileID: 0}
+  dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  player: {fileID: 0}
+  dialogObject: {fileID: 0}
+  dialogText: {fileID: 0}
   isInRange: 0
 --- !u!114 &3104876453195976919
 MonoBehaviour:
@@ -236,7 +236,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canReopen: 0
   coins: []
-  lootings: []
+  lootings:
+  - lootings: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    chances: 50
+    quantity: 2
+  - lootings: {fileID: 11400000, guid: 99b60c87e36454883be46f319211e1a0, type: 2}
+    chances: 10
+    quantity: 1
+  - lootings: {fileID: 11400000, guid: 112a72f8b1ead8740aba124c90d06df5, type: 2}
+    chances: 50
+    quantity: 2
+  - lootings: {fileID: 11400000, guid: ba8d07e0989814e8a9dc8414f26e2c25, type: 2}
+    chances: 10
+    quantity: 1
+  - lootings: {fileID: 11400000, guid: cb120a48d5fcd4134b41aeee4f5260e3, type: 2}
+    chances: 1
+    quantity: 1
+  - lootings: {fileID: 11400000, guid: c310af6a092074674bf5e88bff841a23, type: 2}
+    chances: 5
+    quantity: 1
+  - lootings: {fileID: 11400000, guid: 2a5365fb17c224bdd92e78482b7b5f63, type: 2}
+    chances: 25
+    quantity: 1
+  - lootings: {fileID: 11400000, guid: d700fad586afccd4a9ed3675b5135e05, type: 2}
+    chances: 5
+    quantity: 1
   audioPlayer: {fileID: 0}
   openSound: {fileID: 8300000, guid: bcd5582e3fd4c4ac8b936d84bd83efd6, type: 3}
   animator: {fileID: 344404685478440640}

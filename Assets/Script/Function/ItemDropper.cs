@@ -28,7 +28,7 @@ public class ItemDropper : MonoBehaviour
 
                 dropCoin.GetComponent<Pickable>().PickableSetup(coin.coins, 1, 100);
 
-                dropCoin.GetComponent<DropItemSetup>().InventoryItem = coin.coins;
+                dropCoin.GetComponent<DropItemInitialize>().InventoryItem = coin.coins;
 
                 dropCoin.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-2, 2f) * 10, Random.Range(-2f, 2f) * 10);
             }
@@ -52,7 +52,7 @@ public class ItemDropper : MonoBehaviour
 
                     dropItem.GetComponent<Pickable>().PickableSetup(looting.lootings);
 
-                    dropItem.GetComponent<DropItemSetup>().InventoryItem = looting.lootings;
+                    dropItem.GetComponent<DropItemInitialize>().InventoryItem = looting.lootings;
 
                     dropItem.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-2, 2f) * 10, Random.Range(-2f, 2f) * 10);
                 }
@@ -73,7 +73,7 @@ public class ItemDropper : MonoBehaviour
 
             dropItem.GetComponent<Pickable>().PickableSetup(item);
 
-            dropItem.GetComponent<DropItemSetup>().InventoryItem = item;
+            dropItem.GetComponent<DropItemInitialize>().InventoryItem = item;
 
             dropItem.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-2, 2f) * 10, Random.Range(-2f, 2f) * 10);
         }

@@ -206,7 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  interactKey: 101
   interactAction:
     m_PersistentCalls:
       m_Calls:
@@ -240,9 +239,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  interactDialogObject: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
-  interactDialogText: {fileID: 0}
-  interactDialog: {fileID: 0}
+  dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  player: {fileID: 0}
+  dialogObject: {fileID: 0}
+  dialogText: {fileID: 0}
   isInRange: 0
 --- !u!114 &8306560759883220146
 MonoBehaviour:
@@ -256,8 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a71ff72114cbf74aa8dc1d683e2b342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredKeys: 0
-  keyName: 
   canReopen: 1
   audioPlayer: {fileID: 0}
   openSound: {fileID: 8300000, guid: 45a47f72091334a7a8d361a9050ba899, type: 3}
@@ -265,5 +263,4 @@ MonoBehaviour:
   animator: {fileID: 1704195695562299193}
   BoxCollider2D: {fileID: 4606750690632038253}
   interactable: {fileID: 5012347381110029217}
-  player: {fileID: 0}
   isOpen: 0

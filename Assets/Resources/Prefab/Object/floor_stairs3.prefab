@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  interactKey: 101
   interactAction:
     m_PersistentCalls:
       m_Calls:
@@ -158,8 +157,11 @@ MonoBehaviour:
   leaveRangeAction:
     m_PersistentCalls:
       m_Calls: []
+  dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  player: {fileID: 0}
+  dialogObject: {fileID: 0}
+  dialogText: {fileID: 0}
   isInRange: 0
-  interactDialogObject: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
 --- !u!114 &5036680056351198048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadType: 0
-  SceneNum: 1
   transformPos: {fileID: 0}
+  SceneNum: 1
   transition: {fileID: 0}

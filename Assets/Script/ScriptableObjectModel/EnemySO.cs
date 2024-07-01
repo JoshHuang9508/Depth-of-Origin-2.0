@@ -9,25 +9,28 @@ public class EnemySO : ScriptableObject
 {
     [Header("Basic Data")]
     public string Name;
-
-    [Header("Setting")]
     public float health;
     public bool haveShield;
     public float shieldHealth;
-    public WalkType walkType;
     public float moveSpeed;
     public float defence;
-    public bool isBoss;
-    public AttackType attackType;
     public float attackSpeed;
     public float attackDamage;
     public float chaseField;
     public float attackField;
     public float knockbackForce;
     public float knockbackTime;
+
+    [Header("Setting")]
+    public bool isBoss;
+    public WalkType walkType;
+    public AttackType attackType;
+    public Difficulty difficulty = Difficulty.Easy;
+
+    [Header("Setting(Ranged)")]
+    public GameObject projectile;
     public ShootingType shootingType;
     public float projectileFlySpeed;
-    public Difficulty difficulty = Difficulty.Easy;
 
     [Header("Looting")]
     public List<Coins> coins;
@@ -36,7 +39,6 @@ public class EnemySO : ScriptableObject
 
     [Header("Object Reference")]
     public GameObject EnemyObject;
-    public GameObject projectile;
     public int angleOffset;
 
     public enum Difficulty

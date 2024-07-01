@@ -29,8 +29,11 @@ public class EquipmentDisplay : MonoBehaviour
         potionImage.sprite = player.equipmentData.GetItemAt(5).item != null ? player.equipmentData.GetItemAt(5).item.Image : null;
         potionImage.color = player.equipmentData.GetItemAt(5).item != null ? new Color(255, 255, 255, 255) : new Color(255, 255, 255, 0);
         potionAmountText.text = player.equipmentData.GetItemAt(5).quantity != 0 ? player.equipmentData.GetItemAt(5).quantity.ToString() : "";
+    }
 
-        switch (player.weaponControl)
+    public void SetEquipmentDisplay(int index)
+    {
+        switch (index)
         {
             case 0:
                 meleeWeaponBorder.color = new Color(190, 0, 0, 0);

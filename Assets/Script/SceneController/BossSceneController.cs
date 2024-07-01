@@ -42,7 +42,7 @@ public class BossSceneController : MonoBehaviour
         foreach (var entity in entitylist)
         {
             //need fix lol
-            if (entity.GetComponent<BossBehavior>() != null || entity.GetComponent<Boss2Behavior>() != null || entity.GetComponent<Boss3Behavior>() != null)
+            if (entity.GetComponent<AzmodasBehavior>() != null || entity.GetComponent<GrumBehavior>() != null || entity.GetComponent<KraggBehavior>() != null)
             {
                 bossCounter++;
             }
@@ -57,11 +57,11 @@ public class BossSceneController : MonoBehaviour
                 GameObject.Find("Object_Grid").transform).GetComponent<ChestController>();
             chestSummoned.SetChestContent(coins, lootings);
 
-            SceneLoaderController exitSummoned = Instantiate(
+            SceneLoader exitSummoned = Instantiate(
                 exit,
                 exitSummonPos,
                 Quaternion.identity,
-                GameObject.Find("Object_Grid").transform).GetComponent<SceneLoaderController>();
+                GameObject.Find("Object_Grid").transform).GetComponent<SceneLoader>();
             exitSummoned.SetSceneLoaderContent(sceneNum);
 
             bossAlive = false;

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class OutroTransitionController : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
-    [SerializeField] private SceneLoaderController sceneLoader;
+    [SerializeField] private SceneLoader sceneLoader;
 
     [SerializeField]
     string[] dialog = {

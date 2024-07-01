@@ -8,27 +8,23 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deadSound;
 
-    [Header("Dynamic Data")]
+    [Header("Setting")]
     public EnemySO enemy;
+
+    [Header("Dynamic Data")]
+    [SerializeField] private bool enable = true;
+
     [SerializeField] private GameObject target;
-    [SerializeField] private float currentHealth;
-    [SerializeField] private float currnetShieldHealth;
-    [SerializeField] private bool haveShield;
-    [SerializeField] private Vector2 currentPos, targetPos, diraction;
-    public bool movementEnabler = true;
-    public float movementDisableTimer = 0;
-    public bool attackEnabler = true;
-    public float attackDisableTimer = 0;
-    public bool damageEnabler = true;
-    public float damageDisableTimer = 0;
-    public bool dodgeEnabler = true;
-    public float dodgeDisableTimer = 0;
-    public bool onHit = false;
-    public float onHitTimer = 0;
-    public bool behaviourEnabler = true;
+    [SerializeField] private float currentHealth, currnetShieldHealth;
+    
+    [SerializeField] private float noMoveTimer = 0;
+    [SerializeField] private float noAttackTimer = 0;
+    [SerializeField] private float noDamageTimer = 0;
+    [SerializeField] private float noDodgeTimer = 0;
+    [SerializeField] private float isHitTimer = 0;
 
     [Header("Object Reference")]
-    public Rigidbody2D currentRb;
+    [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject damageText;
@@ -76,15 +72,19 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
             if(currnetShieldHealth <= 0)
             {
-                haveShield = false;
+                HaveShield = false;
             }
         }
     }
-
-    public bool HaveShield { get { return haveShield; } }
-    public Vector2 CurrentPos { get { return currentPos; } }
-    public Vector2 TargetPos { get { return targetPos; } }
-    public Vector2 Diraction { get { return diraction; } }
+    public bool HaveShield { get; private set; }
+    public bool CanMove { get; private set; }
+    public bool CanAttack { get; private set; }
+    public bool CanBeDamaged { get; private set; }
+    public bool CanDodge { get; private set; }
+    public bool IsHit { get; private set; }
+    public Vector2 CurrentPos { get; private set; }
+    public Vector2 TargetPos { get; private set; }
+    public Vector2 Diraction { get; private set; }
 
     public delegate void EnemyAttack();
     public event EnemyAttack OnAttack;
@@ -95,7 +95,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     {
         currentHealth = enemy.health;
         currnetShieldHealth = enemy.shieldHealth;
-        haveShield = enemy.haveShield;
+        HaveShield = enemy.haveShield;
 
         audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
 
@@ -106,15 +106,15 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     {
         try { target = GameObject.FindWithTag("Player"); } catch { }
 
-        if (!behaviourEnabler) return;
+        if (!enable) return;
 
-        currentPos = transform.position;
-        targetPos = target.transform.position;
-        diraction = (targetPos - currentPos).normalized;
+        CurrentPos = transform.position;
+        TargetPos = target.transform.position;
+        Diraction = (TargetPos - CurrentPos).normalized;
 
         //update states
-        spriteRenderer.flipX = (currentPos.x - targetPos.x) > 0.2;
-        animator.enabled = !onHit;
+        spriteRenderer.flipX = (CurrentPos.x - TargetPos.x) > 0.2;
+        animator.enabled = !IsHit;
 
         //update timer
         UpdateTimer();
@@ -126,20 +126,20 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
     private void Moving()
     {
-        if (!movementEnabler) return;
+        if (!CanMove) return;
 
         switch (enemy.walkType)
         {
             case EnemySO.WalkType.Melee:
 
-                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField)
+                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.chaseField)
                 {
-                    currentRb.MovePosition(currentPos + enemy.moveSpeed * Time.deltaTime * diraction);
+                    currentRb.MovePosition(CurrentPos + enemy.moveSpeed * Time.deltaTime * Diraction);
 
                     animator.SetBool("ismove", true);
                     animator.SetBool("ischase", true);
                 }
-                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
+                else if (Vector3.Distance(TargetPos, CurrentPos) > enemy.chaseField)
                 {
                     animator.SetBool("ismove", false);
                     animator.SetBool("ischase", false);
@@ -148,14 +148,14 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
             case EnemySO.WalkType.Sniper:
 
-                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField)
+                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.chaseField)
                 {
-                    currentRb.MovePosition(currentPos - enemy.moveSpeed * Time.deltaTime * diraction);
+                    currentRb.MovePosition(CurrentPos - enemy.moveSpeed * Time.deltaTime * Diraction);
 
                     animator.SetBool("ismove", true);
                     animator.SetBool("ischase", true);
                 }
-                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
+                else if (Vector3.Distance(TargetPos, CurrentPos) > enemy.chaseField)
                 {
                     currentRb.velocity = Vector2.zero;
 
@@ -172,22 +172,22 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
     private void Attacking()
     {
-        if (!attackEnabler) return;
+        if (!CanAttack) return;
 
         switch (enemy.attackType)
         {
             case EnemySO.AttackType.Melee:
 
-                if (Vector3.Distance(targetPos, currentPos) < enemy.attackField)
+                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.attackField)
                 {
                     Damageable damageableObject = target.GetComponent<Damageable>();
 
                     if(damageableObject != null)
                     {
-                        damageableObject.OnHit(enemy.attackDamage, false, diraction * enemy.knockbackForce, enemy.knockbackTime);
+                        damageableObject.OnHit(enemy.attackDamage, false, Diraction * enemy.knockbackForce, enemy.knockbackTime);
 
-                        attackDisableTimer += enemy.attackSpeed;
-                        movementDisableTimer += enemy.attackSpeed;
+                        noAttackTimer += enemy.attackSpeed;
+                        noMoveTimer += enemy.attackSpeed;
 
                         if(OnAttack != null) OnAttack.Invoke();
                     }
@@ -196,11 +196,11 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
             case EnemySO.AttackType.Sniper:
 
-                if (Vector3.Distance(targetPos, currentPos) < enemy.attackField)
+                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.attackField)
                 {
-                    enemy.Attack_Ranged(Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg, transform.position + new Vector3(0, 0.5f, 0));
+                    enemy.Attack_Ranged(Mathf.Atan2(Diraction.y, Diraction.x) * Mathf.Rad2Deg, transform.position + new Vector3(0, 0.5f, 0));
 
-                    attackDisableTimer += enemy.attackSpeed;
+                    noAttackTimer += enemy.attackSpeed;
 
                     if (OnAttack != null) OnAttack.Invoke();
                 }
@@ -211,18 +211,18 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!damageEnabler) return;
+        if (!CanBeDamaged) return;
 
         float localDamage = damage / (1 + (0.001f * enemy.defence));
         Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
         float localKnockbackTime = knockbackTime / (1 + (0.001f * enemy.defence));
 
-        if (haveShield)
+        if (HaveShield)
         {
             //update shield health
             ShieldHealth -= localDamage;
         }
-        else if (!haveShield)
+        else if (!HaveShield)
         {
             //update heath
             Health -= localDamage;
@@ -234,38 +234,38 @@ public class EnemyBehavior : MonoBehaviour, Damageable
             audioPlayer.PlayOneShot(hitSound);
 
             //set timer
-            movementDisableTimer = movementDisableTimer < localKnockbackTime ? localKnockbackTime : movementDisableTimer;
-            attackDisableTimer = attackDisableTimer < localKnockbackTime ? localKnockbackTime : attackDisableTimer;
-            onHitTimer = onHitTimer < localKnockbackTime ? localKnockbackTime : onHitTimer;
+            noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
+            noAttackTimer = noAttackTimer < localKnockbackTime ? localKnockbackTime : noAttackTimer;
+            isHitTimer = isHitTimer < localKnockbackTime ? localKnockbackTime : isHitTimer;
         }
 
         //instantiate damage text
         DamageText.InstantiateDamageText(damageText, transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? "DamageCrit" : "Damage");
 
         //set timer
-        damageDisableTimer += 0.2f;
+        noDamageTimer += 0.2f;
     }
 
     public void SetShield(float _shieldHealth = 0)
     {
         ShieldHealth = _shieldHealth == 0 ? enemy.shieldHealth : _shieldHealth;
 
-        haveShield = true;
+        HaveShield = true;
     }
 
     private bool UpdateTimer()
     {
-        movementDisableTimer = Mathf.Max(0, movementDisableTimer - Time.deltaTime);
-        attackDisableTimer = Mathf.Max(0, attackDisableTimer - Time.deltaTime);
-        damageDisableTimer = Mathf.Max(0, damageDisableTimer - Time.deltaTime);
-        dodgeDisableTimer = Mathf.Max(0, dodgeDisableTimer - Time.deltaTime);
-        onHitTimer = Mathf.Max(0, onHitTimer - Time.deltaTime);
+        noMoveTimer = Mathf.Max(0, noMoveTimer - Time.deltaTime);
+        noAttackTimer = Mathf.Max(0, noAttackTimer - Time.deltaTime);
+        noDamageTimer = Mathf.Max(0, noDamageTimer - Time.deltaTime);
+        noDodgeTimer = Mathf.Max(0, noDodgeTimer - Time.deltaTime);
+        isHitTimer = Mathf.Max(0, isHitTimer - Time.deltaTime);
 
-        movementEnabler = movementDisableTimer <= 0;
-        attackEnabler = attackDisableTimer <= 0;
-        damageEnabler = damageDisableTimer <= 0;
-        dodgeEnabler = dodgeDisableTimer <= 0;
-        onHit = !(onHitTimer <= 0);
+        CanMove = noMoveTimer <= 0;
+        CanAttack = noAttackTimer <= 0;
+        CanBeDamaged = noDamageTimer <= 0;
+        CanDodge = noDodgeTimer <= 0;
+        IsHit = !(isHitTimer <= 0);
 
         return true;
     }
