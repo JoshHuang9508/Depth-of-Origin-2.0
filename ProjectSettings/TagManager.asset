@@ -22,6 +22,10 @@ TagManager:
   - Boss
   - AudioPlayer
   - Test
+  - Room
+  - RoomSpawnPoint
+  - RoomTemplates
+  - RoomStart
   layers:
   - Default
   - TransparentFX
