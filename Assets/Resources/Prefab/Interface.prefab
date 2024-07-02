@@ -1781,7 +1781,7 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: SetVolume
         m_Mode: 0
@@ -3017,7 +3017,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: setFullScreen
         m_Mode: 0
@@ -3413,24 +3413,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03f8458ee537474c956c9755e0c6295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  coinAmount: 0
+  inventoryData: {fileID: 11400000, guid: eb0377a7f3fb1ee49b9a9fd32dd76585, type: 2}
+  equipmentData: {fileID: 11400000, guid: f8aedf2ea14a94e2f98cf6113f6d7e68, type: 2}
+  keyList: []
+  effectionList: []
   B_WalkSpeed: 4
   B_MaxHealth: 100
   B_Strength: 0
   B_Defence: 10
   B_CritRate: 10
   B_CritDamage: 50
-  effectionList: []
-  E_WalkSpeed: 0
-  E_MaxHealth: 0
-  E_Strength: 0
-  E_Defence: 0
-  E_CritRate: 0
-  E_CritDamage: 0
-  currentHealth: 0
-  currentCoinAmount: 0
-  currentWeapon: {fileID: 0}
-  keyList: []
-  weaponControl: 0
   sprintKey: 304
   backpackKey: 102
   usePotionKey: 51
@@ -3438,40 +3432,30 @@ MonoBehaviour:
   meleeWeaponKey: 49
   rangedWeaponKey: 50
   interactKey: 101
+  currentWeapon: {fileID: 0}
+  E_WalkSpeed: 0
+  E_MaxHealth: 0
+  E_Strength: 0
+  E_Defence: 0
+  E_CritRate: 0
+  E_CritDamage: 0
   audioPlayer: {fileID: 0}
   hitSound: {fileID: 8300000, guid: e96b3471e0115490695dfadd2552a369, type: 3}
   inventoryUI: {fileID: 6610900548297841376}
   shopUI: {fileID: 5210553082942383535}
   pauseUI: {fileID: 5927274147666635737}
   deathUI: {fileID: 2455359995362522350}
+  cutscene: {fileID: 4703041008112144548}
   camEffect: {fileID: 2483637067988786457}
   animator: {fileID: 4001695706229620888}
   warningAnim: {fileID: 2352824078662926386}
-  summonWeapon: {fileID: 5891495512261230091}
-  spriteRenderer: {fileID: 4815779445745148010}
+  characterSprite: {fileID: 4815779445745148010}
+  weaponSprite: {fileID: 2328551821582312329}
   currentRb: {fileID: 3263216321874976903}
+  equipmentDisplay: {fileID: 6313650931474562653}
   damageTextReference: {fileID: 8842133498016202654, guid: 1ece5649299024e42bb29bc9f2f0ef8f, type: 3}
   itemDropperReference: {fileID: 4800655640655451192, guid: 72b490c07dabaf343bea163bbd9936d1, type: 3}
   dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
-  inventoryData: {fileID: 11400000, guid: eb0377a7f3fb1ee49b9a9fd32dd76585, type: 2}
-  equipmentData: {fileID: 11400000, guid: f8aedf2ea14a94e2f98cf6113f6d7e68, type: 2}
-  dialog: {fileID: 0}
-  dialogText: {fileID: 0}
-  behaviourEnabler: 1
-  movementEnabler: 1
-  movementDisableTimer: 0
-  attackEnabler: 1
-  attackDisableTimer: 0
-  damageEnabler: 1
-  damageDisableTimer: 0
-  sprintEnabler: 1
-  sprintDisableTimer: 0
-  walkSpeedMutiplyerEnabler: 0
-  walkSpeedMutiplyerDisableTimer: 0
-  healingEnabler: 1
-  healingDisableTimer: 0
-  onHit: 0
-  onHitTimer: 0
 --- !u!1 &524248352213000734
 GameObject:
   m_ObjectHideFlags: 0
@@ -5480,7 +5464,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: ResetButton
         m_Mode: 5
@@ -9608,7 +9592,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -11262,7 +11246,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -11343,7 +11327,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5228067723407248236}
   - component: {fileID: 2375229023928593412}
-  - component: {fileID: 5891495512261230091}
   - component: {fileID: 2328551821582312329}
   m_Layer: 0
   m_Name: Weapon
@@ -11379,26 +11362,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
---- !u!114 &5891495512261230091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663394970880308561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2ab589d484d0440bc20af99cc714ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  player: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  mousePos: {x: 0, y: 0}
-  currentPos: {x: 0, y: 0}
-  Diraction: {x: 0, y: 0}
-  isflip: 0
-  startAngle: 0
 --- !u!212 &2328551821582312329
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13337,7 +13300,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: GraphicApply
         m_Mode: 1
@@ -13349,7 +13312,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: openSettingsMenu
         m_Mode: 1
@@ -15231,7 +15194,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -15411,7 +15374,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: GraphicApply
         m_Mode: 1
@@ -15995,7 +15958,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: VolumeApply
         m_Mode: 1
@@ -16007,7 +15970,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: openSettingsMenu
         m_Mode: 1
@@ -17437,7 +17400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5111838858021104382}
   m_Layer: 5
-  m_Name: PauseMenuContainer
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17733,11 +17696,11 @@ RectTransform:
   m_Children:
   - {fileID: 1962504864466343508}
   - {fileID: 8927305610519116213}
-  m_Father: {fileID: 6001188768591914691}
+  m_Father: {fileID: 5354359829281300325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960.0001, y: 490}
+  m_AnchoredPosition: {x: 960, y: 490}
   m_SizeDelta: {x: 1620, y: 780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6982978847550779508
@@ -19072,7 +19035,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closeSettingsMenu
         m_Mode: 1
@@ -21103,7 +21066,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: ResetButton
         m_Mode: 5
@@ -21655,7 +21618,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -22685,7 +22648,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closeSettingsMenu
         m_Mode: 1
@@ -22697,7 +22660,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: openPauseMenu
         m_Mode: 1
@@ -25229,7 +25192,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: keyBindButtonClose
         m_Mode: 1
@@ -25241,7 +25204,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: openSettingsMenu
         m_Mode: 1
@@ -26115,7 +26078,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: SetResolution
         m_Mode: 0
@@ -28775,7 +28738,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -28955,7 +28918,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -29112,7 +29075,7 @@ GameObject:
   - component: {fileID: 5354359829281300325}
   - component: {fileID: 5828854055023232993}
   m_Layer: 5
-  m_Name: InGameMenu
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29132,6 +29095,7 @@ RectTransform:
   m_Children:
   - {fileID: 4310067309365512629}
   - {fileID: 1558160163616122475}
+  - {fileID: 4469146835780856227}
   m_Father: {fileID: 2131632713537660472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -29405,7 +29369,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closePauseMenu
         m_Mode: 1
@@ -29417,7 +29381,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: openSettingsMenu
         m_Mode: 1
@@ -30317,84 +30281,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &3946162689212557487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 90716470309256806}
-  - component: {fileID: 456814163433132346}
-  m_Layer: 5
-  m_Name: UI Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &90716470309256806
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3946162689212557487}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2131632713537660472}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1365, y: -590}
-  m_SizeDelta: {x: 810, y: 780}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &456814163433132346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3946162689212557487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 356ba219bea853c4bb0b1784c53385a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeValueText: {fileID: 6382018906975230580}
-  volumeSlider: {fileID: 4809959690898278024}
-  defaultVolume: 1
-  fullscreenToggle: {fileID: 5333964547818833895}
-  resolutionDropdown: {fileID: 6681432664603250210}
-  dropdownIcon: {fileID: 21300000, guid: 16a091c7f8ad05b4da2be8ff9b929650, type: 3}
-  keybindsavedNotification: {fileID: 1550002287483745186}
-  keybindsMenu: {fileID: 7924243603099108202}
-  settingsMenu: {fileID: 8773891505330364027}
-  pauseMenu: {fileID: 1181327307246388059}
-  keycodeInputField:
-  - {fileID: 9032550233051551711}
-  - {fileID: 3964587688648466991}
-  - {fileID: 7478318029100255977}
-  - {fileID: 5463353503402926397}
-  - {fileID: 2806666638213974234}
-  - {fileID: 3709465912494154878}
-  - {fileID: 340766246448685530}
-  - {fileID: 6978943176682527097}
-  - {fileID: 1759700898669746468}
-  keycodeInputlist:
-  - {fileID: 947213096137861139}
-  - {fileID: 1853389044437565514}
-  - {fileID: 5301024537311319658}
-  - {fileID: 6782651318600515358}
-  - {fileID: 8514706207373254215}
-  - {fileID: 3220633613878119054}
-  - {fileID: 4982824173202926327}
-  - {fileID: 2300655364347688369}
-  - {fileID: 668454725227979100}
 --- !u!1 &3946406824757331046
 GameObject:
   m_ObjectHideFlags: 0
@@ -33203,7 +33089,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -33433,7 +33319,7 @@ GameObject:
   - component: {fileID: 6001188768591914691}
   - component: {fileID: 5210971972781051540}
   m_Layer: 5
-  m_Name: ScreenUI
+  m_Name: Displays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33456,7 +33342,6 @@ RectTransform:
   - {fileID: 4919611366272784162}
   - {fileID: 5227850291800823010}
   - {fileID: 4347563711274412895}
-  - {fileID: 4469146835780856227}
   m_Father: {fileID: 2131632713537660472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -33936,8 +33821,8 @@ GameObject:
   - component: {fileID: 9213622251794274080}
   - component: {fileID: 4703041008112144548}
   m_Layer: 5
-  m_Name: Transition
-  m_TagString: Transition
+  m_Name: Cutscene
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34285,7 +34170,7 @@ GameObject:
   - component: {fileID: 4919611366272784162}
   - component: {fileID: 2732158774165090035}
   m_Layer: 5
-  m_Name: BossHealthBar
+  m_Name: BossHealthBarDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34385,7 +34270,6 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  boss: {fileID: 0}
   healthText: {fileID: 5047791325371266676}
   bossName: {fileID: 2069868652075642245}
   healthBarSlider: {fileID: 1385588761658463806}
@@ -36116,7 +36000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.74509805, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -45414,7 +45298,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closeSettingsMenu
         m_Mode: 1
@@ -45426,7 +45310,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: keyBindButtonOpen
         m_Mode: 1
@@ -46414,7 +46298,7 @@ GameObject:
   - component: {fileID: 3242958314656921700}
   - component: {fileID: 2879393178688884512}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: HealthBarDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46538,7 +46422,6 @@ MonoBehaviour:
   slider: {fileID: 3242958314656921700}
   healthText: {fileID: 2658169764081754146}
   fill: {fileID: 640375636994129545}
-  player: {fileID: 0}
 --- !u!1 &6329910056666736430
 GameObject:
   m_ObjectHideFlags: 0
@@ -50882,7 +50765,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: VolumeApply
         m_Mode: 1
@@ -51555,7 +51438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.74509805, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -52706,7 +52589,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -57401,7 +57284,7 @@ GameObject:
   - component: {fileID: 6344798355075074010}
   - component: {fileID: 3375468533662813013}
   m_Layer: 5
-  m_Name: CoinCounter
+  m_Name: CoinDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57551,7 +57434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinCounterText: {fileID: 4640535881613662963}
-  player: {fileID: 0}
 --- !u!1 &7798568240778164776
 GameObject:
   m_ObjectHideFlags: 0
@@ -57921,7 +57803,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closePauseMenu
         m_Mode: 1
@@ -57933,7 +57815,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: leavePauseMenu
         m_Mode: 1
@@ -61508,7 +61390,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -63322,7 +63204,6 @@ RectTransform:
   - {fileID: 5354359829281300325}
   - {fileID: 6577836009466742727}
   - {fileID: 3442638017624267937}
-  - {fileID: 90716470309256806}
   - {fileID: 5111838858021104382}
   m_Father: {fileID: 6821333377389006636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63503,7 +63384,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeResetBtn
         m_Mode: 3
@@ -64044,7 +63925,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closeSettingsMenu
         m_Mode: 1
@@ -64595,7 +64476,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: closePauseMenu
         m_Mode: 1
@@ -64607,7 +64488,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: leavePauseMenu
         m_Mode: 1
@@ -64619,7 +64500,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: QuitBtnClick
         m_Mode: 1
@@ -66061,7 +65942,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456814163433132346}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUIController, Assembly-CSharp
         m_MethodName: KeyCodeSaveBtn
         m_Mode: 1
@@ -67033,7 +66914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4347563711274412895}
   m_Layer: 5
-  m_Name: EffectContainer
+  m_Name: EffectionDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68435,7 +68316,7 @@ GameObject:
   - component: {fileID: 570377063700921532}
   - component: {fileID: 2209900343571600003}
   m_Layer: 5
-  m_Name: ExitBtn
+  m_Name: Title Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69371,35 +69252,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 404737055118076609, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 404737055118076609, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 404737055118076609, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 404737055118076609, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 605970063474534318, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 605970063474534318, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 605970063474534318, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 605970063474534318, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 705609747511288917, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -69475,35 +69356,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1820957075375132142, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1820957075375132142, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1820957075375132142, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 1820957075375132142, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 2372805495079536664, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2372805495079536664, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2372805495079536664, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 2372805495079536664, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 2437086127935203732, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -69791,19 +69672,19 @@ PrefabInstance:
       objectReference: {fileID: 2223595716223739465}
     - target: {fileID: 5494189170114848164, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5494189170114848164, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5494189170114848164, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 5494189170114848164, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 6138961156528940524, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: itemSlot
@@ -69859,19 +69740,19 @@ PrefabInstance:
       objectReference: {fileID: 8147436325981735560}
     - target: {fileID: 6218471342483287259, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6218471342483287259, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6218471342483287259, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.526398
       objectReference: {fileID: 0}
     - target: {fileID: 6218471342483287259, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 7280870460217748306, guid: f725779f9cc6e4b519f27aca964fa3dd, type: 3}
       propertyPath: m_AnchorMax.y

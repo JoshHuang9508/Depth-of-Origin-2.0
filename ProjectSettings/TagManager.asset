@@ -17,7 +17,6 @@ TagManager:
   - PlayerHitBox
   - Shield
   - Object
-  - Transition
   - WorldEdge
   - Boss
   - AudioPlayer
@@ -26,6 +25,7 @@ TagManager:
   - RoomSpawnPoint
   - RoomTemplates
   - RoomStart
+  - Transition
   layers:
   - Default
   - TransparentFX

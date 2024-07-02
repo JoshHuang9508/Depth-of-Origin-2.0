@@ -146,14 +146,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   coins:
-  - coins: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
+  - coin: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
     amount: 2
   lootings: []
   wreckage: []
   hitSound: {fileID: 8300000, guid: b36c3f4eeb64e47bb9e02c21fee65075, type: 3}
   breakSound: {fileID: 8300000, guid: 13c084cbb971c4613ae31bdac7b32888, type: 3}
   audioPlayer: {fileID: 0}
-  damageText: {fileID: 8842133498016202654, guid: 1ece5649299024e42bb29bc9f2f0ef8f, type: 3}
   itemDropper: {fileID: 4800655640655451192, guid: 72b490c07dabaf343bea163bbd9936d1, type: 3}
-  damageEnabler: 1
-  damageDisableTimer: 0

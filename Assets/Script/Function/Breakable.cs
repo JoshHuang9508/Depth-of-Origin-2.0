@@ -8,22 +8,24 @@ public class Breakable : MonoBehaviour, Damageable
 {
     [Header("Setting")]
     [SerializeField] private float health;
-    [SerializeField] private List<Coins> coins;
-    [SerializeField] private List<Lootings> lootings;
-    [SerializeField] private List<GameObject> wreckage;
+
+    [Header("Looting")]
+    public List<Coins> coins;
+    public List<Lootings> lootings;
+    public List<GameObject> wreckage;
 
     [Header("Audio")]
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip breakSound;
 
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private AudioSource audioPlayer;
-    [SerializeField] private GameObject damageText;
     [SerializeField] private GameObject itemDropper;
 
-    [Header("Dynamic Data")]
-    public bool damageEnabler = true;
-    public float damageDisableTimer = 0;
+    //Rumtime Data
+    private PlayerBehaviour player;
+    private bool damageEnabler = true;
+    private float damageDisableTimer = 0;
 
     public float Health
     {
@@ -33,26 +35,11 @@ public class Breakable : MonoBehaviour, Damageable
         }
         set
         {
-            health = value;
+            health = Mathf.Max(0, value);
 
             if (health <= 0)
             {
-                //drop items
-                ItemDropper ItemDropper = Instantiate(
-                    itemDropper,
-                    transform.position,
-                    Quaternion.identity,
-                    GameObject.FindWithTag("Item").transform
-                    ).GetComponent<ItemDropper>();
-
-                ItemDropper.DropItems(lootings);
-                ItemDropper.DropCoins(coins);
-                ItemDropper.DropWrackages(wreckage);
-
-                //play audio
-                audioPlayer.PlayOneShot(breakSound);
-
-                Destroy(gameObject);
+                KillObject();
             }
         }
         
@@ -65,6 +52,15 @@ public class Breakable : MonoBehaviour, Damageable
 
     private void Update()
     {
+        try
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by Breakable.cs)");
+        }
+
         UpdateTimer();
     }
 
@@ -76,7 +72,7 @@ public class Breakable : MonoBehaviour, Damageable
             Health -= damage;
 
             //instantiate damege text
-            DamageText.InstantiateDamageText(damageText, transform.position, damage, isCrit ? "DamageCrit" : "Damage");
+            player.SetDamageText(transform.position, damage, isCrit ? "DamageCrit" : "Damage");
 
             //play audio
             audioPlayer.PlayOneShot(hitSound);
@@ -86,7 +82,7 @@ public class Breakable : MonoBehaviour, Damageable
         }
     }
 
-    public void UpdateTimer()
+    private void UpdateTimer()
     {
         //update timer
         damageDisableTimer = Mathf.Max(0, damageDisableTimer - Time.deltaTime);
@@ -94,5 +90,23 @@ public class Breakable : MonoBehaviour, Damageable
         damageEnabler = damageDisableTimer <= 0;
     }
 
-    
+    private void KillObject()
+    {
+        //drop items
+        ItemDropper ItemDropper = Instantiate(
+            itemDropper,
+            transform.position,
+            Quaternion.identity,
+            GameObject.FindWithTag("Item").transform
+            ).GetComponent<ItemDropper>();
+
+        ItemDropper.DropItems(lootings);
+        ItemDropper.DropCoins(coins);
+        ItemDropper.DropWrackages(wreckage);
+
+        //play audio
+        audioPlayer.PlayOneShot(breakSound);
+
+        Destroy(gameObject);
+    }
 }

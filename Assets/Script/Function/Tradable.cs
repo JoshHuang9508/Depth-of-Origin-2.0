@@ -7,15 +7,30 @@ using Inventory.UI;
 public class Tradable : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private List<InventoryItem> shopGoodsList = new();
+    public List<InventoryItem> shopGoodsList = new();
 
-    [Header("Object Reference")]
-    [SerializeField] private GameObject shopUI;
+    [Header("Reference")]
     [SerializeField] private InventorySO shopData;
+
+    //Runtime data
+    private PlayerBehaviour player;
+    private GameObject shopUI;
 
     private void Update()
     {
-        try{ shopUI = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>().shopUI; } catch { }
+        try
+        { 
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        } 
+        catch 
+        {
+            Debug.LogWarning("Can't find player (sent by tradable.cs)");
+        }
+
+        if(player != null)
+        {
+            shopUI = player.shopUI;
+        }
     }
 
     public void OpenShop()

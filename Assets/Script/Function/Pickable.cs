@@ -7,49 +7,49 @@ using UnityEngine.Rendering.Universal;
 public class Pickable : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private int quantity = 1;
-    [SerializeField] private float pickupDistance;
+    public int quantity = 1;
+    public float pickupDistance;
 
-    [Header("Object Reference")]
+    [Header("Item")]
     [SerializeField] private ItemSO item;
-    [SerializeField] private InventorySO inventoryData;
-    [SerializeField] private PlayerBehaviour player;
 
-    [Header("Dynamic Data")]
-    [SerializeField] private bool pickEnabler = false;
-    
+    [Header("Reference")]
+    [SerializeField] private InventorySO inventoryData;
+
+    //Runtime data
+    private PlayerBehaviour player;
+    private bool canBePicked = false;
+    private bool playerInRange = false;
+    private bool isInventoryFull = false;
+
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-
         StartCoroutine(pickup_delay());
     }
 
     void Update()
     {
-        bool isInventoryFull = inventoryData.IsInventoryFull(player.inventoryData, item);
-
-        if (player.enable && (item.isStorable ? !isInventoryFull : true) && pickEnabler && Vector2.Distance(player.transform.position, this.transform.position) < pickupDistance)
+        try
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 30 * Time.deltaTime);
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by pickable.cs)");
+        }
 
-            if(Vector2.Distance(this.transform.position, player.transform.position) <= 0.2)
-            {
-                if(item is CoinSO)
-                {
-                    player.CoinAmount += ((CoinSO)item).coinAmount;
-                }
-                else if(item is KeySO)
-                {
-                    player.GetKeyList.Add(new PlayerBehaviour.Key {key = (KeySO)item, quantity = 1});
-                }
-                else
-                {
-                    inventoryData.AddItem(item, quantity);
-                }
-                Destroy(gameObject);
-            }
+        if(player != null)
+        {
+            inventoryData = player.inventoryData;
+        }
+
+        CheckPlayerInRange();
+        CheckInventoryFull();
+
+        if (player.canActive && playerInRange && canBePicked && (!item.isStorable || !isInventoryFull))
+        {
+            MoveTowardPlayer();
         }
     }
 
@@ -60,10 +60,41 @@ public class Pickable : MonoBehaviour
         this.pickupDistance = pickupDistance;
     }
 
+    private void CheckPlayerInRange()
+    {
+        playerInRange = Vector2.Distance(player.transform.position, this.transform.position) < pickupDistance;
+    }
+
+    private void CheckInventoryFull()
+    {
+        isInventoryFull = inventoryData.IsInventoryFull(player.inventoryData, item);
+    }
+
+    private void MoveTowardPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 30 * Time.deltaTime);
+
+        if (Vector2.Distance(this.transform.position, player.transform.position) <= 0.2)
+        {
+            if (item is CoinSO)
+            {
+                player.coinAmount += ((CoinSO)item).coinAmount;
+            }
+            else if (item is KeySO)
+            {
+                player.keyList.Add(new Key { key = (KeySO)item, quantity = 1 });
+            }
+            else
+            {
+                inventoryData.AddItem(item, quantity);
+            }
+            Destroy(gameObject);
+        }
+    }
 
     private IEnumerator pickup_delay()
     {
         yield return new WaitForSeconds(1.5f);
-        pickEnabler = true;
+        canBePicked = true;
     }
 }

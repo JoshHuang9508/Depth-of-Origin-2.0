@@ -147,11 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950295840eb0a5e4c92ed31df6c1692b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToLive: 0.5
+  existTime: 0.5
   floatSpeed: 500
   floatingDir: {x: 0, y: 1, z: 0}
   textmesh: {fileID: 6136122144018578225}
   rtransform: {fileID: 872122634983077702}
-  starting_Color: {r: 0, g: 0, b: 0, a: 0}
-  timeElapsed: 0
-  damageText: {fileID: 8842133498016202654}

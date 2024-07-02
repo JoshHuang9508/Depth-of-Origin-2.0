@@ -3,27 +3,29 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour, Damageable
 {
+    [Header("Stats")]
+    [SerializeField] private float health, shieldHealth;
+
+    [Header("Setting")]
+    public EnemySO enemy;
+
     [Header("Audio")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deadSound;
 
-    [Header("Setting")]
-    public EnemySO enemy;
+    //Runtime data
+    private bool canActive = true;
+    private PlayerBehaviour player;
+    private GameObject target;
 
-    [Header("Dynamic Data")]
-    [SerializeField] private bool enable = true;
+    private float noMoveTimer = 0;
+    private float noAttackTimer = 0;
+    private float noDamageTimer = 0;
+    private float noDodgeTimer = 0;
+    private float isHitTimer = 0;
 
-    [SerializeField] private GameObject target;
-    [SerializeField] private float currentHealth, currnetShieldHealth;
-    
-    [SerializeField] private float noMoveTimer = 0;
-    [SerializeField] private float noAttackTimer = 0;
-    [SerializeField] private float noDamageTimer = 0;
-    [SerializeField] private float noDodgeTimer = 0;
-    [SerializeField] private float isHitTimer = 0;
-
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
@@ -34,13 +36,13 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     {
         get
         {
-            return currentHealth;
+            return health;
         }
         set
         {
-            currentHealth = value;
+            health = Mathf.Max(0, value);
 
-            if (currentHealth <= 0)
+            if (health <= 0)
             {
                 //drop items
                 ItemDropper ItemDropper = Instantiate(
@@ -64,16 +66,15 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     {
         get
         {
-            return currnetShieldHealth;
+            return shieldHealth;
         }
         set
         {
-            currnetShieldHealth = value;
+            shieldHealth = Mathf.Max(0, value);
 
-            if(currnetShieldHealth <= 0)
-            {
-                HaveShield = false;
-            }
+            if(shieldHealth <= 0) HaveShield = false;
+
+            if (shieldHealth > 0) HaveShield = true;
         }
     }
     public bool HaveShield { get; private set; }
@@ -91,42 +92,51 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
 
 
-    void Start()
+    private void Start()
     {
-        currentHealth = enemy.health;
-        currnetShieldHealth = enemy.shieldHealth;
-        HaveShield = enemy.haveShield;
-
         audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
+
+        health = enemy.health;
+        shieldHealth = enemy.shieldHealth;
+        HaveShield = enemy.haveShield;
 
         if (enemy.isBoss) gameObject.tag = "Boss";
     }
 
-    void Update()
+    private void Update()
     {
-        try { target = GameObject.FindWithTag("Player"); } catch { }
+        try 
+        { 
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+            target = player.gameObject;
+        } 
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by enemyBehaviour.cs)");
+        }
 
-        if (!enable) return;
+        if (!canActive) return;
 
-        CurrentPos = transform.position;
-        TargetPos = target.transform.position;
-        Diraction = (TargetPos - CurrentPos).normalized;
+        if (player != null)
+        {
+            CurrentPos = transform.position;
+            TargetPos = target.transform.position;
+            Diraction = (TargetPos - CurrentPos).normalized;
+        }
 
-        //update states
-        spriteRenderer.flipX = (CurrentPos.x - TargetPos.x) > 0.2;
         animator.enabled = !IsHit;
+
+        //actions
+        if (CanMove) Moving();
+        if(CanAttack) Attacking();
 
         //update timer
         UpdateTimer();
-
-        //actions
-        Moving();
-        Attacking();
     }
 
     private void Moving()
     {
-        if (!CanMove) return;
+        spriteRenderer.flipX = (CurrentPos.x - TargetPos.x) > 0.2;
 
         switch (enemy.walkType)
         {
@@ -172,8 +182,6 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
     private void Attacking()
     {
-        if (!CanAttack) return;
-
         switch (enemy.attackType)
         {
             case EnemySO.AttackType.Melee:
@@ -208,10 +216,9 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         }
     }
 
-
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!CanBeDamaged) return;
+        if (!CanBeDamaged || !canActive) return;
 
         float localDamage = damage / (1 + (0.001f * enemy.defence));
         Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
@@ -240,17 +247,10 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         }
 
         //instantiate damage text
-        DamageText.InstantiateDamageText(damageText, transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? "DamageCrit" : "Damage");
+        player.SetDamageText(transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? "DamageCrit" : "Damage");
 
         //set timer
         noDamageTimer += 0.2f;
-    }
-
-    public void SetShield(float _shieldHealth = 0)
-    {
-        ShieldHealth = _shieldHealth == 0 ? enemy.shieldHealth : _shieldHealth;
-
-        HaveShield = true;
     }
 
     private bool UpdateTimer()

@@ -6,6 +6,9 @@ public class RoomDestroyer : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D otherColider)
     {
-        if (otherColider.CompareTag("RoomStart")) Destroy(transform.parent.gameObject);
+        if (otherColider.CompareTag("Water") || otherColider.CompareTag("Wall"))
+        {
+            Destroy(otherColider.transform.parent.gameObject);
+        }
     }
 }

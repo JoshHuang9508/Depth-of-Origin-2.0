@@ -43,7 +43,7 @@ public class TransitionSceneController : MonoBehaviour
 
     IEnumerator ShowMainText(int index)
     {
-        player.SetBehaviorEnabler(false);
+        player.SetActive(false);
 
         mainText.color = new Color(mainText.color.r, mainText.color.g, mainText.color.b,0f);
         mainText.text = dialog[index];
@@ -88,7 +88,7 @@ public class TransitionSceneController : MonoBehaviour
         {
             //PlayerPrefs.SetInt("loadscene", 3);
             sceneLoader.Load();
-            player.SetBehaviorEnabler(true);
+            player.SetActive(true);
         }
 
         yield break;

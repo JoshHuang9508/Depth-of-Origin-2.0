@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class Talkable : MonoBehaviour
 {
-    [SerializeField] private PlayerBehaviour player;
-    [SerializeField] private string[] dialog = new string[] 
-    { 
-        "test",
-        "test2"
-    }; 
+    [Header("Setting")]
+    public string[] dialog = new string[] { };
+
+    //Runtime data
+    private PlayerBehaviour player;
 
     void Update()
     {
-        try { player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); } catch { }
+        try
+        { 
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); 
+        } 
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by talkable.cs)");
+        }
     }
 
     public async void Chat()

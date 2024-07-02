@@ -10,29 +10,20 @@ using System.Threading.Tasks;
 public class PlayerBehaviour : MonoBehaviour, Damageable
 {
     [Header("Stats")]
-    [SerializeField] private float currentHealth;
-    [SerializeField] private int currentCoinAmount = 0;
+    [SerializeField] private float health;
+    public int coinAmount = 0;
+    public InventorySO inventoryData;
+    public InventorySO equipmentData;
+    public List<Key> keyList = new();
+    public List<Effection> effectionList = new();
+
+    [Header("Setting")]
     [SerializeField] private float B_WalkSpeed;
     [SerializeField] private float B_MaxHealth;
     [SerializeField] private float B_Strength;
     [SerializeField] private float B_Defence;
     [SerializeField] private float B_CritRate;
     [SerializeField] private float B_CritDamage;
-
-    [Header("Weapon")]
-    [SerializeField] private WeaponSO currentWeapon;
-
-    [Header("Effection")]
-    [SerializeField] private List<Effection> effectionList = new();
-    [SerializeField] private float E_WalkSpeed;
-    [SerializeField] private float E_MaxHealth;
-    [SerializeField] private float E_Strength;
-    [SerializeField] private float E_Defence;
-    [SerializeField] private float E_CritRate;
-    [SerializeField] private float E_CritDamage;
-
-    [Header("Key")]
-    [SerializeField] private List<Key> keyList = new();
 
     [Header("Key Settings")]
     public KeyCode sprintKey;
@@ -43,15 +34,27 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public KeyCode rangedWeaponKey;
     public KeyCode interactKey;
 
+    [Header("Weapon")]
+    [SerializeField] private WeaponSO currentWeapon;
+
+    [Header("Effection")]
+    [SerializeField] private float E_WalkSpeed;
+    [SerializeField] private float E_MaxHealth;
+    [SerializeField] private float E_Strength;
+    [SerializeField] private float E_Defence;
+    [SerializeField] private float E_CritRate;
+    [SerializeField] private float E_CritDamage;
+
     [Header("Audio")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
 
-    [Header("Object Reference")]
+    [Header("Reference")]
     public GameObject inventoryUI;
     public GameObject shopUI;
     public GameObject pauseUI;
     public GameObject deathUI;
+    public Animator cutscene;
     [SerializeField] private Animator camEffect;
     [SerializeField] private Animator animator;
     [SerializeField] private Animator warningAnim;
@@ -63,19 +66,16 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [SerializeField] private GameObject itemDropperReference;
     [SerializeField] private GameObject dialogObjectReference;
 
-    [Header("Dynamic Data")]
-    public InventorySO inventoryData;
-    public InventorySO equipmentData;
-    [SerializeField] private GameObject dialog;
-    [SerializeField] private TMP_Text dialogText;
-
-    [SerializeField] private float noMoveTimer = 0;
-    [SerializeField] private float noAttackTimer = 0;
-    [SerializeField] private float noDamageTimer = 0;
-    [SerializeField] private float noSprintTimer = 0;
-    [SerializeField] private float noWalkSpeedMutiplyTimer = 0;
-    [SerializeField] private float noHealTimer = 0;
-    [SerializeField] private float isHitTimer = 0;
+    //Runtime data
+    private GameObject dialog;
+    private TMP_Text dialogText;
+    private float noMoveTimer = 0;
+    private float noAttackTimer = 0;
+    private float noDamageTimer = 0;
+    private float noSprintTimer = 0;
+    private float noWalkSpeedMutiplyTimer = 0;
+    private float noHealTimer = 0;
+    private float isHitTimer = 0;
 
     public float WalkSpeed { get { return B_WalkSpeed * ((100 + E_WalkSpeed) / 100); } }
     public float MaxHealth { get { return B_MaxHealth + E_MaxHealth; } }
@@ -89,7 +89,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public Vector2 diraction { get; private set; }
     public float facingAngle { get; private set; }
 
-    public bool enable { get; private set; }
+    public bool canActive { get; private set; }
     public bool canMove { get; private set; }
     public bool canAttack { get; private set; }
     public bool canBeDamaged { get; private set; }
@@ -102,45 +102,19 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     {
         get
         {
-            return currentHealth;
+            return health;
         }
         set
         {
             //if (value > currentHealth) camEffect.SetTrigger("Heal");
 
-            if (value < currentHealth) camEffect.SetTrigger("OnHit");
+            if (value < health) camEffect.SetTrigger("OnHit");
 
-            currentHealth = value;
+            health = Mathf.Max(0, value);
 
-            if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-                currentCoinAmount = 0;
-                KillPlayer();
-            }
+            if (health <= 0) KillPlayer();
         }
     }
-
-    public int CoinAmount { get { return currentCoinAmount; } set { currentCoinAmount = value; } }
-    public List<Effection> GetEffectionList { get { return effectionList; } set { effectionList = value; } }
-    public List<Key> GetKeyList { get { return keyList; } set { keyList = value; } }
-
-    [Serializable]
-    public class Effection
-    {
-        public EdibleItemSO effectingItem;
-        public float effectingTime;
-    }
-
-    [Serializable]
-    public class Key
-    {
-        public KeySO key;
-        public int quantity;
-    }
-
-
-
 
     public void OnSceneLoaded()
     {
@@ -149,8 +123,8 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     private void Awake()
     {
-        currentHealth = MaxHealth;
-        enable = true;
+        health = MaxHealth;
+        canActive = true;
 
         dialog = Instantiate(
             dialogObjectReference,
@@ -163,7 +137,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     
     private void Update()
     {
-        if(!enable) return;
+        if(!canActive) return;
 
         animator.SetBool("isHit", isHit);
 
@@ -176,14 +150,14 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         UpdateMousePos();
 
         //actions
-        if (canHeal && currentHealth != MaxHealth) Heal();
+        if (canHeal && health != MaxHealth) Heal();
         if (canMove) Moving();
         if (Input.GetKeyDown(sprintKey) && canSprint && canMove) Sprint();
         if (Input.GetKeyDown(meleeWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
         if (Input.GetKeyDown(rangedWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
         if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
         {
-            SetEffection(equipmentData.GetItemAt(5).item as EdibleItemSO);
+            SetEffection(equipmentData.GetItemAt(5).item as PotionSO);
             equipmentData.RemoveItem(5, 1);
         } 
         if (Input.GetKeyDown(backpackKey))
@@ -213,7 +187,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     //functions//
     /////////////
 
-    public void Attacking()
+    private void Attacking()
     {
         WeaponSO weapon = currentWeapon;
 
@@ -306,15 +280,15 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     private void Heal()
     {
-        float healValue = Mathf.Min(MaxHealth - currentHealth, MaxHealth * 0.05f);
+        float healValue = Mathf.Min(MaxHealth - health, MaxHealth * 0.05f);
         Health += healValue;
-        DamageText.InstantiateDamageText(damageTextReference, transform.position, healValue, "Heal");
+        SetDamageText(transform.position, healValue, "Heal");
         noHealTimer = 5;
     }
 
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!canBeDamaged || !enable) return;
+        if (!canBeDamaged || !canActive) return;
 
         float localDamage = damage / (1 + (0.001f * Defence));
         Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * Defence));
@@ -330,7 +304,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         audioPlayer.PlayOneShot(hitSound);
 
         //instantiate damege text
-        DamageText.InstantiateDamageText(damageTextReference, transform.position, localDamage, "PlayerHit");
+        SetDamageText(transform.position, localDamage, "PlayerHit");
 
         //camera shake
         CameraController camera = GameObject.FindWithTag("MainCamera").GetComponentInParent<CameraController>();
@@ -380,7 +354,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         E_CritDamage = results[5];
 
         //check overhealing
-        if (currentHealth > MaxHealth) currentHealth = MaxHealth;
+        if (health > MaxHealth) health = MaxHealth;
     }
 
     private void UpdateTimer()
@@ -403,7 +377,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         isHit = !(isHitTimer <= 0);
     }
 
-    public void UpdateKeyList()
+    private void UpdateKeyList()
     {
         //update key list
         int indexOfKeyList = -1;
@@ -432,7 +406,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         effectionList.Remove(indexOfEffectionList != -1 ? effectionList[indexOfEffectionList] : null);
     }
 
-    public void UpdateWeapon()
+    private void UpdateWeapon()
     {
         //update current weapon
         if (currentWeapon == null)
@@ -451,7 +425,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         }
     }
 
-    public void UpdateMousePos()
+    private void UpdateMousePos()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         currentPos = transform.position;
@@ -493,7 +467,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         {
             inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 4));
         }
-        else if (item is EdibleItemSO)
+        else if (item is PotionSO)
         {
             inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 5));
         }
@@ -504,7 +478,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         equipmentData.AddItemTo(inventoryData.AddItem(equipmentData.RemoveItem(index, -1)), index);
     }
 
-    public void SetEffection(EdibleItemSO edibleItem)
+    public void SetEffection(PotionSO edibleItem)
     {
         int indexOfEffectionList = 0;
         bool isEffectionExist = false;
@@ -532,10 +506,10 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
         if (edibleItem.E_heal != 0)
         {
-            float healValue = Mathf.Min(MaxHealth - currentHealth, edibleItem.E_heal);
+            float healValue = Mathf.Min(MaxHealth - health, edibleItem.E_heal);
             Health += healValue;
 
-            DamageText.InstantiateDamageText(damageTextReference, transform.position, healValue, "Heal");
+            SetDamageText(transform.position, healValue, "Heal");
 
             camEffect.SetTrigger("Heal");
         }  
@@ -578,7 +552,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
         //disable player object
         currentRb.bodyType = RigidbodyType2D.Static;
-        SetBehaviorEnabler(false);
+        SetActive(false);
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -598,14 +572,16 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         {
             DropItem(inventoryData, index, -1);
         }
+
+        coinAmount = 0;
     }
 
     public void RevivePlayer()
     {
         //enable player object
-        currentHealth = MaxHealth;
+        health = MaxHealth;
         currentRb.bodyType = RigidbodyType2D.Dynamic;
-        SetBehaviorEnabler(true);
+        SetActive(true);
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -624,14 +600,14 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         ItemDropper.DropItem(inventory.RemoveItem(index, quantity));
     }
 
-    public void SetBehaviorEnabler(bool value)
+    public void SetActive(bool value)
     {
-        enable = value;
+        canActive = value;
     }
 
     public async Task SetDialog(string[] dialogLines)
     {
-        SetBehaviorEnabler(false);
+        SetActive(false);
         dialog.transform.position = transform.position + new Vector3(0, 1.5f, 0);
         dialog.SetActive(true);
        
@@ -642,10 +618,11 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             await WaitForClick();
         }
 
-        SetBehaviorEnabler(true);
+        SetActive(true);
         dialogText.text = "";
         dialog.SetActive(false);
     }
+
 
     private async Task WaitForClick()
     {
@@ -654,4 +631,30 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             await Task.Yield();
         }
     }
+
+    public void SetDamageText(Vector3 position, float value, string type)
+    {
+        var damageText = Instantiate(
+            damageTextReference,
+            Camera.main.WorldToScreenPoint(position),
+            Quaternion.identity,
+            GameObject.Find("Displays").transform
+            ).GetComponent<DamageTextDisplay>();
+
+        damageText.SetDisplay(value, type);
+    }
+}
+
+[Serializable]
+public class Effection
+{
+    public PotionSO effectingItem;
+    public float effectingTime;
+}
+
+[Serializable]
+public class Key
+{
+    public KeySO key;
+    public int quantity;
 }
