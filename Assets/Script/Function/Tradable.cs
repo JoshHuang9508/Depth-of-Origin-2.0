@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory.Model;
-using Inventory.UI;
+using Inventory;
 
 public class Tradable : MonoBehaviour
 {
     [Header("Setting")]
-    public List<InventoryItem> shopGoodsList = new();
+    public List<InventorySlot> shopGoodsList = new();
 
     [Header("Reference")]
     [SerializeField] private InventorySO shopData;
@@ -24,7 +23,7 @@ public class Tradable : MonoBehaviour
         } 
         catch 
         {
-            Debug.LogWarning("Can't find player (sent by tradable.cs)");
+            Debug.LogWarning("Can't find player (sent by Tradable.cs)");
         }
 
         if(player != null)
@@ -36,7 +35,7 @@ public class Tradable : MonoBehaviour
     public void OpenShop()
     {
         shopData.Initialize();
-        foreach (InventoryItem item in shopGoodsList)
+        foreach (InventorySlot item in shopGoodsList)
         {
             if (item.IsEmpty)
                 continue;

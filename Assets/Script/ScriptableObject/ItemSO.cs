@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static WeaponSO;
 
-namespace Inventory.Model
+namespace Inventory
 {
     public abstract class ItemSO : ScriptableObject
     {

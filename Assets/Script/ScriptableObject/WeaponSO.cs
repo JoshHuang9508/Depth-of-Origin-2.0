@@ -1,10 +1,9 @@
-using Inventory.Model;
+using Inventory;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using static EquippableItemSO;
 
 public class WeaponSO : ItemSO, IDestoryableItem, ISellable, IBuyable, IDroppable
 {

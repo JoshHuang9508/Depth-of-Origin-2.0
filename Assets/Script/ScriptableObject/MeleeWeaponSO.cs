@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Inventory.Model;
+using Inventory;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new melee weapon", menuName = "Items/Weapon/Melee Weapon")]

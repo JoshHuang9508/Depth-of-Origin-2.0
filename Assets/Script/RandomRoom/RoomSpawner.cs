@@ -39,7 +39,7 @@ public class RoomSpawner : MonoBehaviour
     private void CheckWall()
     {
         collisionRoomIndex = (topRoomChecker.isWall ? 0 : 8) + (leftRoomChecker.isWall ? 0 : 4) + (bottomRoomChecker.isWall ? 0 : 2) + (rightRoomChecker.isWall ? 0 : 1);
-        // 1001(2) means the room which is spawned cant have left and bottom door
+        // 1001(2) means the room which is gonna to spawn cant have left and bottom door
     }
 
     private void SpawnRoom()

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory.Model;
-using Inventory.UI;
+using Inventory;
+using UserInterface;
 using System;
 using TMPro;
 using System.Threading.Tasks;
@@ -444,17 +444,17 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     {
         ItemSO item = inventoryData.GetItemAt(index).item;
 
-        if (item is EquippableItemSO)
+        if (item is EquipmentSO)
         {
-            switch (((EquippableItemSO)item).equipmentType)
+            switch (((EquipmentSO)item).equipmentType)
             {
-                case EquippableItemSO.EquipmentType.armor:
+                case EquipmentSO.EquipmentType.armor:
                     inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 0));
                     break;
-                case EquippableItemSO.EquipmentType.jewelry:
+                case EquipmentSO.EquipmentType.jewelry:
                     inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 1));
                     break;
-                case EquippableItemSO.EquipmentType.book:
+                case EquipmentSO.EquipmentType.book:
                     inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 2));
                     break;
             }

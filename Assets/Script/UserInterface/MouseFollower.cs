@@ -1,4 +1,4 @@
-using Inventory.UI;
+using UserInterface;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +7,12 @@ public class MouseFollower : MonoBehaviour
 {
     [Header("Object Reference")]
     [SerializeField] private Canvas canvas;
-    [SerializeField] private UIItemSlot itemSlot;
+    [SerializeField] private ItemSlot itemSlot;
 
     private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
-        itemSlot = GetComponentInChildren<UIItemSlot>();
+        itemSlot = GetComponentInChildren<ItemSlot>();
     }
 
     public void SetData(Sprite sprite,int quantity)

@@ -1,4 +1,4 @@
-using Inventory.Model;
+using Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory.Model;
+using Inventory;
 
 public class ChestController : MonoBehaviour
 {

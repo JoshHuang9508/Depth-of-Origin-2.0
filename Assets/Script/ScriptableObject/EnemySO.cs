@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory.Model;
+using Inventory;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(fileName = "new enemy", menuName = "Enemy")]
@@ -37,7 +37,7 @@ public class EnemySO : ScriptableObject
     public List<Lootings> lootings;
     public List<GameObject> wreckage;
 
-    [Header("Object Reference")]
+    [Header("Reference")]
     public GameObject EnemyObject;
     public int angleOffset;
 

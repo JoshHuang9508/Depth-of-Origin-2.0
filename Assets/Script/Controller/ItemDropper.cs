@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory.Model;
+using Inventory;
 
 public class ItemDropper : MonoBehaviour
 {
@@ -52,7 +52,7 @@ public class ItemDropper : MonoBehaviour
         }
     }
 
-    public void DropItem(InventoryItem inventoryItem)
+    public void DropItem(InventorySlot inventoryItem)
     {
         DropItem(inventoryItem.item, inventoryItem.quantity);
     }

@@ -13,7 +13,6 @@ public class KeyDisplay : MonoBehaviour
     private PlayerBehaviour player;
     private List<GameObject> keysDisplayList = new();
 
-
     private void Update()
     {
         //Get player

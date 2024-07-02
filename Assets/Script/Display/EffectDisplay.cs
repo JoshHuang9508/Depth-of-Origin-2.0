@@ -6,20 +6,33 @@ using UnityEngine.UI;
 
 public class EffectDisplay : MonoBehaviour
 {
-    [Header("Dynamic Data")]
-    [SerializeField] private List<GameObject> effectionDisplayList = new();
-
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private GameObject effectDisplayModel;
-    [SerializeField] private PlayerBehaviour player;
+
+    //Runtime data
+    private List<GameObject> effectionDisplayList = new();
+    private PlayerBehaviour player;
 
 
-    void Start()
+    private void Update()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        try
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by EffectionDisplay.cs)");
+        }
+
+        if (player != null)
+        {
+            SetDisplay();
+        }
+            
     }
 
-    void Update()
+    private void SetDisplay()
     {
         if (effectionDisplayList.Count < player.effectionList.Count)
         {

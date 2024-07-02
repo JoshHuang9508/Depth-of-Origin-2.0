@@ -4,32 +4,36 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Inventory.Model
+namespace Inventory
 {
     [CreateAssetMenu]
     public class InventorySO : ScriptableObject
     {
-        public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
+        //event
+        public event Action<Dictionary<int, InventorySlot>> OnInventoryUpdated;
 
-        [SerializeField] private List<InventoryItem> inventoryItems;
+        //inventory item ist
+        [SerializeField] private List<InventorySlot> inventorySlots;
+
+        //size
         [field: SerializeField] public int Size { get; private set; } = 10;
 
 
 
         public void Initialize()
         {
-            inventoryItems = new List<InventoryItem>();
+            inventorySlots = new List<InventorySlot>();
             for (int i = 0; i < Size; i++)
             {
-                inventoryItems.Add(InventoryItem.GetEmptyItem());
+                inventorySlots.Add(InventorySlot.emptySlot());
             }
         }
 
         public bool IsInventoryFull(InventorySO inventory, ItemSO item)
         {
-            foreach (InventoryItem inventoryItem in inventory.inventoryItems)
+            foreach (InventorySlot inventorySlot in inventory.inventorySlots)
             {
-                if (inventoryItem.item == null || (inventoryItem.item.ID == item.ID && inventoryItem.quantity < inventoryItem.item.MaxStackSize))
+                if (inventorySlot.item == null || (inventorySlot.item.ID == item.ID && inventorySlot.quantity < inventorySlot.item.MaxStackSize))
                 {
                     return false;
                 }
@@ -37,66 +41,69 @@ namespace Inventory.Model
             return true;
         }
 
-        public Dictionary<int, InventoryItem> GetCurrentInventoryState()
+        public Dictionary<int, InventorySlot> GetCurrentInventoryState()
         {
-            Dictionary<int, InventoryItem> returnValue = new();
-            for (int i = 0; i < inventoryItems.Count; i++)
+            Dictionary<int, InventorySlot> returnValue = new();
+            for (int i = 0; i < inventorySlots.Count; i++)
             {
-                if (inventoryItems[i].IsEmpty)
+                if (inventorySlots[i].IsEmpty)
                 {
                     continue;
                 }
-                returnValue[i] = inventoryItems[i];
+                returnValue[i] = inventorySlots[i];
             }
             return returnValue;
         }
 
-        public InventoryItem GetItemAt(int itemIndex)
+        public InventorySlot GetItemAt(int itemIndex)
         {
-            return inventoryItems[itemIndex];
+            return inventorySlots[itemIndex];
         }
 
         public void SwapItems(int index1, int index2)
         {
-            InventoryItem item1 = inventoryItems[index1];
-            inventoryItems[index1] = inventoryItems[index2];
-            inventoryItems[index2] = item1;
+            InventorySlot tempItem = inventorySlots[index1];
+            inventorySlots[index1] = inventorySlots[index2];
+            inventorySlots[index2] = tempItem;
 
             OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
         }
 
-        public InventoryItem RemoveItem(int index, int amount)
+        //remove item form inventory. return those items that were removed.
+        public InventorySlot RemoveItem(int index, int amount = -1)
         {
-            if (inventoryItems.Count > index)
+            if (inventorySlots.Count > index)
             {
-                int newAmount = (amount == -1) ? 0 : inventoryItems[index].quantity - amount;
-                int difAmount = (amount == -1) ? inventoryItems[index].quantity : amount;
+                int newAmount = (amount == -1) ? 0 : inventorySlots[index].quantity - amount;
+                int difAmount = (amount == -1) ? inventorySlots[index].quantity : amount;
 
-                InventoryItem returnItem = new() { item = inventoryItems[index].item, quantity = difAmount };
-                inventoryItems[index] = (newAmount <= 0) ? InventoryItem.GetEmptyItem() : inventoryItems[index].ChangeQuantity(newAmount);
+                InventorySlot returnSlot = new() { item = inventorySlots[index].item, quantity = difAmount };
+                inventorySlots[index] = (newAmount <= 0) ? InventorySlot.emptySlot() : inventorySlots[index].ChangeQuantity(newAmount);
 
                 OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
 
-                return returnItem;
+                return returnSlot;
             }
 
-            return InventoryItem.GetEmptyItem();
+            return InventorySlot.emptySlot();
         }
 
-        public InventoryItem AddItemTo(InventoryItem inventoryItem, int index)
+        //add item to another inventory at a specific slot. return those items that can't be added in.
+        public InventorySlot AddItemTo(InventorySlot inventorySlot, int index)
         {
-            return AddItemTo(inventoryItem.item, inventoryItem.quantity, index);
+            return AddItemTo(inventorySlot.item, inventorySlot.quantity, index);
         }
 
-        public InventoryItem AddItemTo(ItemSO item, int quantity, int index)
+        //add item to inventory at a specific slot. return those items that can't be added in.
+        public InventorySlot AddItemTo(ItemSO item, int quantity, int index)
         {
             for (; quantity > 0; quantity--)
             {
                 bool isSlotFull = true;
 
-                if (inventoryItems[index].item == null || (inventoryItems[index].item.ID == item.ID && inventoryItems[index].quantity < inventoryItems[index].item.MaxStackSize))
+                if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.MaxStackSize))
                 {
-                    inventoryItems[index] = new() { item = item, quantity = inventoryItems[index].quantity + 1 };
+                    inventorySlots[index] = new() { item = item, quantity = inventorySlots[index].quantity + 1 };
                     isSlotFull = false;
                 }
 
@@ -106,25 +113,27 @@ namespace Inventory.Model
                 else continue;
             }
 
-            return InventoryItem.GetEmptyItem();
+            return InventorySlot.emptySlot();
         }
 
-        public InventoryItem AddItem(InventoryItem inventoryItem)
+        //add item to another inventory. return those items that can't be added in.
+        public InventorySlot AddItem(InventorySlot inventorySlot)
         {
-            return AddItem(inventoryItem.item, inventoryItem.quantity);
+            return AddItem(inventorySlot.item, inventorySlot.quantity);
         }
 
-        public InventoryItem AddItem(ItemSO item, int quantity)
+        //add item to inventory. return those items that can't be added in.
+        public InventorySlot AddItem(ItemSO item, int quantity)
         {
             for (; quantity > 0; quantity--)
             {
                 bool isInventoryFull = true;
 
-                for (int index = 0; index < inventoryItems.Count; index++)
+                for (int index = 0; index < inventorySlots.Count; index++)
                 {
-                    if (inventoryItems[index].item == null || (inventoryItems[index].item.ID == item.ID && inventoryItems[index].quantity < inventoryItems[index].item.MaxStackSize))
+                    if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.MaxStackSize))
                     {
-                        inventoryItems[index] = new() { item = item, quantity = inventoryItems[index].quantity + 1 };
+                        inventorySlots[index] = new() { item = item, quantity = inventorySlots[index].quantity + 1 };
                         isInventoryFull = false;
                         break;
                     }
@@ -136,24 +145,25 @@ namespace Inventory.Model
                 else continue;
             }
 
-            return InventoryItem.GetEmptyItem();
+            return InventorySlot.emptySlot();
         }
     }
 
     [Serializable]
-    public struct InventoryItem
+    public struct InventorySlot
     {
-        public int quantity;
         public ItemSO item;
+        public int quantity;
+        
         public bool IsEmpty => item == null;
 
-        public InventoryItem ChangeQuantity(int newQuantity) => new InventoryItem
+        public InventorySlot ChangeQuantity(int newQuantity) => new()
         {
             item = this.item,
             quantity = newQuantity,
         };
 
-        public static InventoryItem GetEmptyItem() => new InventoryItem
+        public static InventorySlot emptySlot() => new()
         {
             item = null,
             quantity = 0,

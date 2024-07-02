@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory.UI
+namespace UserInterface
 {
     public class ItemActionPanel : MonoBehaviour
     {
