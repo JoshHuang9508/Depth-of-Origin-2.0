@@ -4,33 +4,50 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour, Damageable
 {
     [Header("Stats")]
-    [SerializeField] private float health, shieldHealth;
+    [SerializeField] private float health;
+    [SerializeField] private float shieldHealth;
 
     [Header("Setting")]
     public EnemySO enemy;
+
+    [Header("Weapon")]
+    [SerializeField] private WeaponSO currentWeapon;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deadSound;
 
+    [Header("Reference")]
+    [SerializeField] private Rigidbody2D currentRb;
+    [SerializeField] private SpriteRenderer entitySprite;
+    [SerializeField] private SpriteRenderer weaponSprite;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject damageText;
+    [SerializeField] private GameObject itemDropper;
+
     //Runtime data
-    private bool canActive = true;
     private PlayerBehaviour player;
     private GameObject target;
-
+    private Vector2 currentPos;
+    private Vector2 targetPos;
+    private Vector2 diraction;
+    private float facingAngle;
     private float noMoveTimer = 0;
     private float noAttackTimer = 0;
     private float noDamageTimer = 0;
     private float noDodgeTimer = 0;
     private float isHitTimer = 0;
 
-    [Header("Reference")]
-    [SerializeField] private Rigidbody2D currentRb;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Animator animator;
-    [SerializeField] private GameObject damageText;
-    [SerializeField] private GameObject itemDropper;
+    public bool haveShield { get; private set; }
+    public bool canActive { get; private set; }
+    public bool canMove { get; private set; }
+    public bool canAttack { get; private set; }
+    public bool canBeDamaged { get; private set; }
+    public bool canSprint { get; private set; }
+    public bool canHeal { get; private set; }
+    public bool isWalkSpeedMutiply { get; private set; }
+    public bool isHit { get; private set; }
 
     public float Health
     {
@@ -72,33 +89,21 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         {
             shieldHealth = Mathf.Max(0, value);
 
-            if(shieldHealth <= 0) HaveShield = false;
+            if(shieldHealth <= 0) haveShield = false;
 
-            if (shieldHealth > 0) HaveShield = true;
+            if (shieldHealth > 0) haveShield = true;
         }
     }
-    public bool HaveShield { get; private set; }
-    public bool CanMove { get; private set; }
-    public bool CanAttack { get; private set; }
-    public bool CanBeDamaged { get; private set; }
-    public bool CanDodge { get; private set; }
-    public bool IsHit { get; private set; }
-    public Vector2 CurrentPos { get; private set; }
-    public Vector2 TargetPos { get; private set; }
-    public Vector2 Diraction { get; private set; }
-
-    public delegate void EnemyAttack();
-    public event EnemyAttack OnAttack;
-
-
 
     private void Start()
     {
         audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
 
-        health = enemy.health;
-        shieldHealth = enemy.shieldHealth;
-        HaveShield = enemy.haveShield;
+        health = enemy.maxHealth;
+        shieldHealth = enemy.maxShieldHealth;
+        haveShield = enemy.haveShield;
+        currentWeapon = enemy.weapon;
+        canActive = true;
 
         if (enemy.isBoss) gameObject.tag = "Boss";
     }
@@ -115,42 +120,53 @@ public class EnemyBehavior : MonoBehaviour, Damageable
             Debug.LogWarning("Can't find player (sent by enemyBehaviour.cs)");
         }
 
-        if (!canActive) return;
-
-        if (player != null)
-        {
-            CurrentPos = transform.position;
-            TargetPos = target.transform.position;
-            Diraction = (TargetPos - CurrentPos).normalized;
-        }
-
-        animator.enabled = !IsHit;
-
-        //actions
-        if (CanMove) Moving();
-        if(CanAttack) Attacking();
+        animator.enabled = !isHit;
 
         //update timer
         UpdateTimer();
+        if(player != null) UpdateDirection();
+
+        //actions
+        if (canActive)
+        {
+            if (canMove) Moving();
+            if (canAttack && Vector3.Distance(targetPos, currentPos) < enemy.attackField)
+            {
+                if (currentWeapon != null)
+                {
+                    noAttackTimer += currentWeapon.attackCooldown;
+                    Attacking();
+                }
+            }
+        }
     }
 
     private void Moving()
     {
-        spriteRenderer.flipX = (CurrentPos.x - TargetPos.x) > 0.2;
+        entitySprite.flipX = (currentPos.x - targetPos.x) > 0.2;
 
         switch (enemy.walkType)
         {
             case EnemySO.WalkType.Melee:
 
-                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.chaseField)
+                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField && Vector3.Distance(targetPos, currentPos) > enemy.attackField)
                 {
-                    currentRb.MovePosition(CurrentPos + enemy.moveSpeed * Time.deltaTime * Diraction);
+                    currentRb.MovePosition(currentPos + enemy.walkSpeed * Time.deltaTime * diraction);
 
                     animator.SetBool("ismove", true);
                     animator.SetBool("ischase", true);
                 }
-                else if (Vector3.Distance(TargetPos, CurrentPos) > enemy.chaseField)
+                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
                 {
+                    currentRb.velocity = Vector2.zero;
+
+                    animator.SetBool("ismove", false);
+                    animator.SetBool("ischase", false);
+                }
+                else if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField && Vector3.Distance(targetPos, currentPos) < enemy.attackField)
+                {
+                    currentRb.velocity = Vector2.zero;
+
                     animator.SetBool("ismove", false);
                     animator.SetBool("ischase", false);
                 }
@@ -158,14 +174,14 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
             case EnemySO.WalkType.Sniper:
 
-                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.chaseField)
+                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField)
                 {
-                    currentRb.MovePosition(CurrentPos - enemy.moveSpeed * Time.deltaTime * Diraction);
+                    currentRb.MovePosition(currentPos - enemy.walkSpeed * Time.deltaTime * diraction);
 
                     animator.SetBool("ismove", true);
                     animator.SetBool("ischase", true);
                 }
-                else if (Vector3.Distance(TargetPos, CurrentPos) > enemy.chaseField)
+                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
                 {
                     currentRb.velocity = Vector2.zero;
 
@@ -182,54 +198,95 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
     private void Attacking()
     {
-        switch (enemy.attackType)
+        WeaponSO weapon = currentWeapon;
+
+        if (weapon == null) return;
+
+        for (var i = weaponSprite.gameObject.transform.childCount - 1; i >= 0; i--)
         {
-            case EnemySO.AttackType.Melee:
+            Destroy(weaponSprite.gameObject.transform.GetChild(i).gameObject);
+        }
 
-                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.attackField)
-                {
-                    Damageable damageableObject = target.GetComponent<Damageable>();
+        if (weapon is MeleeWeaponSO)
+        {
+            MeleeWeaponSO meleeWeapon = weapon as MeleeWeaponSO;
 
-                    if(damageableObject != null)
+            var sword = Instantiate(
+                meleeWeapon.weaponObject,
+                weaponSprite.gameObject.transform.position,
+                Quaternion.identity,
+                weaponSprite.gameObject.transform
+                ).GetComponent<MeleeWeapon>();
+
+            sword.target = Target.player;
+            sword.weapon = meleeWeapon;
+            sword.strength = enemy.strength;
+            sword.critRate = enemy.critRate;
+            sword.critDamage = enemy.critDamage;
+            sword.isflip = diraction.x < 0;
+
+            weaponSprite.gameObject.transform.rotation = Quaternion.Euler(0, 0, facingAngle - 90);
+        }
+        else if (weapon is RangedWeaponSO)
+        {
+            RangedWeaponSO rangedWeapon = weapon as RangedWeaponSO;
+
+            switch (rangedWeapon.shootingType)
+            {
+                case RangedWeaponSO.ShootingType.Single:
+
+                    var projectile = Instantiate(
+                        rangedWeapon.projectileObject,
+                        weaponSprite.gameObject.transform.position,
+                        Quaternion.Euler(0, 0, facingAngle - 90),
+                        GameObject.FindWithTag("Item").transform
+                        ).GetComponent<RangedWeapon>();
+
+                    projectile.target = Target.player;
+                    projectile.weapon = rangedWeapon;
+                    projectile.strength = enemy.strength;
+                    projectile.critRate = enemy.critRate;
+                    projectile.critDamage = enemy.critDamage;
+                    projectile.startAngle = Quaternion.Euler(0, 0, facingAngle);
+                    break;
+
+                case RangedWeaponSO.ShootingType.Split:
+
+                    for (int i = -60 + (120 / (rangedWeapon.splitAmount + 1)); i < 60; i += 120 / (rangedWeapon.splitAmount + 1))
                     {
-                        damageableObject.OnHit(enemy.attackDamage, false, Diraction * enemy.knockbackForce, enemy.knockbackTime);
+                        var projectile_split = Instantiate(
+                            rangedWeapon.projectileObject,
+                            weaponSprite.gameObject.transform.position,
+                            Quaternion.Euler(0, 0, facingAngle + i - 90),
+                            GameObject.FindWithTag("Item").transform
+                            ).GetComponent<RangedWeapon>(); ;
 
-                        noAttackTimer += enemy.attackSpeed;
-                        noMoveTimer += enemy.attackSpeed;
-
-                        if(OnAttack != null) OnAttack.Invoke();
+                        projectile_split.target = Target.enemy;
+                        projectile_split.weapon = rangedWeapon;
+                        projectile_split.strength = enemy.strength;
+                        projectile_split.critRate = enemy.critRate;
+                        projectile_split.critDamage = enemy.critDamage;
+                        projectile_split.startAngle = Quaternion.Euler(0, 0, facingAngle + i);
                     }
-                }
-                break;
-
-            case EnemySO.AttackType.Sniper:
-
-                if (Vector3.Distance(TargetPos, CurrentPos) < enemy.attackField)
-                {
-                    enemy.Attack_Ranged(Mathf.Atan2(Diraction.y, Diraction.x) * Mathf.Rad2Deg, transform.position + new Vector3(0, 0.5f, 0));
-
-                    noAttackTimer += enemy.attackSpeed;
-
-                    if (OnAttack != null) OnAttack.Invoke();
-                }
-                break;
+                    break;
+            }
         }
     }
 
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!CanBeDamaged || !canActive) return;
+        if (!canBeDamaged) return;
 
         float localDamage = damage / (1 + (0.001f * enemy.defence));
         Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
         float localKnockbackTime = knockbackTime / (1 + (0.001f * enemy.defence));
 
-        if (HaveShield)
+        if (haveShield)
         {
             //update shield health
             ShieldHealth -= localDamage;
         }
-        else if (!HaveShield)
+        else if (!haveShield)
         {
             //update heath
             Health -= localDamage;
@@ -261,12 +318,20 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         noDodgeTimer = Mathf.Max(0, noDodgeTimer - Time.deltaTime);
         isHitTimer = Mathf.Max(0, isHitTimer - Time.deltaTime);
 
-        CanMove = noMoveTimer <= 0;
-        CanAttack = noAttackTimer <= 0;
-        CanBeDamaged = noDamageTimer <= 0;
-        CanDodge = noDodgeTimer <= 0;
-        IsHit = !(isHitTimer <= 0);
+        canMove = noMoveTimer <= 0;
+        canAttack = noAttackTimer <= 0;
+        canBeDamaged = noDamageTimer <= 0;
+        //canDodge = noDodgeTimer <= 0;
+        isHit = !(isHitTimer <= 0);
 
         return true;
+    }
+
+    private void UpdateDirection()
+    {
+        currentPos = transform.position;
+        targetPos = target.transform.position;
+        diraction = (targetPos - currentPos).normalized;
+        facingAngle = Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg;
     }
 }

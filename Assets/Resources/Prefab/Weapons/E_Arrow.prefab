@@ -355,6 +355,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7743498473900126501}
   thisCollider: {fileID: 7300832798547735004}
   trail: {fileID: 2734921202828150837}
+  ignoreWalls: 0
   rangedWeapon: {fileID: 0}
   enemyData: {fileID: 0}
   audioPlayer: {fileID: 0}

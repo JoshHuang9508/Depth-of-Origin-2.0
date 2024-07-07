@@ -17,13 +17,13 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public List<Key> keyList = new();
     public List<Effection> effectionList = new();
 
-    [Header("Setting")]
-    [SerializeField] private float B_WalkSpeed;
-    [SerializeField] private float B_MaxHealth;
-    [SerializeField] private float B_Strength;
-    [SerializeField] private float B_Defence;
-    [SerializeField] private float B_CritRate;
-    [SerializeField] private float B_CritDamage;
+    [Header("Attributes Setting")]
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float strength;
+    [SerializeField] private float defence;
+    [SerializeField] private float critRate;
+    [SerializeField] private float critDamage;
 
     [Header("Key Settings")]
     public KeyCode sprintKey;
@@ -38,12 +38,12 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [SerializeField] private WeaponSO currentWeapon;
 
     [Header("Effection")]
-    [SerializeField] private float E_WalkSpeed;
-    [SerializeField] private float E_MaxHealth;
-    [SerializeField] private float E_Strength;
-    [SerializeField] private float E_Defence;
-    [SerializeField] private float E_CritRate;
-    [SerializeField] private float E_CritDamage;
+    [SerializeField] private float maxHealth_e;
+    [SerializeField] private float walkSpeed_e;
+    [SerializeField] private float strength_e;
+    [SerializeField] private float defence_e;
+    [SerializeField] private float critRate_e;
+    [SerializeField] private float critDamage_e;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioPlayer;
@@ -69,6 +69,10 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     //Runtime data
     private GameObject dialog;
     private TMP_Text dialogText;
+    private Vector2 mousePos;
+    private Vector2 currentPos;
+    private Vector2 diraction;
+    private float facingAngle;
     private float noMoveTimer = 0;
     private float noAttackTimer = 0;
     private float noDamageTimer = 0;
@@ -77,17 +81,12 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     private float noHealTimer = 0;
     private float isHitTimer = 0;
 
-    public float WalkSpeed { get { return B_WalkSpeed * ((100 + E_WalkSpeed) / 100); } }
-    public float MaxHealth { get { return B_MaxHealth + E_MaxHealth; } }
-    public float Strength { get { return B_Strength + E_Strength; } }
-    public float Defence { get { return B_Defence + E_Defence; } }
-    public float CritRate { get { return B_CritRate + E_CritRate; } }
-    public float CritDamage { get { return B_CritDamage + E_CritDamage; } }
-
-    public Vector2 mousePos { get; private set; }
-    public Vector2 currentPos { get; private set; }
-    public Vector2 diraction { get; private set; }
-    public float facingAngle { get; private set; }
+    public float MaxHealth { get { return maxHealth + maxHealth_e; } }
+    public float WalkSpeed { get { return walkSpeed * ((100 + walkSpeed_e) / 100); } }
+    public float Strength { get { return strength + strength_e; } }
+    public float Defence { get { return defence + defence_e; } }
+    public float CritRate { get { return critRate + critRate_e; } }
+    public float CritDamage { get { return critDamage + critDamage_e; } }
 
     public bool canActive { get; private set; }
     public bool canMove { get; private set; }
@@ -121,7 +120,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
     }
 
-    private void Awake()
+    private void Start()
     {
         health = MaxHealth;
         canActive = true;
@@ -137,8 +136,6 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     
     private void Update()
     {
-        if(!canActive) return;
-
         animator.SetBool("isHit", isHit);
 
         //update timer
@@ -150,34 +147,37 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         UpdateMousePos();
 
         //actions
-        if (canHeal && health != MaxHealth) Heal();
-        if (canMove) Moving();
-        if (Input.GetKeyDown(sprintKey) && canSprint && canMove) Sprint();
-        if (Input.GetKeyDown(meleeWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
-        if (Input.GetKeyDown(rangedWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
-        if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
+        if (canActive)
         {
-            SetEffection(equipmentData.GetItemAt(5).item as PotionSO);
-            equipmentData.RemoveItem(5, 1);
-        } 
-        if (Input.GetKeyDown(backpackKey))
-        {
-            inventoryUI.SetActive(!inventoryUI.activeInHierarchy);
-            //***
-            Time.timeScale = inventoryUI.activeInHierarchy ? 0 : 1;
-        }
-        if (Input.GetKey(useWeaponKey) && canAttack)
-        {
-            if(currentWeapon != null)
+            if (canHeal && health != MaxHealth) Heal();
+            if (canMove) Moving();
+            if (canSprint && canMove && Input.GetKeyDown(sprintKey)) Sprint();
+            if (Input.GetKeyDown(meleeWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
+            if (Input.GetKeyDown(rangedWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
+            if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
             {
-                noAttackTimer += currentWeapon.attackCooldown;
-                Attacking();
+                SetEffection(equipmentData.GetItemAt(5).item as PotionSO);
+                equipmentData.RemoveItem(5, 1);
             }
+            if (Input.GetKeyDown(backpackKey))
+            {
+                inventoryUI.SetActive(!inventoryUI.activeInHierarchy);
+                //***
+                Time.timeScale = inventoryUI.activeInHierarchy ? 0 : 1;
+            }
+            if (canAttack && Input.GetKey(useWeaponKey))
+            {
+                if (currentWeapon != null)
+                {
+                    noAttackTimer += currentWeapon.attackCooldown;
+                    Attacking();
+                }
+            }
+            //if (Input.GetKeyDown(KeyCode.Escape))
+            //{
+            //    pauseUI.SetActive(true);
+            //}
         }
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    pauseUI.SetActive(true);
-        //}
     }
 
 
@@ -202,16 +202,19 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         {
             MeleeWeaponSO meleeWeapon = weapon as MeleeWeaponSO;
 
-            var meleeWeaponSummoned = Instantiate(
+            var sword = Instantiate(
                 meleeWeapon.weaponObject,
                 weaponSprite.gameObject.transform.position,
                 Quaternion.identity,
                 weaponSprite.gameObject.transform
-                ).GetComponent<WeaponMovementMelee>();
+                ).GetComponent<MeleeWeapon>();
 
-            meleeWeaponSummoned.weaponData = meleeWeapon;
-            meleeWeaponSummoned.playerData = this;
-            meleeWeaponSummoned.isflip = diraction.x < 0;
+            sword.target = Target.enemy;
+            sword.weapon = meleeWeapon;
+            sword.strength = Strength;
+            sword.critRate = CritRate;
+            sword.critDamage = CritDamage;
+            sword.isflip = diraction.x < 0;
 
             weaponSprite.gameObject.transform.rotation = Quaternion.Euler(0, 0, facingAngle - 90);
         }
@@ -223,32 +226,38 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             {
                 case RangedWeaponSO.ShootingType.Single:
 
-                    var projectileSummoned = Instantiate(
+                    var projectile = Instantiate(
                         rangedWeapon.projectileObject,
                         weaponSprite.gameObject.transform.position,
                         Quaternion.Euler(0, 0, facingAngle - 90),
                         GameObject.FindWithTag("Item").transform
-                        ).GetComponent<WeaponMovementRanged>();
+                        ).GetComponent<RangedWeapon>();
 
-                    projectileSummoned.weaponData = rangedWeapon;
-                    projectileSummoned.playerData = this;
-                    projectileSummoned.startAngle = Quaternion.Euler(0, 0, facingAngle);
+                    projectile.target = Target.enemy;
+                    projectile.weapon = rangedWeapon;
+                    projectile.strength = Strength;
+                    projectile.critRate = CritRate;
+                    projectile.critDamage = CritDamage;
+                    projectile.startAngle = Quaternion.Euler(0, 0, facingAngle);
                     break;
 
                 case RangedWeaponSO.ShootingType.Split:
 
                     for (int i = -60 + (120 / (rangedWeapon.splitAmount + 1)); i < 60; i += 120 / (rangedWeapon.splitAmount + 1))
                     {
-                        var projectileSummoned_split = Instantiate(
+                        var projectile_split = Instantiate(
                             rangedWeapon.projectileObject,
                             weaponSprite.gameObject.transform.position,
                             Quaternion.Euler(0, 0, facingAngle + i - 90),
                             GameObject.FindWithTag("Item").transform
-                            ).GetComponent<WeaponMovementRanged>(); ;
+                            ).GetComponent<RangedWeapon>(); ;
 
-                        projectileSummoned_split.weaponData = rangedWeapon;
-                        projectileSummoned_split.playerData = this;
-                        projectileSummoned_split.startAngle = Quaternion.Euler(0, 0, facingAngle + i);
+                        projectile_split.target = Target.enemy;
+                        projectile_split.weapon = rangedWeapon;
+                        projectile_split.strength = Strength;
+                        projectile_split.critRate = CritRate;
+                        projectile_split.critDamage = CritDamage;
+                        projectile_split.startAngle = Quaternion.Euler(0, 0, facingAngle + i);
                     }
                     break;
             }
@@ -307,12 +316,13 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         SetDamageText(transform.position, localDamage, "PlayerHit");
 
         //camera shake
-        CameraController camera = GameObject.FindWithTag("MainCamera").GetComponentInParent<CameraController>();
+        MainCamera camera = GameObject.FindWithTag("MainCamera").GetComponentInParent<MainCamera>();
         StartCoroutine(camera.Shake(0.1f, 0.2f));
 
         //set timer
         noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
         noHealTimer = 20;
+        noDamageTimer += 0.2f;
     }
 
 
@@ -325,7 +335,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     private void UpdateStates()
     {
         //update player statistics
-        string[] attributes = { "E_walkSpeed", "E_maxHealth", "E_strength", "E_defence", "E_critRate", "E_critDamage" };
+        string[] attributes = { "E_maxHealth", "E_walkSpeed", "E_strength", "E_defence", "E_critRate", "E_critDamage" };
         List<object> items = new() { equipmentData.GetItemAt(0).item, equipmentData.GetItemAt(1).item, equipmentData.GetItemAt(2).item, currentWeapon };
         float[] results = new float[attributes.Length];
 
@@ -346,12 +356,12 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             i++;
         }
 
-        E_WalkSpeed = results[0];
-        E_MaxHealth = results[1];
-        E_Strength = results[2];
-        E_Defence = results[3];
-        E_CritRate = results[4];
-        E_CritDamage = results[5];
+        maxHealth_e = results[0];
+        walkSpeed_e = results[1];
+        strength_e = results[2];
+        defence_e = results[3];
+        critRate_e = results[4];
+        critDamage_e = results[5];
 
         //check overhealing
         if (health > MaxHealth) health = MaxHealth;
@@ -552,12 +562,8 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
         //disable player object
         currentRb.bodyType = RigidbodyType2D.Static;
-        SetActive(false);
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            child.gameObject.SetActive(false);
-        }
+        characterSprite.enabled = false;
+        canActive = false;
 
         //drop item
         List<int> dropItemIndexList = new();
@@ -581,12 +587,8 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         //enable player object
         health = MaxHealth;
         currentRb.bodyType = RigidbodyType2D.Dynamic;
-        SetActive(true);
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            child.gameObject.SetActive(true);
-        }
+        characterSprite.enabled = true;
+        canActive = true;
     }
 
     public void DropItem(InventorySO inventory ,int index, int quantity)

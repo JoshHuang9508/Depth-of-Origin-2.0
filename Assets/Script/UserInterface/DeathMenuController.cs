@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class DeathMenuController : MonoBehaviour
 {
@@ -23,18 +24,17 @@ public class DeathMenuController : MonoBehaviour
         }
     }
 
-    public void RespawnBtnClicked()
+    public async void RespawnBtnClicked()
     {
-        player.RevivePlayer();
         sceneLoader_town.Load();
-
         PlayerPrefs.SetInt("loadscene", 4);
+
+        await Task.Delay(2000);
+        player.RevivePlayer();
     }
 
-    public void TitleBtnClicked()
+    public async void TitleBtnClicked()
     {
         sceneLoader_title.Load();
-
-        SceneManager.LoadScene("Loading");
     }
 }

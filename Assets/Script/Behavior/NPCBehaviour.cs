@@ -34,7 +34,6 @@ public class NPCBehaviour : MonoBehaviour, Damageable
     void Update()
     {
         currentPos = transform.position;
-        
 
         //update timer
         UpdateTimer();

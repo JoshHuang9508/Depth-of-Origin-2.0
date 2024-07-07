@@ -1,34 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(fileName = "new enemy", menuName = "Enemy")]
 public class EnemySO : ScriptableObject
 {
-    [Header("Basic Data")]
+    [Header("Name")]
     public string Name;
-    public float health;
+
+    [Header("Attributes Setting")]
+    public float maxHealth;
+    public float walkSpeed;
     public bool haveShield;
-    public float shieldHealth;
-    public float moveSpeed;
+    public float maxShieldHealth;
+    public float strength;
     public float defence;
-    public float attackSpeed;
-    public float attackDamage;
+    public float critRate;
+    public float critDamage;
     public float chaseField;
     public float attackField;
-    public float knockbackForce;
-    public float knockbackTime;
+    public bool isBoss;
 
     [Header("Setting")]
-    public bool isBoss;
     public WalkType walkType;
     public AttackType attackType;
     public Difficulty difficulty = Difficulty.Easy;
 
-    [Header("Setting(Ranged)")]
-    public GameObject projectile;
+    [Header("Weapon")]
+    public WeaponSO weapon;
+    public WeaponSO projectile;
     public ShootingType shootingType;
     public float projectileFlySpeed;
 
@@ -38,7 +38,7 @@ public class EnemySO : ScriptableObject
     public List<GameObject> wreckage;
 
     [Header("Reference")]
-    public GameObject EnemyObject;
+    public GameObject enemyObject;
     public int angleOffset;
 
     public enum Difficulty
@@ -62,7 +62,7 @@ public class EnemySO : ScriptableObject
     }
 
 
-    public void Attack_Ranged(float startAngle, Vector3 startPosition)
+    /*public void Attack_Ranged(float startAngle, Vector3 startPosition)
     {
         switch (shootingType)
         {
@@ -89,12 +89,12 @@ public class EnemySO : ScriptableObject
     private void SummonArrow(Vector3 position, float angle)
     {
         var ArrowSummoned = Instantiate(
-                        projectile,
-                        position,
-                        Quaternion.Euler(0, 0, angle - 90),
-                        GameObject.FindWithTag("Item").transform);
+            projectile,
+            position,
+            Quaternion.Euler(0, 0, angle - 90),
+            GameObject.FindWithTag("Item").transform);
 
-        ArrowSummoned.GetComponent<ProjectileMovement_Enemy>().startAngle = Quaternion.Euler(0, 0, angle + angleOffset);
-        ArrowSummoned.GetComponent<ProjectileMovement_Enemy>().enemyData = this;
-    }
+        ArrowSummoned.GetComponent<Projectile>().startAngle = Quaternion.Euler(0, 0, angle + angleOffset);
+        ArrowSummoned.GetComponent<Projectile>().enemyData = this;
+    }*/
 }

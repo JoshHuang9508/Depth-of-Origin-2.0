@@ -74,9 +74,9 @@ public class IntroScene : MonoBehaviour
     };
 
     [Header("Reference")]
-    [SerializeField] private ChestController meleeWeaponChest;
-    [SerializeField] private ChestController rangedWeaponChest;
-    [SerializeField] private ChestController potionChest;
+    [SerializeField] private Chest meleeWeaponChest;
+    [SerializeField] private Chest rangedWeaponChest;
+    [SerializeField] private Chest potionChest;
     [SerializeField] private Collider2D trigger1;
     [SerializeField] private Collider2D trigger2;
     [SerializeField] private Collider2D trigger3;
@@ -140,13 +140,13 @@ public class IntroScene : MonoBehaviour
         potionChest.GetComponent<Interactable>().interactable = true;
         await IsChestOpen(potionChest);
         await player.SetDialog(dialog7);
-        SpawnerController.SpawnMob(position, enemy);
+        Spawner.SpawnMob(position, enemy);
 
         await IsTriggered(trigger3);
         await player.SetDialog(dialog8);
     }
 
-    private async Task IsChestOpen(ChestController chest)
+    private async Task IsChestOpen(Chest chest)
     {
         while (!chest.isOpen)
         {

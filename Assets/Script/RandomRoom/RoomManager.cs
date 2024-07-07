@@ -41,7 +41,7 @@ public class RoomManager : MonoBehaviour
         {
             if (rooms[^i] != null)
             {
-                SpawnerController.SpawnMob(rooms[^i].transform.position, boss);
+                Spawner.SpawnMob(rooms[^i].transform.position, boss);
 
                 var _teleportEntry = Instantiate(
                     teleportEntry,

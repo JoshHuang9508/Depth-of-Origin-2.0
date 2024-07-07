@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: Easy Big Demon
   m_EditorClassIdentifier: 
   Name: BigDemon
-  health: 100
+  maxHealth: 100
+  walkSpeed: 0
   haveShield: 0
-  shieldHealth: 0
-  moveSpeed: 4
+  maxShieldHealth: 0
+  strength: 0
   defence: 0
-  attackSpeed: 1
-  attackDamage: 5
+  critRate: 0
+  critDamage: 0
   chaseField: 10
   attackField: 0.8
-  knockbackForce: 5
-  knockbackTime: 0.3
   isBoss: 1
   walkType: 0
   attackType: 0
   difficulty: 0
+  weapon: {fileID: 4857680875645216774, guid: 91aa8beedc05d9243b97995866405f0a, type: 3}
   projectile: {fileID: 4857680875645216774, guid: dfc8f3167d1dd443faee5d6dae255b51, type: 3}
   shootingType: 2
   projectileFlySpeed: 15
@@ -43,5 +43,5 @@ MonoBehaviour:
     chance: 20
   wreckage:
   - {fileID: 6210577483765107436, guid: d131c40cbb94cbc44b82983c8f03af13, type: 3}
-  EnemyObject: {fileID: 2376734355973025706, guid: 3a34748eac96bf94e951cbbb55081f31, type: 3}
+  enemyObject: {fileID: 2376734355973025706, guid: 3a34748eac96bf94e951cbbb55081f31, type: 3}
   angleOffset: 0
