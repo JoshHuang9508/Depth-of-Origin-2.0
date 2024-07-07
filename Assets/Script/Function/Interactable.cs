@@ -52,7 +52,11 @@ public class Interactable : MonoBehaviour
         if(player != null)
         {
             CheckPlayerInRange();
-            SetHintText();
+
+            if (interactable)
+            {
+                SetHintText();
+            }
         }
     }
 
@@ -150,7 +154,7 @@ public class Interactable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (player != null && collision.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
             leaveRangeAction.Invoke();

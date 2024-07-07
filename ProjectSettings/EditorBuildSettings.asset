@@ -9,52 +9,58 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 3070e27ac9d606043a0045b574e7dca7
   - enabled: 1
-    path: Assets/Scenes/TransitionScene.unity
+    path: Assets/Scenes/Load.unity
+    guid: 7b67d26a6c584fc43b2621a16b062235
+  - enabled: 1
+    path: Assets/Scenes/Cutscene.unity
     guid: df0e0c2c6fbe713459edfa2d29d292d2
   - enabled: 1
-    path: Assets/Scenes/InstructionScene.unity
+    path: Assets/Scenes/Intro.unity
     guid: fc2b25fe508b0f84fb73c0920809ef8b
   - enabled: 1
     path: Assets/Scenes/Town.unity
     guid: bf13e470ae452aa4e9b33439cfbb02c0
   - enabled: 1
-    path: Assets/Scenes/1st The Abyss of Maleficarum.unity
+    path: Assets/Scenes/1st_TheAbyssOfMaleficarum.unity
     guid: 3000045bdd8f24e449f9e3124012ca95
   - enabled: 1
-    path: Assets/Scenes/2nd The Abyss of Maleficarum.unity
+    path: Assets/Scenes/2nd_TheAbyssOfMaleficarum.unity
     guid: 83d61f522d5c8bf4c85717bca208c862
   - enabled: 1
-    path: Assets/Scenes/3rd The Abyss of Maleficarum.unity
+    path: Assets/Scenes/3rd_TheAbyssOfMaleficarum.unity
     guid: 05dad3436c7446249a918dcdb2ac1632
   - enabled: 1
-    path: Assets/Scenes/Boss Room The Abyss of Maleficarum.unity
+    path: Assets/Scenes/BossRoom_TheAbyssOfMaleficarum.unity
     guid: 0ac0c607f92503b4894cdc290f0668e3
   - enabled: 1
-    path: Assets/Scenes/Dungeon2_Floor1.unity
+    path: Assets/Scenes/1st_ TheMurkyDepthsOfTheSlimeSewers.unity
     guid: 93347479585a731488dd9242d41e8bfb
   - enabled: 1
-    path: Assets/Scenes/Dungeon2_Floor2.unity
+    path: Assets/Scenes/2nd_ TheMurkyDepthsOfTheSlimeSewers.unity
     guid: 9cfacaa769d2a4d4a92ca728536baa28
   - enabled: 1
-    path: Assets/Scenes/Dungeon2_Floor3.unity
+    path: Assets/Scenes/3rd_ TheMurkyDepthsOfTheSlimeSewers.unity
     guid: 483d7102e80d02048831c2417204ea9d
   - enabled: 1
-    path: Assets/Scenes/Dungeon2_Floor4.unity
+    path: Assets/Scenes/BossRoom_ TheMurkyDepthsOfTheSlimeSewers.unity
     guid: d11f6ee656a7fef48a459169567721d1
   - enabled: 1
-    path: Assets/Scenes/Dungeon3_Floor1.unity
+    path: Assets/Scenes/1st_PyramidOfTheSacredStatue.unity
     guid: e36a01af4b863a442b47cf9a396fa5a5
   - enabled: 1
-    path: Assets/Scenes/Dungeon3_Floor2.unity
+    path: Assets/Scenes/2nd_PyramidOfTheSacredStatue.unity
     guid: 774b4b8b2d2151442baf480f96ad4506
   - enabled: 1
-    path: Assets/Scenes/Dungeon3_Floor3.unity
+    path: Assets/Scenes/3rd_PyramidOfTheSacredStatue.unity
     guid: ec3ca0743666eec44963f6bfc4c3ba8c
   - enabled: 1
-    path: Assets/Scenes/Dungeon3_Floor4.unity
+    path: Assets/Scenes/BossRoom_PyramidOfTheSacredStatue.unity
     guid: ea8efbda01fe3d3419eb1800ab9a533d
   - enabled: 1
-    path: Assets/Scenes/OutroTransitionScene.unity
+    path: Assets/Scenes/Outro.unity
     guid: ece583a38bf6a1e46bd9f65b901370b5
+  - enabled: 1
+    path: Assets/Scenes/RandomRoomTest.unity
+    guid: a4742704c1340804cbf843b073fd926e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

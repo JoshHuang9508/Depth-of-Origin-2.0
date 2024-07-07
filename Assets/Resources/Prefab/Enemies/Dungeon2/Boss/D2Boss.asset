@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194b6416e2c41514984d0126cd02fd2e, type: 3}
+  m_Name: D2Boss
+  m_EditorClassIdentifier: 
+  Name: Slime King Grum
+  health: 200000
+  haveShield: 0
+  shieldHealth: 0
+  moveSpeed: 5
+  defence: 1100
+  attackSpeed: 1
+  attackDamage: 2000
+  chaseField: 100
+  attackField: 3
+  knockbackForce: 100
+  knockbackTime: 1
+  isBoss: 1
+  walkType: 0
+  attackType: 0
+  difficulty: 4
+  shootingType: 0
+  projectileFlySpeed: 12
+  coins:
+  - coins: {fileID: 11400000, guid: 25fe53387134b4704a58ffd41583d842, type: 2}
+    amount: 3
+  - coins: {fileID: 11400000, guid: eebdb48914b2a472aa1889d85c5ec113, type: 2}
+    amount: 1
+  lootings:
+  - lootings: {fileID: 11400000, guid: 2f5b0132a166748838fdaa2445002f6f, type: 2}
+    chances: 100
+    quantity: 1
+  wreckage: []
+  EnemyObject: {fileID: 5319692153324330543, guid: 5e1043b191eef68409548edaf001cd41, type: 3}
+  projectile: {fileID: 8859390899598628619, guid: 26cc197d2738981458a2e9e481f80bab, type: 3}
+  angleOffset: 0

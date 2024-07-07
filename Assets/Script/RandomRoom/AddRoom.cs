@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AddRoom : MonoBehaviour
 {
-    private RoomTemplate roomTemplate;
+    private RoomManager roomTemplate;
 
     void Start()
     {
-        roomTemplate = GameObject.FindWithTag("RoomTemplates").GetComponent<RoomTemplate>();
+        roomTemplate = GameObject.FindWithTag("RoomTemplates").GetComponent<RoomManager>();
         roomTemplate.rooms.Add(this.gameObject);
     }
 }

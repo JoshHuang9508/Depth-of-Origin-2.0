@@ -5,20 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class DeathMenuController : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    
+    [Header("Reference")]
+    [SerializeField] private SceneLoader sceneLoader_town;
+    [SerializeField] private SceneLoader sceneLoader_title;
+
+    private PlayerBehaviour player;
+
+    private void Update()
+    {
+        try
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by DeathMenuController.cs)");
+        }
+    }
+
     public void RespawnBtnClicked()
     {
-        player.GetComponent<PlayerBehaviour>().RevivePlayer();
+        player.RevivePlayer();
+        sceneLoader_town.Load();
 
         PlayerPrefs.SetInt("loadscene", 4);
-
-        SceneManager.LoadScene("Loading");
     }
 
     public void TitleBtnClicked()
     {
-        PlayerPrefs.SetInt("loadscene", 0);
+        sceneLoader_title.Load();
 
         SceneManager.LoadScene("Loading");
     }

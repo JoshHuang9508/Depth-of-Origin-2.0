@@ -88,9 +88,9 @@ public class Lootings
 {
     public ItemSO looting;
     public int quantity;
-    public float chance;
+    public float chance = 100;
 
-    public Lootings(ItemSO item, float chance, int quantity = 1)
+    public Lootings(ItemSO item, float chance = 100, int quantity = 1)
     {
         this.looting = item;
         this.quantity = quantity;

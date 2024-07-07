@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory;
 
 public class ChestController : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private bool canReopen;
+    public bool isOpen;
+    public bool canReopen;
     [SerializeField] private List<Coins> coins;
     [SerializeField] private List<Lootings> lootings;
 
@@ -14,16 +14,10 @@ public class ChestController : MonoBehaviour
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip openSound;
 
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private Animator animator;
     [SerializeField] public Interactable interactable;
     [SerializeField] private GameObject itemDropper;
-
-    [Header("Dynamic Data")]
-    [SerializeField] private bool isOpen;
-
-    public bool IsChestOpen { get { return isOpen; } }
-
 
 
     void Start()
@@ -36,7 +30,6 @@ public class ChestController : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            interactable.enabled = false;
 
             animator.SetTrigger("Open");
 
@@ -59,7 +52,6 @@ public class ChestController : MonoBehaviour
         if (isOpen && canReopen)
         {
             isOpen = false;
-            interactable.enabled = true;
 
             animator.SetTrigger("Close");
         }

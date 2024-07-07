@@ -17,7 +17,7 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] private bool autoSpawn = true;
     [SerializeField] private float spawnGap = 3;
 
-    [Header("Dynamic Data")]
+    [Header("Runtime Data")]
     [SerializeField] private int spawnTimes;
     [SerializeField] private int stayedMobs;
     [SerializeField] private float spawnTimer = 0;
@@ -55,7 +55,7 @@ public class SpawnerController : MonoBehaviour
         if (collision.CompareTag("Enemy")) stayedMobs--;
     }
 
-    public void SpawnMobs()
+    private void SpawnMobs()
     {
         //detect spawn restrict
         if (spawnEnabler && (stayedMobs < mobsStayedLimit || mobsStayedLimit == -1) && (spawnTimesLimit > spawnTimes || spawnTimesLimit == -1) &&
@@ -106,6 +106,17 @@ public class SpawnerController : MonoBehaviour
             //spawn delay
             spawnEnabler = true;
         }
+    }
+
+    public static void SpawnMob(Vector3 spawnPos, EnemySO enemy)
+    {
+        //spawn mobs
+        var spawnMob = Instantiate(
+            enemy.EnemyObject,
+            spawnPos,
+            Quaternion.identity,
+            GameObject.FindWithTag("Entity").transform);
+        spawnMob.GetComponent<EnemyBehavior>().enemy = enemy;
     }
 
     private bool DetectBlankAreas(Vector2 areaCenter, Vector2 areaSize, float cellSize)

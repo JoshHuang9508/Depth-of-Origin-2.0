@@ -17,6 +17,7 @@ public class BossHealthBarDisplay : MonoBehaviour
     [SerializeField] private GameObject shieldBar;
 
     //Runtime data
+    private PlayerBehaviour player;
     private EnemyBehavior boss;
 
     void Update()
@@ -27,10 +28,19 @@ public class BossHealthBarDisplay : MonoBehaviour
         }
         catch
         {
-
+            //Debug.Log("No boss detected.");
         }
 
-        if(boss != null)
+        try
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by BossHealthBarDisplay.cs)");
+        }
+
+        if (boss != null && Vector3.Distance(player.transform.position, boss.transform.position) <= 15)
         {
             SetVisiable(true);
             SetDisplay();

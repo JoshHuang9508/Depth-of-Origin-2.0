@@ -5,24 +5,19 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [Header("Setting")]
-    [SerializeField] private bool canReopen;
+    public bool isOpen;
+    public bool canReopen;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
 
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private Animator animator;
     [SerializeField] private BoxCollider2D BoxCollider2D;
-    [SerializeField] private Interactable interactable;
 
-    [Header("Dynamic Data")]
-    [SerializeField] private bool isOpen;
-
-
-
-    void Start()
+    private void Start()
     {
         audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
     }
@@ -32,7 +27,6 @@ public class DoorController : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            interactable.enabled = false;
             BoxCollider2D.enabled = false;
 
             animator.SetTrigger("Open");
@@ -46,7 +40,6 @@ public class DoorController : MonoBehaviour
         if (isOpen && canReopen)
         {
             isOpen = false;
-            interactable.enabled = true;
             BoxCollider2D.enabled = true;
 
             animator.SetTrigger("Close");

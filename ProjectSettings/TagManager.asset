@@ -20,12 +20,12 @@ TagManager:
   - WorldEdge
   - Boss
   - AudioPlayer
-  - Test
   - Room
   - RoomSpawnPoint
   - RoomTemplates
   - RoomStart
-  - Transition
+  - SceneControl
+  - Load
   layers:
   - Default
   - TransparentFX
