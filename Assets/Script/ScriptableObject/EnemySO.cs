@@ -17,20 +17,17 @@ public class EnemySO : ScriptableObject
     public float defence;
     public float critRate;
     public float critDamage;
+    public float dodge;
     public float chaseField;
     public float attackField;
     public bool isBoss;
 
     [Header("Setting")]
     public WalkType walkType;
-    public AttackType attackType;
     public Difficulty difficulty = Difficulty.Easy;
 
     [Header("Weapon")]
     public WeaponSO weapon;
-    public WeaponSO projectile;
-    public ShootingType shootingType;
-    public float projectileFlySpeed;
 
     [Header("Looting")]
     public List<Coins> coins;
@@ -46,7 +43,7 @@ public class EnemySO : ScriptableObject
         Easy, Normal, Hard, Difficult, Extreme
     }
 
-    public enum ShootingType
+    /*public enum ShootingType
     {
         Single, Split, AllAngle
     }
@@ -54,7 +51,7 @@ public class EnemySO : ScriptableObject
     public enum AttackType
     {
         Melee, Sniper
-    }
+    }*/
 
     public enum WalkType
     {

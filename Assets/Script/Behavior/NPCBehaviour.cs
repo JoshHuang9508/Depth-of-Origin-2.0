@@ -8,24 +8,29 @@ public class NPCBehaviour : MonoBehaviour, Damageable
     [Header("Setting")]
     public float walkSpeed;
 
-    [Header("Dynamic Data")]
-    [SerializeField] private float timeElapse;
-    [SerializeField] private Vector3 currentPos, targetPos, diraction;
-    [SerializeField] private bool isMove = false;
-    [SerializeField] private bool canMove = true;
-    [SerializeField] private float noMoveTimer = 0;
-
-    [Header("Object Reference")]
+    [Header("Reference")]
     [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
+    //Runtime data
+    private PlayerBehaviour player;
+    private float timeElapse;
+    private Vector3 currentPos, targetPos, diraction;
+    private bool isMove = false;
+    private float noMoveTimer = 0;
+    private float noDamageTimer = 0;
+
+    public bool canActive { get; private set; }
+    public bool canMove { get; private set; }
+    public bool canBeDamaged { get; private set; }
+
+
+
 
     void Start()
     {
-        currentRb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
+        canActive = true;
 
         currentPos = transform.position;
         targetPos = currentPos;
@@ -33,13 +38,25 @@ public class NPCBehaviour : MonoBehaviour, Damageable
 
     void Update()
     {
+        try
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
+        catch
+        {
+            Debug.LogWarning("Can't find player (sent by NPCBehaviour.cs)");
+        }
+
         currentPos = transform.position;
 
         //update timer
         UpdateTimer();
 
         //actions
-        if (canMove) Moving();
+        if (canActive)
+        {
+            if (canMove) Moving();
+        }
     }
 
     private void Moving()
@@ -73,20 +90,27 @@ public class NPCBehaviour : MonoBehaviour, Damageable
         diraction = (targetPos - currentPos).normalized;
     }
 
-    /*private bool IsOnTargetPos()
-    {
-        return (
-        currentPos.x > (targetPos.x - 0.2) &&
-        currentPos.x < (targetPos.x + 0.2) &&
-        currentPos.y > (targetPos.y - 0.2) &&
-        currentPos.y < (targetPos.y + 0.2) );
-    }*/
-
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        currentRb.velocity = knockbackForce;
+        if (!canBeDamaged || !canActive) return;
 
-        noMoveTimer = noMoveTimer > knockbackTime ? noMoveTimer : knockbackTime;
+        float localDamage = damage;
+        Vector2 localKnockbackForce = knockbackForce;
+        float localKnockbackTime = knockbackTime;
+
+        //update heath (but NPC has no health smh)
+
+        //knockback
+        currentRb.velocity = localKnockbackForce;
+
+        //play audio (but NPC has no audio smh)
+
+        //instantiate damege text
+        player.SetDamageText(transform.position, localDamage, DamageTextDisplay.DamageTextType.PlayerHit);
+
+        //set timer
+        noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
+        noDamageTimer = 0.2f;
 
         //reset movement
         diraction = Vector3.zero;
@@ -100,7 +124,9 @@ public class NPCBehaviour : MonoBehaviour, Damageable
         timeElapse += Time.deltaTime;
 
         noMoveTimer = Mathf.Max(0, noMoveTimer - Time.deltaTime);
+        noDamageTimer = Mathf.Max(0, noDamageTimer - Time.deltaTime);
 
         canMove = noMoveTimer <= 0;
+        canBeDamaged = noDamageTimer <= 0;
     }
 }

@@ -19,10 +19,10 @@ MonoBehaviour:
     quantity: 0
   - item: {fileID: 0}
     quantity: 0
-  - item: {fileID: 11400000, guid: 2a5365fb17c224bdd92e78482b7b5f63, type: 2}
-    quantity: 1
-  - item: {fileID: 11400000, guid: 316d24bfff278e6428f1be9bfe0cae46, type: 2}
+  - item: {fileID: 0}
     quantity: 0
-  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
-    quantity: 2
+  - item: {fileID: 0}
+    quantity: 0
+  - item: {fileID: 0}
+    quantity: 0
   <Size>k__BackingField: 6

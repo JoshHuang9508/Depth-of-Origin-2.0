@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 844096241242444398}
   - component: {fileID: 5777768908603982460}
   m_Layer: 8
-  m_Name: Torch_Extinguished
+  m_Name: torch_extinguished
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

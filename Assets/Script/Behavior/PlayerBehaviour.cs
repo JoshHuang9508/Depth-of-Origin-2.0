@@ -77,8 +77,8 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     private float noAttackTimer = 0;
     private float noDamageTimer = 0;
     private float noSprintTimer = 0;
-    private float noWalkSpeedMutiplyTimer = 0;
     private float noHealTimer = 0;
+    private float walkSpeedMutiplyTimer = 0;
     private float isHitTimer = 0;
 
     public float MaxHealth { get { return maxHealth + maxHealth_e; } }
@@ -265,33 +265,41 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     }
 
     private void Moving()
-    {
+    {   
         animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
         characterSprite.flipX = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.2 ? Input.GetAxis("Horizontal") < 0 : characterSprite.flipX;
 
-        int walkSpeedMutiplyer = isWalkSpeedMutiply ? 3 : 1;
+        float X = Input.GetAxis("Horizontal");
+        float Y = Input.GetAxis("Vertical");
+        float csc = 1 / Mathf.Sin(Mathf.Atan2(Y, X));
+        float sec = 1 / Mathf.Cos(Mathf.Atan2(Y, X));
+        float maxStrenthRaw = Mathf.Abs(csc) < Mathf.Abs(sec) ? Mathf.Abs(csc) : Mathf.Abs(sec);
+        float inputStrenthRaw = Mathf.Sqrt(X * X + Y * Y);
+        float percentage = inputStrenthRaw  / maxStrenthRaw;
+        int walkSpeedMutiplyer = isWalkSpeedMutiply ? 2 : 1;
 
-        Vector2 movement = new(
-            Input.GetAxis("Horizontal") * WalkSpeed * walkSpeedMutiplyer,
-            Input.GetAxis("Vertical") * WalkSpeed * walkSpeedMutiplyer
-        );
+        //Debug.Log($"Strength : {percentage * 100}%");
+
+        Vector2 movement =  WalkSpeed * walkSpeedMutiplyer * percentage * new Vector2(X, Y).normalized;
+
+        Debug.Log(movement);
 
         currentRb.velocity = movement;
     }
 
     private void Sprint()
     {
-        noSprintTimer += 2f;
-        noWalkSpeedMutiplyTimer = noWalkSpeedMutiplyTimer >= 0.2f ? noWalkSpeedMutiplyTimer : 0.2f;
-        noDamageTimer = noDamageTimer >= 0.2f ? noDamageTimer : 0.2f;
+        noSprintTimer = 1f;
+        walkSpeedMutiplyTimer = walkSpeedMutiplyTimer >= 0.1f ? walkSpeedMutiplyTimer : 0.1f;
+        noDamageTimer = noDamageTimer >= 0.1f ? noDamageTimer : 0.1f;
     }
 
     private void Heal()
     {
         float healValue = Mathf.Min(MaxHealth - health, MaxHealth * 0.05f);
         Health += healValue;
-        SetDamageText(transform.position, healValue, "Heal");
+        SetDamageText(transform.position, healValue, DamageTextDisplay.DamageTextType.Heal);
         noHealTimer = 5;
     }
 
@@ -313,7 +321,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         audioPlayer.PlayOneShot(hitSound);
 
         //instantiate damege text
-        SetDamageText(transform.position, localDamage, "PlayerHit");
+        SetDamageText(transform.position, localDamage, DamageTextDisplay.DamageTextType.PlayerHit);
 
         //camera shake
         MainCamera camera = GameObject.FindWithTag("MainCamera").GetComponentInParent<MainCamera>();
@@ -322,7 +330,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         //set timer
         noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
         noHealTimer = 20;
-        noDamageTimer += 0.2f;
+        noDamageTimer = 0.2f;
     }
 
 
@@ -374,16 +382,16 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         noAttackTimer = Mathf.Max(0, noAttackTimer - Time.deltaTime);
         noDamageTimer = Mathf.Max(0, noDamageTimer - Time.deltaTime);
         noSprintTimer = Mathf.Max(0, noSprintTimer - Time.deltaTime);
-        noWalkSpeedMutiplyTimer = Mathf.Max(0, noWalkSpeedMutiplyTimer - Time.deltaTime);
         noHealTimer = Mathf.Max(0, noHealTimer - Time.deltaTime);
+        walkSpeedMutiplyTimer = Mathf.Max(0, walkSpeedMutiplyTimer - Time.deltaTime);
         isHitTimer = Mathf.Max(0, isHitTimer - Time.deltaTime);
 
         canMove = noMoveTimer <= 0;
         canAttack = noAttackTimer <= 0;
         canBeDamaged = noDamageTimer <= 0;
         canSprint = noSprintTimer <= 0;
-        isWalkSpeedMutiply = !(noWalkSpeedMutiplyTimer <= 0);
         canHeal = noHealTimer <= 0;
+        isWalkSpeedMutiply = !(walkSpeedMutiplyTimer <= 0);
         isHit = !(isHitTimer <= 0);
     }
 
@@ -519,7 +527,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             float healValue = Mathf.Min(MaxHealth - health, edibleItem.E_heal);
             Health += healValue;
 
-            SetDamageText(transform.position, healValue, "Heal");
+            SetDamageText(transform.position, healValue, DamageTextDisplay.DamageTextType.Heal);
 
             camEffect.SetTrigger("Heal");
         }  
@@ -634,7 +642,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         }
     }
 
-    public void SetDamageText(Vector3 position, float value, string type)
+    public void SetDamageText(Vector3 position, float value, DamageTextDisplay.DamageTextType type)
     {
         var damageText = Instantiate(
             damageTextReference,

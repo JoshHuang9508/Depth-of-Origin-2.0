@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4881706932054290818}
   - component: {fileID: 2809919988923202565}
   m_Layer: 0
-  m_Name: woodensign_right
+  m_Name: woodenSign_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

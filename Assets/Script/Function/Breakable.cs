@@ -71,7 +71,7 @@ public class Breakable : MonoBehaviour, Damageable
             Health -= damage;
 
             //instantiate damege text
-            player.SetDamageText(transform.position, damage, isCrit ? "DamageCrit" : "Damage");
+            player.SetDamageText(transform.position, damage, isCrit ? DamageTextDisplay.DamageTextType.DamageCrit : DamageTextDisplay.DamageTextType.Damage);
 
             //play audio
             audioPlayer.PlayOneShot(hitSound);

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7629684207400392404}
   - component: {fileID: 1576033482591271821}
   m_Layer: 0
-  m_Name: elf
+  m_Name: Entity
   m_TagString: HitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,13 +266,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
-  movementEnabler: 1
-  movementDisableTimer: 0
-  isMoving: 0
-  timeElapse: 0
-  currentPos: {x: 0, y: 0, z: 0}
-  targetPos: {x: 0, y: 0, z: 0}
-  diraction: {x: 0, y: 0, z: 0}
+  currentRb: {fileID: 4789420732522528935}
+  spriteRenderer: {fileID: 1611369558164191641}
+  animator: {fileID: 7629684207400392404}
 --- !u!210 &2389553474108140035
 SortingGroup:
   m_ObjectHideFlags: 0

@@ -14,6 +14,11 @@ public class DamageTextDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textmesh;
     [SerializeField] private RectTransform rtransform;
 
+    public enum DamageTextType
+    {
+        Damage, DamageCrit, Heal, PlayerHit, Dodge
+    }
+
     //Runtime Data
     private float timeElapsed = 0.0f;
 
@@ -28,29 +33,34 @@ public class DamageTextDisplay : MonoBehaviour
         }
     }
 
-    public void SetDisplay(float value, string type)
+    public void SetDisplay(float value, DamageTextType type)
     {
         switch (type)
         {
-            case "Damage":
+            case DamageTextType.Damage:
                 textmesh.text = Mathf.RoundToInt(value).ToString();
                 textmesh.color = new Color(255, 255, 255, 255);
                 textmesh.outlineWidth = 0f;
                 break;
-            case "DamageCrit":
+            case DamageTextType.DamageCrit:
                 textmesh.text = Mathf.RoundToInt(value).ToString();
                 textmesh.color = new Color(255, 255, 0, 255);
                 textmesh.outlineColor = new Color(255, 0, 0, 255);
                 textmesh.outlineWidth = 0.4f;
                 break;
-            case "Heal":
+            case DamageTextType.Heal:
                 textmesh.text = Mathf.RoundToInt(value).ToString();
                 textmesh.color = new Color(0, 150, 0, 255);
                 textmesh.outlineWidth = 0f;
                 break;
-            case "PlayerHit":
+            case DamageTextType.PlayerHit:
                 textmesh.text = Mathf.RoundToInt(value).ToString();
                 textmesh.color = new Color(150, 0, 0, 255);
+                textmesh.outlineWidth = 0f;
+                break;
+            case DamageTextType.Dodge:
+                textmesh.text = "Dodged";
+                textmesh.color = new Color(255, 255, 255, 100);
                 textmesh.outlineWidth = 0f;
                 break;
         }

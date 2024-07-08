@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2596380447608284058}
   - component: {fileID: 2716684344592604355}
   m_Layer: 8
-  m_Name: Crate
+  m_Name: crate
   m_TagString: BreakableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

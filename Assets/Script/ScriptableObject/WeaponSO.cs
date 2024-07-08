@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class WeaponSO : ItemSO, IDestoryableItem, ISellable, IBuyable, IDroppable
 {
-    [Header("Basic Data")]
-    public float attackCooldown;
+    [Header("Attributes")]
     public float weaponDamage = 1f;
+    public float attackCooldown;
     public float knockbackForce;
     public float knockbackTime;
 

@@ -21,16 +21,13 @@ MonoBehaviour:
   defence: 100
   critRate: 0
   critDamage: 0
+  dodge: 10
   chaseField: 10
-  attackField: 1.2
+  attackField: 20
   isBoss: 1
-  walkType: 0
-  attackType: 0
+  walkType: 1
   difficulty: 1
-  weapon: {fileID: 11400000, guid: 2a5365fb17c224bdd92e78482b7b5f63, type: 2}
-  projectile: {fileID: 0}
-  shootingType: 2
-  projectileFlySpeed: 15
+  weapon: {fileID: 11400000, guid: d2994337cc7fa51459d26fa01183c752, type: 2}
   coins:
   - coin: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
     amount: 10

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3104876453195976919}
   - component: {fileID: 344404685478440640}
   m_Layer: 0
-  m_Name: Chest
+  m_Name: chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,6 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
+  requireKey: 0
+  keyName: 
+  keyNames: []
   interactAction:
     m_PersistentCalls:
       m_Calls:
@@ -218,10 +221,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
-  player: {fileID: 0}
-  dialogObject: {fileID: 0}
-  dialogText: {fileID: 0}
-  isInRange: 0
 --- !u!114 &3104876453195976919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,39 +233,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b9ce23ab9198747a9bfab51a260524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   canReopen: 0
-  coins: []
+  coins:
+  - coin: {fileID: 11400000, guid: 3c6f55420d7522f45929837f50736624, type: 2}
+    amount: 3
   lootings:
-  - lootings: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
-    chances: 50
+  - looting: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
     quantity: 2
-  - lootings: {fileID: 11400000, guid: 99b60c87e36454883be46f319211e1a0, type: 2}
-    chances: 10
-    quantity: 1
-  - lootings: {fileID: 11400000, guid: 112a72f8b1ead8740aba124c90d06df5, type: 2}
-    chances: 50
-    quantity: 2
-  - lootings: {fileID: 11400000, guid: ba8d07e0989814e8a9dc8414f26e2c25, type: 2}
-    chances: 10
-    quantity: 1
-  - lootings: {fileID: 11400000, guid: cb120a48d5fcd4134b41aeee4f5260e3, type: 2}
-    chances: 1
-    quantity: 1
-  - lootings: {fileID: 11400000, guid: c310af6a092074674bf5e88bff841a23, type: 2}
-    chances: 5
-    quantity: 1
-  - lootings: {fileID: 11400000, guid: 2a5365fb17c224bdd92e78482b7b5f63, type: 2}
-    chances: 25
-    quantity: 1
-  - lootings: {fileID: 11400000, guid: d700fad586afccd4a9ed3675b5135e05, type: 2}
-    chances: 5
-    quantity: 1
+    chance: 40
   audioPlayer: {fileID: 0}
   openSound: {fileID: 8300000, guid: bcd5582e3fd4c4ac8b936d84bd83efd6, type: 3}
   animator: {fileID: 344404685478440640}
   interactable: {fileID: 334294825837532046}
   itemDropper: {fileID: 4800655640655451192, guid: 72b490c07dabaf343bea163bbd9936d1, type: 3}
-  isOpen: 0
 --- !u!95 &344404685478440640
 Animator:
   serializedVersion: 7

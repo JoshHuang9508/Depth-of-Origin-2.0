@@ -44,9 +44,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     public bool canMove { get; private set; }
     public bool canAttack { get; private set; }
     public bool canBeDamaged { get; private set; }
-    public bool canSprint { get; private set; }
-    public bool canHeal { get; private set; }
-    public bool isWalkSpeedMutiply { get; private set; }
+    public bool canDodge { get; private set; }
     public bool isHit { get; private set; }
 
     public float Health
@@ -124,6 +122,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
 
         //update timer
         UpdateTimer();
+        UpdateWeapon();
         if(player != null) UpdateDirection();
 
         //actions
@@ -261,7 +260,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
                             GameObject.FindWithTag("Item").transform
                             ).GetComponent<RangedWeapon>(); ;
 
-                        projectile_split.target = Target.enemy;
+                        projectile_split.target = Target.player;
                         projectile_split.weapon = rangedWeapon;
                         projectile_split.strength = enemy.strength;
                         projectile_split.critRate = enemy.critRate;
@@ -277,37 +276,51 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     {
         if (!canBeDamaged) return;
 
-        float localDamage = damage / (1 + (0.001f * enemy.defence));
-        Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
-        float localKnockbackTime = knockbackTime / (1 + (0.001f * enemy.defence));
+        bool isDodge = Random.Range(0f, 100f) <= enemy.dodge;
 
-        if (haveShield)
+        if (canDodge && isDodge)
         {
-            //update shield health
-            ShieldHealth -= localDamage;
-        }
-        else if (!haveShield)
-        {
-            //update heath
-            Health -= localDamage;
-
-            //knockback
-            currentRb.velocity = localKnockbackForce;
-
-            //play audio
-            audioPlayer.PlayOneShot(hitSound);
+            //instantiate damage text
+            player.SetDamageText(transform.position, 0, DamageTextDisplay.DamageTextType.Dodge);
 
             //set timer
-            noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
-            noAttackTimer = noAttackTimer < localKnockbackTime ? localKnockbackTime : noAttackTimer;
-            isHitTimer = isHitTimer < localKnockbackTime ? localKnockbackTime : isHitTimer;
+            noDodgeTimer = 1f;
+            noDamageTimer = 0.2f;
         }
+        else
+        {
+            float localDamage = damage / (1 + (0.001f * enemy.defence));
+            Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
+            float localKnockbackTime = knockbackTime / (1 + (0.001f * enemy.defence));
 
-        //instantiate damage text
-        player.SetDamageText(transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? "DamageCrit" : "Damage");
+            if (haveShield)
+            {
+                //update shield health
+                ShieldHealth -= localDamage;
+            }
+            else if (!haveShield)
+            {
+                //update heath
+                Health -= localDamage;
 
-        //set timer
-        noDamageTimer += 0.2f;
+                //knockback
+                currentRb.velocity = localKnockbackForce;
+
+                //play audio
+                audioPlayer.PlayOneShot(hitSound);
+
+                //set timer
+                noMoveTimer = noMoveTimer < localKnockbackTime ? localKnockbackTime : noMoveTimer;
+                noAttackTimer = noAttackTimer < localKnockbackTime ? localKnockbackTime : noAttackTimer;
+                isHitTimer = isHitTimer < localKnockbackTime ? localKnockbackTime : isHitTimer;
+            }
+
+            //instantiate damage text
+            player.SetDamageText(transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? DamageTextDisplay.DamageTextType.DamageCrit : DamageTextDisplay.DamageTextType.Damage);
+
+            //set timer
+            noDamageTimer = 0.2f;
+        }
     }
 
     private bool UpdateTimer()
@@ -321,7 +334,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         canMove = noMoveTimer <= 0;
         canAttack = noAttackTimer <= 0;
         canBeDamaged = noDamageTimer <= 0;
-        //canDodge = noDodgeTimer <= 0;
+        canDodge = noDodgeTimer <= 0;
         isHit = !(isHitTimer <= 0);
 
         return true;
@@ -333,5 +346,24 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         targetPos = target.transform.position;
         diraction = (targetPos - currentPos).normalized;
         facingAngle = Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg;
+    }
+
+    private void UpdateWeapon()
+    {
+        //update current weapon
+        if (currentWeapon == null)
+        {
+            weaponSprite.sprite = null;
+            weaponSprite.gameObject.transform.rotation = Quaternion.Euler(0, 0, facingAngle);
+        }
+        else
+        {
+            if (currentWeapon is MeleeWeaponSO) weaponSprite.sprite = null;
+            else if (currentWeapon is RangedWeaponSO)
+            {
+                weaponSprite.sprite = currentWeapon.Image;
+                weaponSprite.gameObject.transform.rotation = Quaternion.Euler(0, 0, facingAngle);
+            }
+        }
     }
 }
