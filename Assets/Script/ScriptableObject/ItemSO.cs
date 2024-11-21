@@ -7,24 +7,21 @@ namespace Inventory
 {
     public abstract class ItemSO : ScriptableObject
     {
-        [Header("Basic Data")]
+        [Header("Informations")]
         public string Name;
         [TextArea] public string Description;
 
-        [Header("Setting")]
+        [Header("Settings")]
         public bool IsStackable;
         public bool isStorable = true;
         public int MaxStackSize = 1;
         public Rarity Rarity;
         public int sellPrice, buyPrice;
 
-        [Header("Reference")]
+        [Header("References")]
         public Sprite Image;
 
-
         public int ID => GetInstanceID();
-
-
 
         public bool EquipObject(int index)
         {
@@ -83,7 +80,7 @@ namespace Inventory
                 else
                 {
                     player.coinAmount -= buyPrice;
-                    player.inventoryData.AddItem(inventory.GetItemAt(index));
+                    player.backpackData.AddItem(inventory.GetItemAt(index));
                 }
             }
             return false;
@@ -98,8 +95,6 @@ namespace Inventory
             }
             return false;
         }
-
-        
     }
 
     public enum Rarity

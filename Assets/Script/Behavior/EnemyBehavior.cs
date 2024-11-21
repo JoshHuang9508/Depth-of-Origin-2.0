@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour, Damageable
 {
-    [Header("Stats")]
+    [Header("States")]
     [SerializeField] private float health;
     [SerializeField] private float shieldHealth;
 
-    [Header("Setting")]
+    [Header("Datas")]
     public EnemySO enemy;
 
     [Header("Weapon")]
@@ -18,12 +18,11 @@ public class EnemyBehavior : MonoBehaviour, Damageable
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deadSound;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer entitySprite;
     [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject damageText;
     [SerializeField] private GameObject itemDropper;
 
     //Runtime data
@@ -57,23 +56,7 @@ public class EnemyBehavior : MonoBehaviour, Damageable
         {
             health = Mathf.Max(0, value);
 
-            if (health <= 0)
-            {
-                //drop items
-                ItemDropper ItemDropper = Instantiate(
-                    itemDropper,
-                    new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                    Quaternion.identity,
-                    GameObject.FindWithTag("Item").transform
-                    ).GetComponent<ItemDropper>();
-                ItemDropper.DropItems(enemy.lootings);
-                ItemDropper.DropCoins(enemy.coins);
-                ItemDropper.DropWrackages(enemy.wreckage);
-
-                audioPlayer.PlayOneShot(deadSound);
-
-                Destroy(gameObject);
-            }
+            if (health <= 0) KillEnemy();
         }
     }
 
@@ -365,5 +348,23 @@ public class EnemyBehavior : MonoBehaviour, Damageable
                 weaponSprite.gameObject.transform.rotation = Quaternion.Euler(0, 0, facingAngle);
             }
         }
+    }
+
+    public void KillEnemy()
+    {
+        //drop items
+        ItemDropper ItemDropper = Instantiate(
+            itemDropper,
+            new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            Quaternion.identity,
+            GameObject.FindWithTag("Item").transform
+            ).GetComponent<ItemDropper>();
+        ItemDropper.DropItems(enemy.lootings);
+        ItemDropper.DropCoins(enemy.coins);
+        ItemDropper.DropWrackages(enemy.wreckage);
+
+        audioPlayer.PlayOneShot(deadSound);
+
+        Destroy(gameObject);
     }
 }

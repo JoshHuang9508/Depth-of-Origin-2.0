@@ -41,7 +41,7 @@ public class Pickable : MonoBehaviour
 
         if(player != null)
         {
-            inventoryData = player.inventoryData;
+            inventoryData = player.backpackData;
         }
 
         CheckPlayerInRange();
@@ -67,7 +67,7 @@ public class Pickable : MonoBehaviour
 
     private void CheckInventoryFull()
     {
-        isInventoryFull = inventoryData.IsInventoryFull(player.inventoryData, item);
+        isInventoryFull = inventoryData.IsInventoryFull(player.backpackData, item);
     }
 
     private void MoveTowardPlayer()

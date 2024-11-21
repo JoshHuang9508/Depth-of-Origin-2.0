@@ -4,7 +4,7 @@ using UnityEngine;
 using RoomGeneration;
 using System.Threading.Tasks;
 
-public class RoomManager : MonoBehaviour
+public class RoomManager : Manager
 {
     [Header("Room Setting")]
     public List<RoomsWithChances> topRooms;
@@ -13,25 +13,23 @@ public class RoomManager : MonoBehaviour
     public List<RoomsWithChances> rightRooms;
     public GameObject wallRoom;
 
+    [Header("Current Queue")]
     public List<GameObject> rooms;
+    public List<RoomSpawner> RoomSpawners = new();
 
-    [Header("Boss Room Setting")]
+    [Header("Boss")]
     public EnemySO boss;
 
     [Header("Reference")]
     [SerializeField] private GameObject teleportEntry;
-    [SerializeField] private DungeonScene dungeonScene;
-
-    public List<RoomSpawner> RoomSpawners = new();
-
 
     private async void Start()
     {
-        dungeonScene.isRoomGenerateDone = false;
+        isSetup = false;
         await Task.Delay(20);
         await CheckRoomSpawn();
         await SummonBossRoom();
-        dungeonScene.isRoomGenerateDone = true;
+        isSetup = true;
         Debug.Log("Load Done");
     }
 

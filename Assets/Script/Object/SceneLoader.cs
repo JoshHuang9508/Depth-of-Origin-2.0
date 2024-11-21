@@ -42,7 +42,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (inAction) return;
 
-        player.cutscene.SetTrigger("Start");
+        player.camEffect.PlayCamEffect(CamEffect.CamEffectType.CrossfadeIn);
         inAction = true;
         await Task.Delay(1500);
 
@@ -70,7 +70,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         await Task.Delay(500);
-        player.cutscene.SetTrigger("End");
+        player.camEffect.PlayCamEffect(CamEffect.CamEffectType.CrossfadeOut);
         inAction = false;
     }
 

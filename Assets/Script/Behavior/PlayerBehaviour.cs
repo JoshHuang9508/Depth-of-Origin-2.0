@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 
 public class PlayerBehaviour : MonoBehaviour, Damageable
 {
-    [Header("Stats")]
+    [Header("States")]
     [SerializeField] private float health;
     public int coinAmount = 0;
-    public InventorySO inventoryData;
-    public InventorySO equipmentData;
     public List<Key> keyList = new();
     public List<Effection> effectionList = new();
 
-    [Header("Attributes Setting")]
+    [Header("Datas")]
+    public InventorySO backpackData;
+    public InventorySO equipmentData;
+
+    [Header("Attributes")]
     [SerializeField] private float maxHealth;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float strength;
@@ -37,7 +39,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [Header("Weapon")]
     [SerializeField] private WeaponSO currentWeapon;
 
-    [Header("Effection")]
+    [Header("Effections")]
     [SerializeField] private float maxHealth_e;
     [SerializeField] private float walkSpeed_e;
     [SerializeField] private float strength_e;
@@ -49,13 +51,12 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
 
-    [Header("Reference")]
-    public GameObject inventoryUI;
+    [Header("References")]
+    public GameObject backpackUI;
     public GameObject shopUI;
     public GameObject pauseUI;
     public GameObject deathUI;
-    public Animator cutscene;
-    [SerializeField] private Animator camEffect;
+    public CamEffect camEffect;
     [SerializeField] private Animator animator;
     [SerializeField] private Animator warningAnim;
     [SerializeField] private SpriteRenderer characterSprite;
@@ -69,9 +70,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     //Runtime data
     private GameObject dialog;
     private TMP_Text dialogText;
-    private Vector2 mousePos;
-    private Vector2 currentPos;
-    private Vector2 diraction;
+    private Vector2 mousePos, currentPos, diraction;
     private float facingAngle;
     private float noMoveTimer = 0;
     private float noAttackTimer = 0;
@@ -105,12 +104,8 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         }
         set
         {
-            //if (value > currentHealth) camEffect.SetTrigger("Heal");
-
-            if (value < health) camEffect.SetTrigger("OnHit");
-
+            if (value < health) camEffect.PlayCamEffect(CamEffect.CamEffectType.Hit);
             health = Mathf.Max(0, value);
-
             if (health <= 0) KillPlayer();
         }
     }
@@ -161,9 +156,9 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
             }
             if (Input.GetKeyDown(backpackKey))
             {
-                inventoryUI.SetActive(!inventoryUI.activeInHierarchy);
+                backpackUI.SetActive(!backpackUI.activeInHierarchy);
                 //***
-                Time.timeScale = inventoryUI.activeInHierarchy ? 0 : 1;
+                Time.timeScale = backpackUI.activeInHierarchy ? 0 : 1;
             }
             if (canAttack && Input.GetKey(useWeaponKey))
             {
@@ -279,11 +274,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         float percentage = inputStrenthRaw  / maxStrenthRaw;
         int walkSpeedMutiplyer = isWalkSpeedMutiply ? 2 : 1;
 
-        //Debug.Log($"Strength : {percentage * 100}%");
-
         Vector2 movement =  WalkSpeed * walkSpeedMutiplyer * percentage * new Vector2(X, Y).normalized;
-
-        Debug.Log(movement);
 
         currentRb.velocity = movement;
     }
@@ -460,40 +451,40 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     public void SetEquipment(int index)
     {
-        ItemSO item = inventoryData.GetItemAt(index).item;
+        ItemSO item = backpackData.GetItemAt(index).item;
 
         if (item is EquipmentSO)
         {
             switch (((EquipmentSO)item).equipmentType)
             {
                 case EquipmentSO.EquipmentType.armor:
-                    inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 0));
+                    backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 0));
                     break;
                 case EquipmentSO.EquipmentType.jewelry:
-                    inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 1));
+                    backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 1));
                     break;
                 case EquipmentSO.EquipmentType.book:
-                    inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 2));
+                    backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 2));
                     break;
             }
         }
         else if (item is MeleeWeaponSO)
         {
-            inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 3));
+            backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 3));
         }
         else if (item is RangedWeaponSO)
         {
-            inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 4));
+            backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 4));
         }
         else if (item is PotionSO)
         {
-            inventoryData.AddItem(equipmentData.AddItemTo(inventoryData.RemoveItem(index, -1), 5));
+            backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 5));
         }
     }
 
     public void UnEquipment(int index)
     {
-        equipmentData.AddItemTo(inventoryData.AddItem(equipmentData.RemoveItem(index, -1)), index);
+        equipmentData.AddItemTo(backpackData.AddItem(equipmentData.RemoveItem(index, -1)), index);
     }
 
     public void SetEffection(PotionSO edibleItem)
@@ -529,7 +520,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
             SetDamageText(transform.position, healValue, DamageTextDisplay.DamageTextType.Heal);
 
-            camEffect.SetTrigger("Heal");
+            camEffect.PlayCamEffect(CamEffect.CamEffectType.Heal);
         }  
     }
 
@@ -565,7 +556,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     {
         //close UI
         shopUI.SetActive(false);
-        inventoryUI.SetActive(false);
+        backpackUI.SetActive(false);
         deathUI.SetActive(true);
 
         //disable player object
@@ -575,7 +566,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
         //drop item
         List<int> dropItemIndexList = new();
-        for (int index = 0; index < inventoryData.Size; index++)
+        for (int index = 0; index < backpackData.Size; index++)
         {
             if (UnityEngine.Random.Range(0, 100) >= 50)
             {
@@ -584,7 +575,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         }
         foreach(int index in dropItemIndexList)
         {
-            DropItem(inventoryData, index, -1);
+            DropItem(backpackData, index, -1);
         }
 
         coinAmount = 0;

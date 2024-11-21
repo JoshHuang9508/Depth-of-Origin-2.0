@@ -508,7 +508,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1881440115}
   - component: {fileID: 1881440114}
-  - component: {fileID: 1881440113}
   m_Layer: 0
   m_Name: SceneControl
   m_TagString: SceneControl
@@ -516,20 +515,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1881440113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881440112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cce9a9c4993a5841b9b855b32647289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRoomGenerateDone: 0
-  sceneControl: {fileID: 1881440114}
 --- !u!114 &1881440114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNum: 6
+  managers:
+  - {fileID: 2137746507}
   isSceneSetup: 0
 --- !u!4 &1881440115
 Transform:
@@ -617,7 +604,7 @@ Transform:
   m_GameObject: {fileID: 2137746505}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 46.905693, y: 29.300613, z: 0.168045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -635,6 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5a2d4b4550e8b4e8815f98803386bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSetup: 0
   topRooms:
   - room: {fileID: 7711861281647377458, guid: 2c46dd613b9dc6548a794caa65cfbba1, type: 3}
     chance: 100
@@ -737,10 +725,9 @@ MonoBehaviour:
     index: 9
   wallRoom: {fileID: 4460983538000019885, guid: fa9caf475c5511a4a8cec3575aa84f88, type: 3}
   rooms: []
+  RoomSpawners: []
   boss: {fileID: 11400000, guid: 3cd0c5d81a3c6404cb3de2643b0da413, type: 2}
   teleportEntry: {fileID: 1872864187052449066, guid: 42d01681f6683cc4997b26ae10eca7b7, type: 3}
-  dungeonScene: {fileID: 1881440113}
-  RoomSpawners: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

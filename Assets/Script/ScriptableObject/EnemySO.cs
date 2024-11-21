@@ -43,55 +43,8 @@ public class EnemySO : ScriptableObject
         Easy, Normal, Hard, Difficult, Extreme
     }
 
-    /*public enum ShootingType
-    {
-        Single, Split, AllAngle
-    }
-
-    public enum AttackType
-    {
-        Melee, Sniper
-    }*/
-
     public enum WalkType
     {
         Melee, Sniper, None
     }
-
-
-    /*public void Attack_Ranged(float startAngle, Vector3 startPosition)
-    {
-        switch (shootingType)
-        {
-            case ShootingType.Single:
-                SummonArrow(startPosition, startAngle);
-                break;
-                
-            case ShootingType.Split:
-                for (int i = -60; i <= 60; i += 30)
-                {
-                    SummonArrow(startPosition, startAngle + i);
-                }
-                break;
-
-            case ShootingType.AllAngle:
-                for (int i = -180; i < 180; i += 18)
-                {
-                    SummonArrow(startPosition, startAngle + i);
-                }
-                break;
-        }
-    }
-
-    private void SummonArrow(Vector3 position, float angle)
-    {
-        var ArrowSummoned = Instantiate(
-            projectile,
-            position,
-            Quaternion.Euler(0, 0, angle - 90),
-            GameObject.FindWithTag("Item").transform);
-
-        ArrowSummoned.GetComponent<Projectile>().startAngle = Quaternion.Euler(0, 0, angle + angleOffset);
-        ArrowSummoned.GetComponent<Projectile>().enemyData = this;
-    }*/
 }
