@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("Status")]
-    public bool isActive = false;
+    [Header("References")]
+    [SerializeField] private SceneLoader sceneLoader;
 
-    [Header("Reference")]
-    [SerializeField] private SceneLoader sceneLoader_town;
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void SaveGame()
     {
@@ -18,20 +20,25 @@ public class PauseMenuController : MonoBehaviour
 
     public void Exit()
     {
-        SceneManager.LoadScene("Main_Menu");
+        Time.timeScale = 1.0f;
+
+        sceneLoader.SetSceneLoaderContent(0);
+        sceneLoader.Load();
+
+        gameObject.SetActive(false);
     }
 
     public void Open()
     {
-        isActive = true;
-        gameObject.SetActive(true);
         Time.timeScale = 0.0f;
+
+        gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        isActive = false;
-        gameObject.SetActive(false);
         Time.timeScale = 1.0f;
+
+        gameObject.SetActive(false);
     }
 }

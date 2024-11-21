@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 public class DeathMenuController : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private PlayerBehaviour player;
 

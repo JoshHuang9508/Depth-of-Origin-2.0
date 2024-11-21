@@ -54,7 +54,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [Header("References")]
     public GameObject backpackUI;
     public GameObject shopUI;
-    public GameObject pauseUI;
+    public PauseMenuController pauseUI;
     public GameObject deathUI;
     public CamEffect camEffect;
     [SerializeField] private Animator animator;
@@ -168,10 +168,10 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
                     Attacking();
                 }
             }
-            //if (Input.GetKeyDown(KeyCode.Escape))
-            //{
-            //    pauseUI.SetActive(true);
-            //}
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseUI.Open();
+            }
         }
     }
 
