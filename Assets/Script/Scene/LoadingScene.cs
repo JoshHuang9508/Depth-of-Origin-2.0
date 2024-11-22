@@ -10,7 +10,7 @@ public class LoadingScene : MonoBehaviour
     [Header("Reference")]
     [SerializeField] TextMeshProUGUI text;
 
-    public async Task PlayLoadAnimation()
+    public async void PlayLoadAnimation()
     {
         await Task.Delay(300);
         text.text = "Now Loading.";

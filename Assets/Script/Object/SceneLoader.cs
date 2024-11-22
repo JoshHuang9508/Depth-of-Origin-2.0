@@ -50,14 +50,14 @@ public class SceneLoader : MonoBehaviour
         {
             case LoadType.Scene:
                 await Load(SceneManager.LoadSceneAsync("Load", LoadSceneMode.Additive));
-                SceneManager.UnloadScene(SceneManager.GetActiveScene());
+                await SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
                 LoadingScene loadingScene = await GetLoadingScene();
                 loadingScene.PlayLoadAnimation();
                 await Task.Delay(100);
                 await Load(SceneManager.LoadSceneAsync(sceneNum, LoadSceneMode.Additive));
                 SceneControl sceneControl = await GetTargetSceneControl();
-                bool isSceneSetup = await sceneControl.SceneSetup();
-                SceneManager.UnloadScene("Load");
+                await sceneControl.SceneSetup();
+                await SceneManager.UnloadSceneAsync("Load");
 
                 GameObject.FindWithTag("Player").transform.position = GameObject.FindWithTag("Respawn").transform.position;
                 GameObject.FindWithTag("CameraHold").transform.position = GameObject.FindWithTag("Respawn").transform.position + new Vector3(0, 0, -10);

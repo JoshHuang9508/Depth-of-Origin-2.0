@@ -106,7 +106,7 @@ public class IntroScene : MonoBehaviour
         }
         catch
         {
-            Debug.LogWarning("Can't find player (sent by InstructionChapterController.cs)");
+            Debug.LogWarning("Can't find player (sent by IntroScene.cs)");
         }
     }
 

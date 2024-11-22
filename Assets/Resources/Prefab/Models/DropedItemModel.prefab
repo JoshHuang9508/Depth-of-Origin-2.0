@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 2482709967473776010}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16, y: 0, z: 0.039303787}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -186,8 +186,6 @@ MonoBehaviour:
   pickupDistance: 3
   item: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: eb0377a7f3fb1ee49b9a9fd32dd76585, type: 2}
-  player: {fileID: 0}
-  pickEnabler: 0
 --- !u!114 &-3344829333070863771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fada03115d638bd4b8110318843ee74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InventoryItem>k__BackingField: {fileID: 0}
+  item: {fileID: 0}
   spriteRenderer: {fileID: 2244761267995483345}
   backgroundLightObject: {fileID: 4372730835014328670}
   spriteLight2D: {fileID: 8991145502629534035}
