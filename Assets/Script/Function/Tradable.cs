@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Inventory;
+using UserInterface;
 
 public class Tradable : MonoBehaviour
 {
     [Header("Setting")]
     public List<InventorySlot> shopGoodsList = new();
 
-    [Header("Reference")]
+    [Header("Data")]
     [SerializeField] private InventorySO shopData;
 
     //Runtime data
     private PlayerBehaviour player;
-    private GameObject shopUI;
 
     private void Update()
     {
@@ -25,29 +25,21 @@ public class Tradable : MonoBehaviour
         {
             Debug.LogWarning("Can't find player (sent by Tradable.cs)");
         }
-
-        if(player != null)
-        {
-            shopUI = player.shopUI;
-        }
     }
 
-    public void OpenShop()
+    public void ToggleShop()
     {
-        shopData.Initialize();
-        foreach (InventorySlot item in shopGoodsList)
+        if (player != null)
         {
-            if (item.IsEmpty)
-                continue;
-            shopData.AddItem(item);
+            player.ToggleShopUI();
         }
-        shopUI.SetActive(!shopUI.activeInHierarchy);
-        Time.timeScale = shopUI.activeInHierarchy ? 0 : 1;
     }
 
     public void CloseShop()
     {
-        Time.timeScale = 1;
-        shopUI.SetActive(false);
+        if (player != null)
+        {
+            player.ToggleShopUI(PlayerBehaviour.UIOption.close);
+        }
     }
 }

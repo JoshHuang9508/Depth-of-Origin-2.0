@@ -25,7 +25,7 @@ public class Weapon : MeleeWeapon
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Damageable damageableObject = collision.GetComponentInParent<Damageable>();
+        IDamageable damageableObject = collision.GetComponentInParent<IDamageable>();
 
         if (damageableObject != null)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Breakable : MonoBehaviour, Damageable
+public class Breakable : MonoBehaviour, IDamageable
 {
     [Header("Setting")]
     [SerializeField] private float health;

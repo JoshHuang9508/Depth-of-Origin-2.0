@@ -1,7 +1,7 @@
 using NUnit;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour, Damageable
+public class EnemyBehavior : MonoBehaviour, IDamageable
 {
     [Header("States")]
     [SerializeField] private float health;

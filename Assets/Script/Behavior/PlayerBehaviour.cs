@@ -7,7 +7,7 @@ using System;
 using TMPro;
 using System.Threading.Tasks;
 
-public class PlayerBehaviour : MonoBehaviour, Damageable
+public class PlayerBehaviour : MonoBehaviour, IDamageable
 {
     [Header("States")]
     [SerializeField] private float health;
@@ -19,14 +19,6 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public InventorySO backpackData;
     public InventorySO equipmentData;
 
-    [Header("Attributes")]
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float strength;
-    [SerializeField] private float defence;
-    [SerializeField] private float critRate;
-    [SerializeField] private float critDamage;
-
     [Header("Key Settings")]
     public KeyCode sprintKey;
     public KeyCode backpackKey;
@@ -35,9 +27,18 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public KeyCode meleeWeaponKey;
     public KeyCode rangedWeaponKey;
     public KeyCode interactKey;
+    public KeyCode pauseKey;
 
     [Header("Weapon")]
     [SerializeField] private WeaponSO currentWeapon;
+
+    [Header("Attributes")]
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float strength;
+    [SerializeField] private float defence;
+    [SerializeField] private float critRate;
+    [SerializeField] private float critDamage;
 
     [Header("Effections")]
     [SerializeField] private float maxHealth_e;
@@ -48,15 +49,16 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     [SerializeField] private float critDamage_e;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
 
-    [Header("References")]
-    public GameObject backpackUI;
-    public GameObject shopUI;
-    public PauseMenuController pauseUI;
-    public GameObject deathUI;
+    [Header("UI")]
+    public Interface backpackUI;
+    public Interface shopUI;
+    public PauseMenu pauseUI;
+    public DeathMenu deathUI;
     public CamEffect camEffect;
+
+    [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private Animator warningAnim;
     [SerializeField] private SpriteRenderer characterSprite;
@@ -87,14 +89,15 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     public float CritRate { get { return critRate + critRate_e; } }
     public float CritDamage { get { return critDamage + critDamage_e; } }
 
-    public bool canActive { get; private set; }
-    public bool canMove { get; private set; }
-    public bool canAttack { get; private set; }
-    public bool canBeDamaged { get; private set; }
-    public bool canSprint { get; private set; }
-    public bool canHeal { get; private set; }
-    public bool isWalkSpeedMutiply { get; private set; }
-    public bool isHit { get; private set; }
+    public bool isActive;
+    public bool canMove;
+    public bool canAttack;
+    public bool canBeDamaged;
+    public bool canSprint;
+    public bool canHeal;
+    public bool isWalkSpeedMutiply;
+    public bool isHit;
+    public bool isInterfaceOpen;
 
     public float Health
     {
@@ -110,15 +113,10 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         }
     }
 
-    public void OnSceneLoaded()
-    {
-        audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
-    }
-
     private void Start()
     {
         health = MaxHealth;
-        canActive = true;
+        isActive = true;
 
         dialog = Instantiate(
             dialogObjectReference,
@@ -133,7 +131,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
     {
         animator.SetBool("isHit", isHit);
 
-        //update timer
+        //update
         UpdateStates();
         UpdateTimer();
         UpdateEffectionList();
@@ -142,46 +140,140 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         UpdateMousePos();
 
         //actions
-        if (canActive)
+        if (isActive)
         {
             if (canHeal && health != MaxHealth) Heal();
             if (canMove) Moving();
             if (canSprint && canMove && Input.GetKeyDown(sprintKey)) Sprint();
-            if (Input.GetKeyDown(meleeWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
-            if (Input.GetKeyDown(rangedWeaponKey) && canAttack) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
+            if (canAttack && Input.GetKeyDown(meleeWeaponKey) ) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
+            if (canAttack && Input.GetKeyDown(rangedWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
             if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
             {
                 SetEffection(equipmentData.GetItemAt(5).item as PotionSO);
                 equipmentData.RemoveItem(5, 1);
             }
+            if (canAttack && Input.GetKey(useWeaponKey) && currentWeapon != null)
+            {
+                noAttackTimer += currentWeapon.attackCooldown;
+                Attacking();
+            }
             if (Input.GetKeyDown(backpackKey))
             {
-                backpackUI.SetActive(!backpackUI.activeInHierarchy);
-                //***
-                Time.timeScale = backpackUI.activeInHierarchy ? 0 : 1;
+                ToggleBackpackUI();
             }
-            if (canAttack && Input.GetKey(useWeaponKey))
+            if (Input.GetKeyDown(pauseKey))
             {
-                if (currentWeapon != null)
-                {
-                    noAttackTimer += currentWeapon.attackCooldown;
-                    Attacking();
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                pauseUI.Open();
+                TogglePauseMenu();
             }
         }
     }
 
+    //////
+    //UI//
+    //////
 
+    public enum UIOption
+    {
+        toggle, open, close
+    }
+    
+    public void ToggleBackpackUI(UIOption option = UIOption.toggle)
+    {
+        if (pauseUI.IsActive || deathUI.IsActive) return;
 
+        bool canInteract = !backpackUI.IsActive;
+
+        switch (option)
+        {
+            case UIOption.toggle:
+                CloseAllUI();
+                if (canInteract) backpackUI.Toggle();
+                break;
+            case UIOption.open:
+                CloseAllUI();
+                backpackUI.Open();
+                break;
+            case UIOption.close:
+                backpackUI.Close();
+                break;
+        }
+    }
+
+    public void ToggleShopUI(UIOption option = UIOption.toggle)
+    {
+        if (pauseUI.IsActive || deathUI.IsActive) return;
+
+        bool canInteract = !shopUI.IsActive;
+
+        switch (option)
+        {
+            case UIOption.toggle:
+                CloseAllUI();
+                if (canInteract) shopUI.Toggle();
+                break;
+            case UIOption.open:
+                CloseAllUI();
+                shopUI.Open();
+                break;
+            case UIOption.close:
+                shopUI.Close();
+                break;
+        }
+    }
+
+    public void TogglePauseMenu(UIOption option = UIOption.toggle)
+    {
+        if (deathUI.IsActive) return;
+
+        bool canInteract = !shopUI.IsActive && !backpackUI.IsActive;
+
+        switch (option)
+        {
+            case UIOption.toggle:
+                CloseAllUI();
+                if (canInteract) pauseUI.Toggle();
+                break;
+            case UIOption.open:
+                CloseAllUI();
+                pauseUI.Open();
+                break;
+            case UIOption.close:
+                pauseUI.Close();
+                break;
+        }
+    }
+
+    public void ToggleDeathMenu(UIOption option = UIOption.toggle)
+    {
+        bool canInteract = !deathUI.IsActive;
+
+        switch (option)
+        {
+            case UIOption.toggle:
+                CloseAllUI();
+                if (canInteract) deathUI.Toggle();
+                break;
+            case UIOption.open:
+                CloseAllUI();
+                deathUI.Open();
+                break;
+            case UIOption.close:
+                deathUI.Close();
+                break;
+        }
+        
+    }
+
+    private void CloseAllUI()
+    {
+        backpackUI.Close();
+        shopUI.Close();
+    }
 
     /////////////
     //functions//
     /////////////
-
+    
     private void Attacking()
     {
         WeaponSO weapon = currentWeapon;
@@ -296,7 +388,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!canBeDamaged || !canActive) return;
+        if (!canBeDamaged || !isActive) return;
 
         float localDamage = damage / (1 + (0.001f * Defence));
         Vector2 localKnockbackForce = knockbackForce / (1 + (0.001f * Defence));
@@ -309,7 +401,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         currentRb.velocity = localKnockbackForce;
 
         //play audio
-        audioPlayer.PlayOneShot(hitSound);
+        AudioPlayer.PlaySound(hitSound);
 
         //instantiate damege text
         SetDamageText(transform.position, localDamage, DamageTextDisplay.DamageTextType.PlayerHit);
@@ -554,15 +646,12 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     public void KillPlayer()
     {
-        //close UI
-        shopUI.SetActive(false);
-        backpackUI.SetActive(false);
-        deathUI.SetActive(true);
+        ToggleDeathMenu(UIOption.open);
 
         //disable player object
         currentRb.bodyType = RigidbodyType2D.Static;
         characterSprite.enabled = false;
-        canActive = false;
+        isActive = false;
 
         //drop item
         List<int> dropItemIndexList = new();
@@ -587,7 +676,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
         health = MaxHealth;
         currentRb.bodyType = RigidbodyType2D.Dynamic;
         characterSprite.enabled = true;
-        canActive = true;
+        isActive = true;
     }
 
     public void DropItem(InventorySO inventory ,int index, int quantity)
@@ -603,7 +692,7 @@ public class PlayerBehaviour : MonoBehaviour, Damageable
 
     public void SetActive(bool value)
     {
-        canActive = value;
+        isActive = value;
     }
 
     public async Task SetDialog(string[] dialogLines)

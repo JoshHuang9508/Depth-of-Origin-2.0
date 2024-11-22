@@ -9,7 +9,4 @@ public class NPCBehaviour : MonoBehaviour
     public Rigidbody2D currentRb;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
-
-    //Runtime data
-    private PlayerBehaviour player;
 }

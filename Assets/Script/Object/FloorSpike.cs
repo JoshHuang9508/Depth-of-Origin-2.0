@@ -28,7 +28,7 @@ public class FloorSpike : MonoBehaviour
 
         if (canDamage && isActive && DetectPlayer())
         {
-            Damageable damageableObject = GameObject.FindWithTag("Player").GetComponent<Damageable>();
+            IDamageable damageableObject = GameObject.FindWithTag("Player").GetComponent<IDamageable>();
 
             damageableObject.OnHit(damage, false, Vector2.zero, 0);
 

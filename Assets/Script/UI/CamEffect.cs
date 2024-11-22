@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CamEffect : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Animator hitAnimator;
     [SerializeField] private Animator healAnimator;
     [SerializeField] private Animator crossfadeAnimator;

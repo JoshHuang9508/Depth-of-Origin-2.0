@@ -47,7 +47,7 @@ public class Pickable : MonoBehaviour
         CheckPlayerInRange();
         CheckInventoryFull();
 
-        if (player.canActive && playerInRange && canBePicked && (!item.isStorable || !isInventoryFull))
+        if (player.isActive && playerInRange && canBePicked && (!item.isStorable || !isInventoryFull))
         {
             MoveTowardPlayer();
         }

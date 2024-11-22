@@ -554,12 +554,6 @@ MonoBehaviour:
   effectionList: []
   backpackData: {fileID: 11400000, guid: eb0377a7f3fb1ee49b9a9fd32dd76585, type: 2}
   equipmentData: {fileID: 11400000, guid: f8aedf2ea14a94e2f98cf6113f6d7e68, type: 2}
-  maxHealth: 100
-  walkSpeed: 6
-  strength: 0
-  defence: 0
-  critRate: 5
-  critDamage: 50
   sprintKey: 304
   backpackKey: 102
   usePotionKey: 51
@@ -567,7 +561,14 @@ MonoBehaviour:
   meleeWeaponKey: 49
   rangedWeaponKey: 50
   interactKey: 101
+  pauseKey: 27
   currentWeapon: {fileID: 0}
+  maxHealth: 100
+  walkSpeed: 6
+  strength: 0
+  defence: 0
+  critRate: 5
+  critDamage: 50
   maxHealth_e: 0
   walkSpeed_e: 0
   strength_e: 0
@@ -576,10 +577,10 @@ MonoBehaviour:
   critDamage_e: 0
   audioPlayer: {fileID: 0}
   hitSound: {fileID: 8300000, guid: e96b3471e0115490695dfadd2552a369, type: 3}
-  backpackUI: {fileID: 6610900548297841376}
-  shopUI: {fileID: 5210553082942383535}
+  backpackUI: {fileID: 1389329436604755146}
+  shopUI: {fileID: 8410755319345371705}
   pauseUI: {fileID: 2530160243686330786}
-  deathUI: {fileID: 2455359995362522350}
+  deathUI: {fileID: 2308376323747479514}
   camEffect: {fileID: 5268325630573398421}
   animator: {fileID: 4001695706229620888}
   warningAnim: {fileID: 2352824078662926386}
@@ -590,6 +591,15 @@ MonoBehaviour:
   damageTextReference: {fileID: 8842133498016202654, guid: 1ece5649299024e42bb29bc9f2f0ef8f, type: 3}
   itemDropperReference: {fileID: 4800655640655451192, guid: 72b490c07dabaf343bea163bbd9936d1, type: 3}
   dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  isActive: 0
+  canMove: 0
+  canAttack: 0
+  canBeDamaged: 0
+  canSprint: 0
+  canHeal: 0
+  isWalkSpeedMutiply: 0
+  isHit: 0
+  isInterfaceOpen: 0
 --- !u!1 &653134237024041325
 GameObject:
   m_ObjectHideFlags: 0
@@ -4569,6 +4579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5344770860641341382}
   - component: {fileID: 3791433537587624190}
+  - component: {fileID: 9181070341318554462}
   m_Layer: 0
   m_Name: AudioPlayer
   m_TagString: AudioPlayer
@@ -4687,6 +4698,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9181070341318554462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582883983599874984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a855e80d15e412f9a5141285d5e172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPlayer: {fileID: 3791433537587624190}
 --- !u!1 &5607580299894921822
 GameObject:
   m_ObjectHideFlags: 0

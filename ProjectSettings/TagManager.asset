@@ -20,10 +20,6 @@ TagManager:
   - WorldEdge
   - Boss
   - AudioPlayer
-  - Room
-  - RoomSpawnPoint
-  - RoomTemplates
-  - RoomStart
   - SceneControl
   - Load
   layers:
