@@ -5,38 +5,36 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new enemy", menuName = "Enemy")]
 public class EnemySO : ScriptableObject
 {
-    [Header("Name")]
+    [Header("Basic")]
     public string Name;
+    public bool isBoss;
 
-    [Header("Attributes Setting")]
+    [Header("Attributes")]
     public float maxHealth;
-    public float walkSpeed;
     public bool haveShield;
     public float maxShieldHealth;
+    public float walkSpeed;
     public float strength;
     public float defence;
     public float critRate;
     public float critDamage;
-    public float dodge;
+    public float dodgeRate;
     public float chaseField;
     public float attackField;
-    public bool isBoss;
-
-    [Header("Setting")]
-    public WalkType walkType;
+    public WalkType walkType; // Will Change to AI
     public Difficulty difficulty = Difficulty.Easy;
 
     [Header("Weapon")]
     public WeaponSO weapon;
 
-    [Header("Looting")]
+    [Header("Lootings")]
     public List<Coins> coins;
     public List<Lootings> lootings;
     public List<GameObject> wreckage;
 
-    [Header("Reference")]
+    [Header("References")]
     public GameObject enemyObject;
-    public int angleOffset;
+    public int angleOffset; // ?
 
     public enum Difficulty
     {

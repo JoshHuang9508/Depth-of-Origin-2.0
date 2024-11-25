@@ -7,134 +7,108 @@ namespace Inventory
 {
     public abstract class ItemSO : ScriptableObject
     {
-        [Header("Informations")]
+        [Header("Basic")]
         public string Name;
         [TextArea] public string Description;
+        public Rarity rarity;
 
-        [Header("Settings")]
-        public bool IsStackable;
+        [Header("Attributes")]
+        public int sellPrice;
+        public int buyPrice;
+        public bool isStackable = true;
         public bool isStorable = true;
-        public int MaxStackSize = 1;
-        public Rarity Rarity;
-        public int sellPrice, buyPrice;
+        public int maxStackSize = 1;
 
         [Header("References")]
         public Sprite Image;
 
         public int ID => GetInstanceID();
 
-        public bool EquipObject(int index)
+        public void EquipObject(int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-
-            if (player != null)
-            {
-                player.SetEquipment(index);
-            }
-            return false;
+            player?.SetEquipment(index);
         }
 
-        public bool UnequipObject(int index)
+        public void UnequipObject(int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-
-            if (player != null)
-            {
-                player.UnEquipment(index);
-            }
-            return false;
+            player?.UnEquipment(index);
         }
 
-        public bool ConsumeObject(InventorySO inventory, int index)
+        public void ConsumeObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); ;
-
-            if (player != null)
-            {
-                player.SetEffection((PotionSO)inventory.GetItemAt(index).item);
-                inventory.RemoveItem(index, 1);
-            }
-            return false;
+            player?.SetEffection((PotionSO)inventory.GetItemAt(index).item);
+            inventory.RemoveItem(index, 1);
         }
 
-        public bool SellObject(InventorySO inventory, int index)
+        public void SellObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            if (player != null)
-            {
-                player.coinAmount += sellPrice;
-                inventory.RemoveItem(index, 1);
-            }
-            return false;
+            player?.ModifyCoin(sellPrice);
+            inventory.RemoveItem(index, 1);
         }
 
-        public bool BuyObject(InventorySO inventory, int index)
+        public void BuyObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            if (player != null)
+            if (player.coins < buyPrice)
             {
-                if(player.coinAmount < buyPrice)
-                {
-                    Debug.Log("You don't have enough money!");
-                }
-                else
-                {
-                    player.coinAmount -= buyPrice;
-                    player.backpackData.AddItem(inventory.GetItemAt(index));
-                }
+                Debug.Log("You don't have enough money!"); // Chnage this to a UI message
             }
-            return false;
+            else
+            {
+                player?.ModifyCoin(-buyPrice);
+                player.backpackData.AddItem(inventory.GetItemAt(index));
+            }
         }
 
-        public bool DropItem(InventorySO inventory, int index)
+        public void DropItem(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            if (player != null)
-            {
-                player.DropItem(inventory, index, -1);
-            }
-            return false;
+            player?.DropItem(inventory, index, -1);
         }
     }
 
     public enum Rarity
     {
-        Common, Uncommon, Rare, Exotic, Mythic, Legendary 
+        Common, Uncommon, Rare, Exotic, Mythic, Legendary
     }
 
-    public interface IDestoryableItem
+    public interface IDestoryable
     {
 
     }
 
     public interface IEquipable
     {
-        bool EquipObject(int index);
+        void EquipObject(int index);
     }
 
     public interface IUnequipable
     {
-        bool UnequipObject(int index);
+        void UnequipObject(int index);
     }
 
     public interface IConsumeable
     {
-        bool ConsumeObject(InventorySO inventory, int index);
+        void ConsumeObject(InventorySO inventory, int index);
     }
 
     public interface ISellable
     {
-        bool SellObject(InventorySO inventory, int index);
+        void SellObject(InventorySO inventory, int index);
     }
 
     public interface IBuyable
     {
-        bool BuyObject(InventorySO inventory, int index);
+        void BuyObject(InventorySO inventory, int index);
     }
 
     public interface IDroppable
     {
-        bool DropItem(InventorySO inventory, int index);
+        void DropItem(InventorySO inventory, int index);
     }
 }
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MapGenerator: Manager
+public class MapGenerator : Manager
 {
-    [Header("Settings")]
-    [SerializeField] private int mapSize = 5;
+    [Header("Attributes")]
+    [SerializeField] private readonly int mapSize = 5;
 
     [Header("Rooms")]
     [SerializeField] private List<Room> rooms;

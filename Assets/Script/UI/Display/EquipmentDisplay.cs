@@ -6,18 +6,14 @@ using TMPro;
 
 public class EquipmentDisplay : MonoBehaviour
 {
-    [Header("Reference")]
-    [SerializeField] private Image meleeWeaponImage;
-    [SerializeField] private Image rangedWeaponImage;
-    [SerializeField] private Image potionImage;
-    [SerializeField] private Image meleeWeaponBorder;
-    [SerializeField] private Image rangedWeaponBorder;
+    [Header("References")]
+    [SerializeField] private Image meleeWeaponImage, rangedWeaponImage, potionImage, meleeWeaponBorder, rangedWeaponBorder;
     [SerializeField] private TMP_Text potionAmountText;
     [SerializeField] private PlayerBehaviour player;
 
     private void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

@@ -6,16 +6,16 @@ using TMPro;
 
 public class HealthWarningDisplay : MonoBehaviour
 {
-    [Header("Setting")]
-    [SerializeField] private Gradient gradient;
+    [Header("Attributes")]
+    public Gradient gradient;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Image fill;
     [SerializeField] private PlayerBehaviour player;
 
     void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }
@@ -23,6 +23,6 @@ public class HealthWarningDisplay : MonoBehaviour
 
     private void SetDisplay()
     {
-        fill.color = gradient.Evaluate(player.Health / player.MaxHealth);
+        fill.color = gradient.Evaluate(player.health / player.MaxHealth);
     }
 }

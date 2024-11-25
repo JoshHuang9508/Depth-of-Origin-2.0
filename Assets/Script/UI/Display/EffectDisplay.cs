@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class EffectDisplay : MonoBehaviour
 {
+    [Header("Status")]
+    public List<GameObject> effectionDisplayList = new();
+
     [Header("References")]
     [SerializeField] private GameObject effectDisplayModel;
     [SerializeField] private PlayerBehaviour player;
-
-    [Header("Status")]
-    private List<GameObject> effectionDisplayList = new();
 
     private void Update()
     {

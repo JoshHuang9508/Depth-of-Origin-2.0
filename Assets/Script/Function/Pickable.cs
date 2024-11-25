@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class Pickable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public int quantity = 1;
     public float pickupDistance;
 
@@ -25,24 +25,12 @@ public class Pickable : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(pickup_delay());
+        StartCoroutine(Pickup_delay());
     }
 
     void Update()
     {
-        try
-        {
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-        }
-        catch
-        {
-            Debug.LogWarning("Can't find player (sent by pickable.cs)");
-        }
-
-        if(player != null)
-        {
-            inventoryData = player.backpackData;
-        }
+        player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBehaviour>() ?? null;
 
         CheckPlayerInRange();
         CheckInventoryFull();
@@ -67,7 +55,7 @@ public class Pickable : MonoBehaviour
 
     private void CheckInventoryFull()
     {
-        isInventoryFull = inventoryData.IsInventoryFull(player.backpackData, item);
+        isInventoryFull = player.backpackData.IsInventoryFull(player.backpackData, item);
     }
 
     private void MoveTowardPlayer()
@@ -76,23 +64,23 @@ public class Pickable : MonoBehaviour
 
         if (Vector2.Distance(this.transform.position, player.transform.position) <= 0.2)
         {
-            if (item is CoinSO)
+            if (item is CoinSO coin)
             {
-                player.coinAmount += ((CoinSO)item).coinAmount;
+                player.ModifyCoin(coin.amount);
             }
-            else if (item is KeySO)
+            else if (item is KeySO key)
             {
-                player.keyList.Add(new Key { key = (KeySO)item, quantity = 1 });
+                player.keyList.Add(new Key { key = key, quantity = 1 });
             }
             else
             {
-                inventoryData.AddItem(item, quantity);
+                player.backpackData.AddItem(item, quantity);
             }
             Destroy(gameObject);
         }
     }
 
-    private IEnumerator pickup_delay()
+    private IEnumerator Pickup_delay()
     {
         yield return new WaitForSeconds(1.5f);
         canBePicked = true;

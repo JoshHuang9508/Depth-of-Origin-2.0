@@ -6,8 +6,8 @@ using TMPro;
 
 public class HealthBarDisplay : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private Gradient gradient;
+    [Header("Attributes")]
+    public Gradient gradient;
 
     [Header("References")]
     [SerializeField] private Slider slider;
@@ -17,7 +17,7 @@ public class HealthBarDisplay : MonoBehaviour
 
     private void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }
@@ -25,8 +25,8 @@ public class HealthBarDisplay : MonoBehaviour
 
     private void SetDisplay()
     {
-        slider.value = player.Health / player.MaxHealth;
-        healthText.text = $"{Mathf.RoundToInt(player.Health)} / {player.MaxHealth}";
-        fill.color = gradient.Evaluate(player.Health / player.MaxHealth);
+        slider.value = player.health / player.MaxHealth;
+        healthText.text = $"{Mathf.RoundToInt(player.health)} / {player.MaxHealth}";
+        fill.color = gradient.Evaluate(player.health / player.MaxHealth);
     }
 }

@@ -7,21 +7,18 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class Interactable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public bool interactable = true;
     public bool requireKey = false;
-    [SerializeField] private string keyName;
-    [SerializeField] private List<string> keyNames;
-    [SerializeField] private UnityEvent interactAction, enterRangeAction, leaveRangeAction;
+    public bool playerInRange;
+    public List<string> allowedKeyNames;
+    public UnityEvent interactAction, enterRangeAction, leaveRangeAction;
 
     [Header("Reference")]
     [SerializeField] private GameObject dialogObjectReference;
-
-    //Runtime data
-    private PlayerBehaviour player;
+    [SerializeField] private PlayerBehaviour player;
     private GameObject dialogObject;
     private TMP_Text dialogText;
-    private bool playerInRange;
 
     private void Start()
     {
@@ -39,17 +36,9 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        //Get player
-        try
-        {
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-        }
-        catch
-        {
-            Debug.LogWarning("Can't find player (sent by interactable.cs)");
-        }
+        player = GameObject.FindWithTag("Player")?.GetComponent<PlayerBehaviour>() ?? null;
 
-        if(player != null)
+        if (player != null)
         {
             CheckPlayerInRange();
 
@@ -74,7 +63,7 @@ public class Interactable : MonoBehaviour
                     }
                     else
                     {
-                        player.SetDialog(new string[] { $"(You need a {keyName} to open this.)" });
+                        player.SetDialog(new string[] { "(You need a key to open this.)" });
                     }
                 }
                 else
@@ -95,29 +84,11 @@ public class Interactable : MonoBehaviour
     {
         bool haveKey = false;
 
-        if (keyName != "")
-        {
-            int indexOfKeyList = -1;
-
-            foreach (var key in player.keyList)
-            {
-                if (key.key.Name == keyName)
-                {
-                    haveKey = true;
-                    indexOfKeyList = player.keyList.IndexOf(key);
-                }
-            }
-            if (haveKey)
-            {
-                player.keyList[indexOfKeyList].quantity--;
-            }
-        }
-
-        if (keyNames.Count != 0)
+        if (allowedKeyNames.Count != 0)
         {
             List<int> indexOfKeyList = new();
 
-            foreach (string keyName in keyNames)
+            foreach (string keyName in allowedKeyNames)
             {
                 foreach (var key in player.keyList)
                 {
@@ -126,7 +97,7 @@ public class Interactable : MonoBehaviour
                         indexOfKeyList.Add(player.keyList.IndexOf(key));
                     }
                 }
-                if (indexOfKeyList.Count == keyNames.Count)
+                if (indexOfKeyList.Count == allowedKeyNames.Count)
                 {
                     haveKey = true;
                 }

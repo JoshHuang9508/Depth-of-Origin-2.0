@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-public class WeaponSO : ItemSO, IDestoryableItem, ISellable, IBuyable, IDroppable
+public class WeaponSO : ItemSO, IDestoryable, ISellable, IBuyable, IDroppable
 {
     [Header("Attributes")]
+    public WeaponType weaponType;
     public float weaponDamage = 1f;
-    public float attackCooldown;
+    public float attackSpeed = 1f;
     public float knockbackForce;
     public float knockbackTime;
 
@@ -20,4 +21,13 @@ public class WeaponSO : ItemSO, IDestoryableItem, ISellable, IBuyable, IDroppabl
     public float E_defence;
     public float E_critRate;
     public float E_critDamage;
+
+    [Header("Reference")]
+    public ProjectileSO projectile;
+    // public Animator animator;
+
+    [Header("Audio")]
+    public AudioClip useSound;
+
+
 }

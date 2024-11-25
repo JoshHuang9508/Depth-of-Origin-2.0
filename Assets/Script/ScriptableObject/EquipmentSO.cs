@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new equipment", menuName = "Items/Equipment")]
-public class EquipmentSO : ItemSO, IEquipable, IDestoryableItem, ISellable, IBuyable, IUnequipable, IDroppable
+public class EquipmentSO : ItemSO, IEquipable, IDestoryable, ISellable, IBuyable, IUnequipable, IDroppable
 {
-    [Header("Setting")]
+    [Header("Basic")]
     public EquipmentType equipmentType;
 
     [Header("Effection")]
@@ -16,9 +16,4 @@ public class EquipmentSO : ItemSO, IEquipable, IDestoryableItem, ISellable, IBuy
     public float E_defence;
     public float E_critRate;
     public float E_critDamage;
-
-    public enum EquipmentType
-    {
-        armor, book, jewelry
-    }
 }

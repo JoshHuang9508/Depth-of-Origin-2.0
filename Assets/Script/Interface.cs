@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime);
+    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime);
 }
 
 public interface IInterface

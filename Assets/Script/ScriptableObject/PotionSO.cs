@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new potion", menuName = "Items/Potion")]
-public class PotionSO : ItemSO, IConsumeable, IEquipable, IDestoryableItem, ISellable, IBuyable, IUnequipable, IDroppable
+public class PotionSO : ItemSO, IConsumeable, IEquipable, IDestoryable, ISellable, IBuyable, IUnequipable, IDroppable
 {
+    [Header("Attributes")]
+    public float effectTime;
+
     [Header("Effection")]
     public float E_heal;
     public float E_maxHealth;
@@ -15,5 +18,4 @@ public class PotionSO : ItemSO, IConsumeable, IEquipable, IDestoryableItem, ISel
     public float E_defence;
     public float E_critRate;
     public float E_critDamage;
-    public float effectTime;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,10 +6,13 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour, IDamageable
 {
-    [Header("Setting")]
+    [Header("Status")]
+    public bool canDamage = true;
+
+    [Header("Settings")]
     [SerializeField] private float health;
 
-    [Header("Looting")]
+    [Header("Lootings")]
     public List<Coins> coins;
     public List<Lootings> lootings;
     public List<GameObject> wreckage;
@@ -18,14 +22,23 @@ public class Breakable : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip breakSound;
 
     [Header("Reference")]
-    [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private GameObject itemDropper;
 
     //Rumtime Data
     private PlayerBehaviour player;
-    private bool damageEnabler = true;
-    private float damageDisableTimer = 0;
 
+    private float DamageTimer
+    {
+        get
+        {
+            return DamageTimer;
+        }
+        set
+        {
+            DamageTimer = Mathf.Max(DamageTimer, value);
+            canDamage = DamageTimer <= 0;
+        }
+    }
     public float Health
     {
         get
@@ -35,18 +48,8 @@ public class Breakable : MonoBehaviour, IDamageable
         set
         {
             health = Mathf.Max(0, value);
-
-            if (health <= 0)
-            {
-                KillObject();
-            }
+            if (health <= 0) KillObject();
         }
-        
-    }
-
-    private void Start()
-    {
-        audioPlayer = GameObject.FindWithTag("AudioPlayer").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -63,35 +66,25 @@ public class Breakable : MonoBehaviour, IDamageable
         UpdateTimer();
     }
 
-    public void OnHit(float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
+    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (damageEnabler)
-        {
-            //update heath
-            Health -= damage;
+        if (!canDamage || attackerType != AttackerType.player) return;
 
-            //instantiate damege text
-            player.SetDamageText(transform.position, damage, isCrit ? DamageTextDisplay.DamageTextType.DamageCrit : DamageTextDisplay.DamageTextType.Damage);
+        Health -= damage;
+        //instantiate damege text
+        // AudioPlayer.Playsound(hitSound);
 
-            //play audio
-            audioPlayer.PlayOneShot(hitSound);
-
-            //set timer
-            damageDisableTimer += 0.2f;
-        }
+        DamageTimer = 0.2f;
     }
 
     private void UpdateTimer()
     {
-        //update timer
-        damageDisableTimer = Mathf.Max(0, damageDisableTimer - Time.deltaTime);
-
-        damageEnabler = damageDisableTimer <= 0;
+        DamageTimer = Mathf.Max(0, DamageTimer - Time.deltaTime);
     }
 
     private void KillObject()
     {
-        //drop items
+        // drop items -> change this to a function
         ItemDropper ItemDropper = Instantiate(
             itemDropper,
             transform.position,
@@ -103,8 +96,8 @@ public class Breakable : MonoBehaviour, IDamageable
         ItemDropper.DropCoins(coins);
         ItemDropper.DropWrackages(wreckage);
 
-        //play audio
-        audioPlayer.PlayOneShot(breakSound);
+        // ItemDropper.DropItem();
+        // AudioPlayer.Playsound(breakSound);
 
         Destroy(gameObject);
     }

@@ -52,7 +52,7 @@ public class DropItemInitialize : MonoBehaviour
 
     private void SetBackgroundLight()
     {
-        switch (item.Rarity)
+        switch (item.rarity)
         {
             case Rarity.Common:
                 backgroundLight2D.color = new Color(0.8f, 0.8f, 0.8f);

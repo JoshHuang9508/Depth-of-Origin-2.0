@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FloorSpike : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Status")]
+    [SerializeField] private bool isActive = false;
+
+    [Header("Attributes")]
     [SerializeField] private float damage;
     [SerializeField] private float inactiveTime;
     [SerializeField] private float activeTime;
@@ -13,9 +17,7 @@ public class FloorSpike : MonoBehaviour
     [SerializeField] private Animator animator;
 
     //Runtime data
-    private float timeElapse;
-    private bool isActive = false;
-    private static bool canDamage = true;
+    private float timer;
 
     private void Start()
     {
@@ -24,53 +26,54 @@ public class FloorSpike : MonoBehaviour
 
     private void Update()
     {
-        Activiting();
+        UpdateTimer();
 
-        if (canDamage && isActive && DetectPlayer())
+        Active();
+    }
+
+    private void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!isActive) return;
+
+        if (collision is IDamageable)
         {
-            IDamageable damageableObject = GameObject.FindWithTag("Player").GetComponent<IDamageable>();
-
-            damageableObject.OnHit(damage, false, Vector2.zero, 0);
-
-            StartCoroutine(SetStaticTimer(callback => { canDamage = callback; }, 1));
+            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+            damageable?.Damage(AttackerType.enemy, damage, false, Vector2.zero, 0);
         }
     }
 
-    private bool DetectPlayer()
+    // private bool DetectPlayer()
+    // {
+    //     List<Collider2D> colliderResult = new();
+    //     Physics2D.OverlapCollider(GetComponent<Collider2D>(), new(), colliderResult);
+
+    //     bool isPlayerInRange = false;
+    //     for (int i = 0; i < colliderResult.Count; i++)
+    //     {
+    //         if (colliderResult[i] != null && colliderResult[i].CompareTag("Player")) isPlayerInRange = true;
+    //     }
+
+    //     return isPlayerInRange;
+    // }
+
+    private void Active()
     {
-        List<Collider2D> colliderResult = new();
-        Physics2D.OverlapCollider(GetComponent<Collider2D>(), new(), colliderResult);
-
-        bool isPlayerInRange = false;
-        for (int i = 0; i < colliderResult.Count; i++)
-        {
-            if (colliderResult[i] != null && colliderResult[i].CompareTag("Player")) isPlayerInRange = true;
-        }
-
-        return isPlayerInRange;
-    }
-
-    private void Activiting()
-    {
-        timeElapse += Time.deltaTime;
         animator.SetBool("isActive", isActive);
 
-        if (timeElapse >= inactiveTime && !isActive)
+        if (timer >= inactiveTime && !isActive)
         {
             isActive = true;
-            timeElapse = 0;
+            timer = 0;
         }
-        else if (timeElapse >= activeTime && isActive)
+        else if (timer >= activeTime && isActive)
         {
             isActive = false;
-            timeElapse = 0;
+            timer = 0;
         }
-    }
-
-    private IEnumerator SetStaticTimer(System.Action<bool> callback, float time)
-    {
-        callback(false);
-        yield return new WaitForSeconds(time);
-        callback(true);
     }
 }

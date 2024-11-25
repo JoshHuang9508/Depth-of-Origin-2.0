@@ -33,7 +33,7 @@ namespace Inventory
         {
             foreach (InventorySlot inventorySlot in inventory.inventorySlots)
             {
-                if (inventorySlot.item == null || (inventorySlot.item.ID == item.ID && inventorySlot.quantity < inventorySlot.item.MaxStackSize))
+                if (inventorySlot.item == null || (inventorySlot.item.ID == item.ID && inventorySlot.quantity < inventorySlot.item.maxStackSize))
                 {
                     return false;
                 }
@@ -101,7 +101,7 @@ namespace Inventory
             {
                 bool isSlotFull = true;
 
-                if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.MaxStackSize))
+                if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.maxStackSize))
                 {
                     inventorySlots[index] = new() { item = item, quantity = inventorySlots[index].quantity + 1 };
                     isSlotFull = false;
@@ -131,7 +131,7 @@ namespace Inventory
 
                 for (int index = 0; index < inventorySlots.Count; index++)
                 {
-                    if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.MaxStackSize))
+                    if (inventorySlots[index].item == null || (inventorySlots[index].item.ID == item.ID && inventorySlots[index].quantity < inventorySlots[index].item.maxStackSize))
                     {
                         inventorySlots[index] = new() { item = item, quantity = inventorySlots[index].quantity + 1 };
                         isInventoryFull = false;
@@ -154,7 +154,7 @@ namespace Inventory
     {
         public ItemSO item;
         public int quantity;
-        
+
         public bool IsEmpty => item == null;
 
         public InventorySlot ChangeQuantity(int newQuantity) => new()

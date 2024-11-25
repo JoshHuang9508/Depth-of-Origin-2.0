@@ -6,7 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new coin", menuName = "Items/Coin")]
 public class CoinSO : ItemSO
 {
-    [Header("Setting")]
-    public int coinAmount;
+    [Header("Attributes")]
+    public int amount;
+
+    [Header("References")]
     public RuntimeAnimatorController runtimeAnimatorController;
 }
