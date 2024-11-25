@@ -7,7 +7,7 @@ using TMPro;
 
 public class LoadingScene : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] TextMeshProUGUI text;
 
     public async void PlayLoadAnimation()

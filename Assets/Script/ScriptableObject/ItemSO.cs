@@ -11,7 +11,7 @@ namespace Inventory
         public string Name;
         [TextArea] public string Description;
 
-        [Header("Settings")]
+        [Header("Attributes")]
         public bool IsStackable;
         public bool isStorable = true;
         public int MaxStackSize = 1;
@@ -73,7 +73,7 @@ namespace Inventory
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
             if (player != null)
             {
-                if(player.coinAmount < buyPrice)
+                if (player.coinAmount < buyPrice)
                 {
                     Debug.Log("You don't have enough money!");
                 }
@@ -99,7 +99,7 @@ namespace Inventory
 
     public enum Rarity
     {
-        Common, Uncommon, Rare, Exotic, Mythic, Legendary 
+        Common, Uncommon, Rare, Exotic, Mythic, Legendary
     }
 
     public interface IDestoryableItem

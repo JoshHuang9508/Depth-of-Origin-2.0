@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 public class IntroScene : MonoBehaviour
 {
     [Header("Dialogue")]
-    [SerializeField] private string[] dialog1 = new string[] 
+    [SerializeField]
+    private string[] dialog1 = new string[]
     {
         "... Where is here?",
         "...",
@@ -14,12 +15,14 @@ public class IntroScene : MonoBehaviour
         "Whatever, I should move right now.",
         "(Use W,A,S,D to control your character.)"
     };
-    [SerializeField] private string[] dialog2 = new string[]
+    [SerializeField]
+    private string[] dialog2 = new string[]
     {
         "...A chest?",
         "(Get close to the chest and press E to open it.)"
     };
-    [SerializeField] private string[] dialog3 = new string[]
+    [SerializeField]
+    private string[] dialog3 = new string[]
     {
         "Sword... maybe I can use it to break the barrier.",
         "... But how do I hold it?",
@@ -27,13 +30,15 @@ public class IntroScene : MonoBehaviour
         "(Press 1 to take out melee weapon.)",
         "(Use Mouse0 to swing melee weapon.)"
     };
-    [SerializeField] private string[] dialog4 = new string[]
+    [SerializeField]
+    private string[] dialog4 = new string[]
     {
         "...",
         "Another chest?",
         "(Open the chest.)"
     };
-    [SerializeField] private string[] dialog5 = new string[]
+    [SerializeField]
+    private string[] dialog5 = new string[]
     {
         "A Bow... it's been a long time since I use a bow.",
         "Seems like some pots are in the lake.",
@@ -42,12 +47,14 @@ public class IntroScene : MonoBehaviour
         "(Press 2 to take out ranged weapon.)",
         "(Move your mouse to aim, then use Mouse0 to shoot arrows.)"
     };
-    [SerializeField] private string[] dialog6 = new string[]
+    [SerializeField]
+    private string[] dialog6 = new string[]
     {
         "Chest Again...",
         "(Open the chest.)"
     };
-    [SerializeField] private string[] dialog7 = new string[]
+    [SerializeField]
+    private string[] dialog7 = new string[]
     {
         "Potions? Looks yuck...",
         "How does it taste like?",
@@ -64,7 +71,8 @@ public class IntroScene : MonoBehaviour
         "What is that sound?!",
         "(A monster appeared! Defeat it before go ahead.)"
     };
-    [SerializeField] private string[] dialog8 = new string[]
+    [SerializeField]
+    private string[] dialog8 = new string[]
     {
         "Oh my lord, it was close",
         "What was that creature? It was horrible!",
@@ -73,7 +81,7 @@ public class IntroScene : MonoBehaviour
         "(Instruction chapter are completed, you can find it and more detail by pressing I. GLHF!)"
     };
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Chest meleeWeaponChest;
     [SerializeField] private Chest rangedWeaponChest;
     [SerializeField] private Chest potionChest;
@@ -110,9 +118,9 @@ public class IntroScene : MonoBehaviour
         }
     }
 
-    private async void StartDialogue() 
+    private async void StartDialogue()
     {
-        if(player == null)
+        if (player == null)
         {
             await Task.Delay(100);
             StartDialogue();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MouseFollower : MonoBehaviour
 {
-    [Header("Object Reference")]
+    [Header("References")]
     [SerializeField] private Canvas canvas;
     [SerializeField] private ItemSlot itemSlot;
 
@@ -15,7 +15,7 @@ public class MouseFollower : MonoBehaviour
         itemSlot = GetComponentInChildren<ItemSlot>();
     }
 
-    public void SetData(Sprite sprite,int quantity)
+    public void SetData(Sprite sprite, int quantity)
     {
         itemSlot.SetData(sprite, quantity);
     }

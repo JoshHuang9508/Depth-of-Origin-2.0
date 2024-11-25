@@ -6,10 +6,10 @@ using TMPro;
 
 public class BossHealthBarDisplay : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Attributes")]
     [SerializeField] private Gradient healthBarGradient;
     [SerializeField] private Gradient ShieldBarGradient;
-    
+
     [Header("References")]
     [SerializeField] private TMP_Text healthText, bossName;
     [SerializeField] private Slider healthBarSlider, shieldBarSlider;
@@ -43,7 +43,7 @@ public class BossHealthBarDisplay : MonoBehaviour
 
     private void SetVisiable(bool Visiable)
     {
-        for(int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
             child.gameObject.SetActive(Visiable);

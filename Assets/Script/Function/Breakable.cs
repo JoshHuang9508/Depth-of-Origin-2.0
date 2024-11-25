@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour, IDamageable
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private float health;
 
-    [Header("Looting")]
+    [Header("Lootings")]
     public List<Coins> coins;
     public List<Lootings> lootings;
     public List<GameObject> wreckage;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip breakSound;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private GameObject itemDropper;
 
@@ -41,7 +41,7 @@ public class Breakable : MonoBehaviour, IDamageable
                 KillObject();
             }
         }
-        
+
     }
 
     private void Start()

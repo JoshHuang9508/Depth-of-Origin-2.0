@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private float smoothing;
     [SerializeField] private Vector3 offset = Vector3.zero;
 
-    [Header("Object Reference")]
+    [Header("References")]
     [SerializeField] private Transform target;
     [SerializeField] private Collider2D mapBounds;
 
-    [Header("Dynamic Data")]
+    [Header("Status")]
     [SerializeField] private bool isFollowing_x = true;
     [SerializeField] private bool isFollowing_y = true;
     [SerializeField] private Vector3 newPosition;
@@ -25,7 +25,7 @@ public class MainCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(target == null) return;
+        if (target == null) return;
 
         try
         {
@@ -38,7 +38,7 @@ public class MainCamera : MonoBehaviour
 
         newPosition = Vector3.Lerp(transform.position, target.transform.position + offset, smoothing);
 
-        if(mapBounds != null)
+        if (mapBounds != null)
         {
             Vector2 targetPos_x = new(newPosition.x, 0);
             Vector2 targetPos_y = new(0, newPosition.y);

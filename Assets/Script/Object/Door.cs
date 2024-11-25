@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public bool isOpen;
     public bool canReopen;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private BoxCollider2D BoxCollider2D;
 

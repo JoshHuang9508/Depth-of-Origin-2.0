@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class KeyDisplay : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private GameObject keysDisplayModel;
 
     //Runtime data
@@ -25,7 +25,7 @@ public class KeyDisplay : MonoBehaviour
             Debug.LogWarning("Can't find player (sent by SceneLoader.cs)");
         }
 
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

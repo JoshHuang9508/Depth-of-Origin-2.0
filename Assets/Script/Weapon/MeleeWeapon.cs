@@ -14,11 +14,11 @@ public class MeleeWeapon : MonoBehaviour
     public bool isflip;
     public Target target;
 
-    [Header("Reference")]
+    [Header("References")]
     public SpriteRenderer spriteRenderer;
     public Animator animator;
 
-    [Header("Audio")]
+    [Header("Audios")]
     public AudioSource audioPlayer;
     public AudioClip swingSound;
 }

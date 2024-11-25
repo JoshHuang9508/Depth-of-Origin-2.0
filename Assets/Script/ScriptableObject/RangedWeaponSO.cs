@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new ranged weapon", menuName = "Items/Weapon/Ranged Weapon")]
 public class RangedWeaponSO : WeaponSO, IEquipable, IUnequipable
 {
-    [Header("Object Reference")]
+    [Header("References")]
     public GameObject projectileObject;
 
     [Header("Projectile Settings")]

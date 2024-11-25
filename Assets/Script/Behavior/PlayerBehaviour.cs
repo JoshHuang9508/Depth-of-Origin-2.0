@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class PlayerBehaviour : MonoBehaviour, IDamageable
 {
-    [Header("States")]
+    [Header("Status")]
     [SerializeField] private float health;
     public int coinAmount = 0;
     public List<Key> keyList = new();
@@ -32,7 +32,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     [Header("Weapon")]
     [SerializeField] private WeaponSO currentWeapon;
 
-    [Header("Attributes")]
+    [Header("Stats")]
     [SerializeField] private float maxHealth;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float strength;
@@ -48,7 +48,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     [SerializeField] private float critRate_e;
     [SerializeField] private float critDamage_e;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioClip hitSound;
 
     [Header("UI")]
@@ -126,7 +126,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         dialog.SetActive(false);
         dialogText = dialog.GetComponentInChildren<TMP_Text>();
     }
-    
+
     private void Update()
     {
         animator.SetBool("isHit", isHit);
@@ -145,7 +145,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             if (canHeal && health != MaxHealth) Heal();
             if (canMove) Moving();
             if (canSprint && canMove && Input.GetKeyDown(sprintKey)) Sprint();
-            if (canAttack && Input.GetKeyDown(meleeWeaponKey) ) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
+            if (canAttack && Input.GetKeyDown(meleeWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
             if (canAttack && Input.GetKeyDown(rangedWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
             if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
             {
@@ -176,7 +176,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     {
         toggle, open, close
     }
-    
+
     public void ToggleBackpackUI(UIOption option = UIOption.toggle)
     {
         if (pauseUI.IsActive || deathUI.IsActive) return;
@@ -261,7 +261,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
                 deathUI.Close();
                 break;
         }
-        
+
     }
 
     private void CloseAllUI()
@@ -273,7 +273,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     /////////////
     //functions//
     /////////////
-    
+
     private void Attacking()
     {
         WeaponSO weapon = currentWeapon;
@@ -352,7 +352,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     }
 
     private void Moving()
-    {   
+    {
         animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
         characterSprite.flipX = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.2 ? Input.GetAxis("Horizontal") < 0 : characterSprite.flipX;
@@ -363,10 +363,10 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         float sec = 1 / Mathf.Cos(Mathf.Atan2(Y, X));
         float maxStrenthRaw = Mathf.Abs(csc) < Mathf.Abs(sec) ? Mathf.Abs(csc) : Mathf.Abs(sec);
         float inputStrenthRaw = Mathf.Sqrt(X * X + Y * Y);
-        float percentage = inputStrenthRaw  / maxStrenthRaw;
+        float percentage = inputStrenthRaw / maxStrenthRaw;
         int walkSpeedMutiplyer = isWalkSpeedMutiply ? 2 : 1;
 
-        Vector2 movement =  WalkSpeed * walkSpeedMutiplyer * percentage * new Vector2(X, Y).normalized;
+        Vector2 movement = WalkSpeed * walkSpeedMutiplyer * percentage * new Vector2(X, Y).normalized;
 
         currentRb.velocity = movement;
     }
@@ -440,7 +440,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         {
             results[i] = 0;
 
-            for(int k = 0; k < items.Count; k++)
+            for (int k = 0; k < items.Count; k++)
             {
                 if (items[k] != null) results[i] += (float)items[k].GetType().GetField(attribute).GetValue(items[k]);
             }
@@ -536,7 +536,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
 
 
 
-    
+
     ////////////////
     //Modification//
     ////////////////
@@ -613,7 +613,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             SetDamageText(transform.position, healValue, DamageTextDisplay.DamageTextType.Heal);
 
             camEffect.PlayCamEffect(CamEffect.CamEffectType.Heal);
-        }  
+        }
     }
 
     public void SetWeapon(int index)
@@ -662,7 +662,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
                 dropItemIndexList.Add(index);
             }
         }
-        foreach(int index in dropItemIndexList)
+        foreach (int index in dropItemIndexList)
         {
             DropItem(backpackData, index, -1);
         }
@@ -679,7 +679,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         isActive = true;
     }
 
-    public void DropItem(InventorySO inventory ,int index, int quantity)
+    public void DropItem(InventorySO inventory, int index, int quantity)
     {
         ItemDropper ItemDropper = Instantiate(
             itemDropperReference,
@@ -700,8 +700,8 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         SetActive(false);
         dialog.transform.position = transform.position + new Vector3(0, 1.5f, 0);
         dialog.SetActive(true);
-       
-        foreach(string line in dialogLines)
+
+        foreach (string line in dialogLines)
         {
             dialogText.text = line;
             await Task.Delay(1000);

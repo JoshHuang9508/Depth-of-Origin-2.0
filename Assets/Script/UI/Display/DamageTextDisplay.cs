@@ -5,12 +5,12 @@ using TMPro;
 
 public class DamageTextDisplay : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public float existTime = 0.5f;
     public float floatSpeed = 500;
     public Vector3 floatingDir = new(0, 1, 0);
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private TextMeshProUGUI textmesh;
     [SerializeField] private RectTransform rtransform;
 

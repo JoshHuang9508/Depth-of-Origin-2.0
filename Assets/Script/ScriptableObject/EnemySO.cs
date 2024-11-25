@@ -8,7 +8,7 @@ public class EnemySO : ScriptableObject
     [Header("Name")]
     public string Name;
 
-    [Header("Attributes Setting")]
+    [Header("Attributes")]
     public float maxHealth;
     public float walkSpeed;
     public bool haveShield;
@@ -21,20 +21,18 @@ public class EnemySO : ScriptableObject
     public float chaseField;
     public float attackField;
     public bool isBoss;
-
-    [Header("Setting")]
     public WalkType walkType;
     public Difficulty difficulty = Difficulty.Easy;
 
     [Header("Weapon")]
     public WeaponSO weapon;
 
-    [Header("Looting")]
+    [Header("Lootings")]
     public List<Coins> coins;
     public List<Lootings> lootings;
     public List<GameObject> wreckage;
 
-    [Header("Reference")]
+    [Header("References")]
     public GameObject enemyObject;
     public int angleOffset;
 

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 public class SceneLoader : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public LoadType loadType = LoadType.Scene;
-    
-    [Header("Setting(Chunk)")]
+
+    [Header("Attributes(Chunk)")]
     public GameObject transformPos;
 
-    [Header("Setting(Scene)")]
+    [Header("Attributes(Scene)")]
     public int sceneNum = 0;
 
     //Runtime data
@@ -85,11 +85,11 @@ public class SceneLoader : MonoBehaviour
 
         while (loadingScene == null)
         {
-            try 
-            { 
-                loadingScene = GameObject.FindWithTag("Load").GetComponent<LoadingScene>(); 
+            try
+            {
+                loadingScene = GameObject.FindWithTag("Load").GetComponent<LoadingScene>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.LogError($"An error occurred: {ex.Message}");
             }
@@ -106,12 +106,12 @@ public class SceneLoader : MonoBehaviour
 
         while (sceneControl == null)
         {
-            try 
+            try
             {
                 GameObject[] gameObjects = null;
                 gameObjects = GameObject.FindGameObjectsWithTag("SceneControl");
 
-                foreach(GameObject gameObject in gameObjects)
+                foreach (GameObject gameObject in gameObjects)
                 {
                     SceneControl sc = gameObject.GetComponent<SceneControl>();
 
@@ -122,7 +122,7 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Debug.LogError($"An error occurred: {ex.Message}");
             }

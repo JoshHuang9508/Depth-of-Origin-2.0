@@ -16,13 +16,13 @@ public class RangedWeapon : MonoBehaviour
     public bool isflip;
     public Target target;
 
-    [Header("Reference")]
+    [Header("References")]
     public Rigidbody2D objectRigidbody;
     public SpriteRenderer spriteRenderer;
     public Collider2D thisCollider;
     public TrailRenderer trail;
 
-    [Header("Audio")]
+    [Header("Audios")]
     public AudioSource audioPlayer;
     public AudioClip shotSound;
 }

@@ -8,15 +8,15 @@ using UnityEngine.UI;
 
 public class EquipmentPage : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Attributes")]
     public ActionType actionType;
     [SerializeField] private bool isDragable;
 
-    [Header("Dynamic Data")]
+    [Header("Status")]
     [SerializeField] private List<ItemSlot> itemSlotList = new();
     [SerializeField] private int currentDraggedItemIndex = -1;
 
-    [Header("Object Reference")]
+    [Header("References")]
     public InventorySO equipmentData;
     [SerializeField] private Interface UIinterface;
     [SerializeField] private ItemSlot itemSlot;

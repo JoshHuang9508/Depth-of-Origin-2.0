@@ -6,7 +6,7 @@ using TMPro;
 
 public class HealthBarDisplay : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Attributes")]
     [SerializeField] private Gradient gradient;
 
     [Header("References")]
@@ -17,7 +17,7 @@ public class HealthBarDisplay : MonoBehaviour
 
     private void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

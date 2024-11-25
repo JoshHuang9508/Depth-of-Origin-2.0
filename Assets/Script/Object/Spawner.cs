@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private float spawnRange;
     [SerializeField] private float minSpawnDistance = 15;
     [SerializeField] private int mobsStayedLimit = 4;
@@ -13,11 +13,11 @@ public class Spawner : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private List<EnemySO> spawnList;
 
-    [Header("Setting(Auto Spawn)")]
+    [Header("Attributes(Auto Spawn)")]
     [SerializeField] private bool autoSpawn = true;
     [SerializeField] private float spawnGap = 3;
 
-    [Header("Runtime Data")]
+    [Header("Status")]
     [SerializeField] private int spawnTimes;
     [SerializeField] private int stayedMobs;
     [SerializeField] private float spawnTimer = 0;
@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
         {
             spawnTimer += Time.deltaTime;
 
-            if(spawnTimer > spawnGap)
+            if (spawnTimer > spawnGap)
             {
                 SpawnMobs();
                 spawnTimer = 0;

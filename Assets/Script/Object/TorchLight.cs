@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class TorchLight : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Light2D torchLight;
     [SerializeField] private Animator animator;
 
@@ -16,7 +16,7 @@ public class TorchLight : MonoBehaviour
     {
         torchLight = GetComponentInChildren<Light2D>();
         animator = GetComponent<Animator>();
-        if(!extinguished) StartCoroutine(torchLightShining());
+        if (!extinguished) StartCoroutine(torchLightShining());
     }
 
     public void LightTorch()
@@ -38,7 +38,7 @@ public class TorchLight : MonoBehaviour
         while (torchLight.intensity * mutiplier <= targetIntensityValue * mutiplier)
         {
             torchLight.intensity += 0.05f * mutiplier;
-            yield return new WaitForSeconds(Random.Range(0.1f,0.05f));
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.05f));
         }
         StartCoroutine(torchLightShining());
     }

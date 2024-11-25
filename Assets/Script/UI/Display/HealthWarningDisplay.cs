@@ -6,16 +6,16 @@ using TMPro;
 
 public class HealthWarningDisplay : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private Gradient gradient;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Image fill;
     [SerializeField] private PlayerBehaviour player;
 
     void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

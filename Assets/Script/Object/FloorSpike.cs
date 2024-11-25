@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FloorSpike : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private float damage;
     [SerializeField] private float inactiveTime;
     [SerializeField] private float activeTime;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Animator animator;
 
     //Runtime data

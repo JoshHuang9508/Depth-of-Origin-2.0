@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Talkable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public string[] dialog = new string[] { };
 
     //Runtime data
@@ -13,9 +13,9 @@ public class Talkable : MonoBehaviour
     void Update()
     {
         try
-        { 
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); 
-        } 
+        {
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        }
         catch
         {
             Debug.LogWarning("Can't find player (sent by talkable.cs)");

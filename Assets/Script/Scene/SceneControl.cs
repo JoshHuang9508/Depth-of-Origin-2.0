@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public class SceneControl : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Attributes")]
     public int sceneNum;
     public List<Manager> managers;
 
@@ -17,7 +17,7 @@ public class SceneControl : MonoBehaviour
         while (!isSceneSetup)
         {
             isSceneSetup = true;
-            foreach(Manager manager in managers)
+            foreach (Manager manager in managers)
             {
                 isSceneSetup = manager.isSetup && isSceneSetup;
             }

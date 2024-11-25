@@ -6,7 +6,7 @@ using UserInterface;
 
 public class Tradable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public List<InventorySlot> shopGoodsList = new();
 
     [Header("Data")]
@@ -18,10 +18,10 @@ public class Tradable : MonoBehaviour
     private void Update()
     {
         try
-        { 
+        {
             player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-        } 
-        catch 
+        }
+        catch
         {
             Debug.LogWarning("Can't find player (sent by Tradable.cs)");
         }

@@ -8,21 +8,21 @@ using UnityEngine;
 
 public class ItemPage : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Attributes")]
     public ActionType actionType;
     [SerializeField] private bool isDragable;
 
-    [Header("Dynamic Data")]
+    [Header("Status")]
     [SerializeField] private List<ItemSlot> itemSlotList = new();
     [SerializeField] private int currentDraggedItemIndex = -1;
 
-    [Header("Object Reference")]
+    [Header("References")]
     public InventorySO inventoryData;
     [SerializeField] private Interface UIinterface;
     [SerializeField] private ItemSlot itemSlot;
     [SerializeField] private RectTransform contentPanel;
 
-    
+
     private void Awake()
     {
         UIinterface = GetComponentInParent<Interface>();

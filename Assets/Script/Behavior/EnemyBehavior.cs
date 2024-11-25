@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour, IDamageable
 {
-    [Header("States")]
+    [Header("Status")]
     [SerializeField] private float health;
     [SerializeField] private float shieldHealth;
 
@@ -13,7 +13,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [Header("Weapon")]
     [SerializeField] private WeaponSO currentWeapon;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deadSound;
@@ -70,7 +70,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         {
             shieldHealth = Mathf.Max(0, value);
 
-            if(shieldHealth <= 0) haveShield = false;
+            if (shieldHealth <= 0) haveShield = false;
 
             if (shieldHealth > 0) haveShield = true;
         }
@@ -91,11 +91,11 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        try 
-        { 
+        try
+        {
             player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
             target = player.gameObject;
-        } 
+        }
         catch
         {
             Debug.LogWarning("Can't find player (sent by enemyBehaviour.cs)");
@@ -106,7 +106,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         //update timer
         UpdateTimer();
         UpdateWeapon();
-        if(player != null) UpdateDirection();
+        if (player != null) UpdateDirection();
 
         //actions
         if (canActive)

@@ -6,10 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new equipment", menuName = "Items/Equipment")]
 public class EquipmentSO : ItemSO, IEquipable, IDestoryableItem, ISellable, IBuyable, IUnequipable, IDroppable
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public EquipmentType equipmentType;
 
-    [Header("Effection")]
+    [Header("Effections")]
     public float E_maxHealth;
     public float E_strength;
     public float E_walkSpeed;

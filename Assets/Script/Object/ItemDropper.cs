@@ -5,7 +5,7 @@ using Inventory;
 
 public class ItemDropper : MonoBehaviour
 {
-    [Header("Object Reference")]
+    [Header("References")]
     public GameObject itemModel;
 
     private void Start()
@@ -22,7 +22,7 @@ public class ItemDropper : MonoBehaviour
 
         foreach (Coins coin in coins)
         {
-            for(int i = 0; i < coin.amount; i++)
+            for (int i = 0; i < coin.amount; i++)
             {
                 var dropCoin = Instantiate(itemModel, transform.position, Quaternion.identity, transform.parent);
 
@@ -40,9 +40,9 @@ public class ItemDropper : MonoBehaviour
 
         foreach (Lootings looting in lootings)
         {
-            if(Random.Range(0, 100) < looting.chance)
+            if (Random.Range(0, 100) < looting.chance)
             {
-                for(int i = 0; i < looting.quantity; i++)
+                for (int i = 0; i < looting.quantity; i++)
                 {
                     var dropItem = Instantiate(itemModel, transform.position, Quaternion.identity, transform.parent);
 
@@ -67,7 +67,7 @@ public class ItemDropper : MonoBehaviour
         }
     }
 
-    public void DropWrackages(List<GameObject> wreckages) 
+    public void DropWrackages(List<GameObject> wreckages)
     {
         if (wreckages.Count == 0)
         {

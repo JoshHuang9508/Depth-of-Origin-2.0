@@ -5,13 +5,13 @@ using TMPro;
 
 public class CoinDisplay : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private TMP_Text coinCounterText;
     [SerializeField] private PlayerBehaviour player;
 
     void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

@@ -4,6 +4,7 @@ using RandomRoom;
 
 public class Room : MonoBehaviour
 {
+	[Header("Attributes")]
 	public RoomType roomType;
 	public int index;
 }

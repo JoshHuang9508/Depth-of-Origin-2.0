@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "OurFirstGame2.sln"
+    "dotnet.defaultSolution": "Depth-of-Origin2.0.sln"
 }

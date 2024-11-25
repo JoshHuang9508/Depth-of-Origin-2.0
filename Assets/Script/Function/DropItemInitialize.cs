@@ -6,10 +6,10 @@ using UnityEngine.Rendering.Universal;
 
 public class DropItemInitialize : MonoBehaviour
 {
-    [Header("Item")]
+    [Header("Attributes")]
     public ItemSO item;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject backgroundLightObject;
     [SerializeField] private Light2D spriteLight2D;

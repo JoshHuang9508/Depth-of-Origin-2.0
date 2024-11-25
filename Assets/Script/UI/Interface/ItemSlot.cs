@@ -10,7 +10,7 @@ namespace UserInterface
 {
     public class ItemSlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
     {
-        [Header("Reference")]
+        [Header("References")]
         [SerializeField] private Image itemImage;
         [SerializeField] private TMP_Text quantityTxt;
         [SerializeField] private Image borderImage;
@@ -19,7 +19,7 @@ namespace UserInterface
         private bool isEmpty = true;
 
         public Action<ItemSlot> OnItemClicked, OnItemDroppedOn, OnItemBeginDrag, OnItemEndDrag, OnRightMouseBtnClick;
-        
+
 
         private void Awake()
         {
@@ -86,7 +86,7 @@ namespace UserInterface
 
         public void OnDrag(PointerEventData eventData)
         {
-            
+
         }
     }
 }

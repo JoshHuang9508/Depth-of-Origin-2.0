@@ -8,20 +8,20 @@ namespace UserInterface
 {
     public class ItemActionPanel : MonoBehaviour
     {
-        [Header("Object Reference")]
+        [Header("References")]
         [SerializeField] private GameObject buttonprefab;
 
 
         public void AddButton(string name, Action onClickAction)
         {
-            GameObject button = Instantiate(buttonprefab,transform);
+            GameObject button = Instantiate(buttonprefab, transform);
             button.GetComponent<Button>().onClick.AddListener(() => onClickAction());
             button.GetComponentInChildren<TMPro.TMP_Text>().text = name;
         }
 
         public void Toggle(bool val)
         {
-            if(val == true)
+            if (val == true)
             {
                 RemoveOldButtons();
             }
@@ -30,7 +30,7 @@ namespace UserInterface
 
         public void RemoveOldButtons()
         {
-            foreach(Transform transformChildObjects in transform)
+            foreach (Transform transformChildObjects in transform)
             {
                 Destroy(transformChildObjects.gameObject);
             }

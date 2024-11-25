@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public bool isOpen;
     public bool canReopen;
     [SerializeField] private List<Coins> coins;
     [SerializeField] private List<Lootings> lootings;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip openSound;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] public Interactable interactable;
     [SerializeField] private GameObject itemDropper;

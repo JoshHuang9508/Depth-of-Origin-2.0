@@ -7,14 +7,14 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class Interactable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public bool interactable = true;
     public bool requireKey = false;
     [SerializeField] private string keyName;
     [SerializeField] private List<string> keyNames;
     [SerializeField] private UnityEvent interactAction, enterRangeAction, leaveRangeAction;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private GameObject dialogObjectReference;
 
     //Runtime data
@@ -49,7 +49,7 @@ public class Interactable : MonoBehaviour
             Debug.LogWarning("Can't find player (sent by interactable.cs)");
         }
 
-        if(player != null)
+        if (player != null)
         {
             CheckPlayerInRange();
 

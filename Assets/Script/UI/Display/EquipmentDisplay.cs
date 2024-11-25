@@ -6,7 +6,7 @@ using TMPro;
 
 public class EquipmentDisplay : MonoBehaviour
 {
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Image meleeWeaponImage;
     [SerializeField] private Image rangedWeaponImage;
     [SerializeField] private Image potionImage;
@@ -17,7 +17,7 @@ public class EquipmentDisplay : MonoBehaviour
 
     private void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             SetDisplay();
         }

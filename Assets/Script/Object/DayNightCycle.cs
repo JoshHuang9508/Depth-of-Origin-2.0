@@ -5,12 +5,12 @@ using UnityEngine.Rendering.Universal;
 
 public class DayNightCycle : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     [SerializeField] private Gradient gradient;
     [SerializeField] private float dayTime, nightTime;
     [SerializeField] private float transformTimeGap;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private Light2D globalLight;
 
     //Runtime data
@@ -32,12 +32,12 @@ public class DayNightCycle : MonoBehaviour
     {
         timeElapse += Time.deltaTime;
 
-        if(timeElapse >= dayTime && time == GlobalTime.Day)
+        if (timeElapse >= dayTime && time == GlobalTime.Day)
         {
             StartCoroutine(DayNightTransform(time));
             time = GlobalTime.Night;
         }
-        else if(timeElapse >= nightTime && time == GlobalTime.Night)
+        else if (timeElapse >= nightTime && time == GlobalTime.Night)
         {
             StartCoroutine(DayNightTransform(time));
             time = GlobalTime.Day;

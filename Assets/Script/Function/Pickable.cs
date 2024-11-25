@@ -6,14 +6,12 @@ using UnityEngine.Rendering.Universal;
 
 public class Pickable : MonoBehaviour
 {
-    [Header("Setting")]
+    [Header("Attributes")]
     public int quantity = 1;
     public float pickupDistance;
-
-    [Header("Item")]
     [SerializeField] private ItemSO item;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private InventorySO inventoryData;
 
     //Runtime data
@@ -39,7 +37,7 @@ public class Pickable : MonoBehaviour
             Debug.LogWarning("Can't find player (sent by pickable.cs)");
         }
 
-        if(player != null)
+        if (player != null)
         {
             inventoryData = player.backpackData;
         }
