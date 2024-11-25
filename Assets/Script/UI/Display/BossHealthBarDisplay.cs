@@ -21,14 +21,7 @@ public class BossHealthBarDisplay : MonoBehaviour
 
     void Update()
     {
-        try
-        {
-            boss = GameObject.FindWithTag("Boss").GetComponent<EnemyBehavior>();
-        }
-        catch
-        {
-            //Debug.Log("No boss detected.");
-        }
+        boss = GameObject.FindWithTag("Boss").GetComponent<EnemyBehavior>();
 
         if (boss != null && Vector3.Distance(player.transform.position, boss.transform.position) <= 15)
         {
@@ -53,15 +46,15 @@ public class BossHealthBarDisplay : MonoBehaviour
     private void SetDisplay()
     {
         bossName.text = boss.enemy.Name;
-        healthBarSlider.value = boss.Health / boss.enemy.maxHealth;
-        healthText.text = $"{Mathf.RoundToInt(boss.Health)} / {boss.enemy.maxHealth}";
-        healthBarFill.color = healthBarGradient.Evaluate(boss.Health / boss.enemy.maxHealth);
+        healthBarSlider.value = boss.health / boss.enemy.maxHealth;
+        healthText.text = $"{Mathf.RoundToInt(boss.health)} / {boss.enemy.maxHealth}";
+        healthBarFill.color = healthBarGradient.Evaluate(boss.health / boss.enemy.maxHealth);
 
         shieldBar.SetActive(boss.enemy.haveShield);
         if (boss.enemy.haveShield)
         {
-            shieldBarSlider.value = boss.ShieldHealth / boss.enemy.maxShieldHealth;
-            shieldBarFill.color = ShieldBarGradient.Evaluate(boss.ShieldHealth / boss.enemy.maxShieldHealth);
+            shieldBarSlider.value = boss.shieldHealth / boss.enemy.maxShieldHealth;
+            shieldBarFill.color = ShieldBarGradient.Evaluate(boss.shieldHealth / boss.enemy.maxShieldHealth);
         }
     }
 }

@@ -6,81 +6,81 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour, IDamageable
 {
-    [Header("Status")]
-    public bool canDamage = true;
+    [Header("Datas")]
 
-    [Header("Settings")]
-    [SerializeField] private float health;
+    [Header("Attributes")]
+    [SerializeField] private float maxHealth;
 
     [Header("Lootings")]
-    public List<Coins> coins;
-    public List<Lootings> lootings;
-    public List<GameObject> wreckage;
+    [SerializeField] private List<Coins> coins;
+    [SerializeField] private List<Lootings> lootings;
+    [SerializeField] private List<GameObject> wreckage;
 
-    [Header("Audio")]
+    [Header("Audios")]
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip breakSound;
 
-    [Header("Reference")]
+    [Header("References")]
     [SerializeField] private GameObject itemDropper;
 
-    //Rumtime Data
-    private PlayerBehaviour player;
+    // Status
+    public float health { get; private set; }
 
-    private float DamageTimer
+    // Timer 
+    public enum TimerType { Damage }
+    private Dictionary<TimerType, float> timerList = new()
     {
-        get
-        {
-            return DamageTimer;
-        }
-        set
-        {
-            DamageTimer = Mathf.Max(DamageTimer, value);
-            canDamage = DamageTimer <= 0;
-        }
-    }
-    public float Health
-    {
-        get
-        {
-            return health;
-        }
-        set
-        {
-            health = Mathf.Max(0, value);
-            if (health <= 0) KillObject();
-        }
-    }
+        { TimerType.Damage, 0 }
+    };
+
+    // Rumtime Data
+    private PlayerBehaviour player;
 
     private void Update()
     {
-        try
-        {
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-        }
-        catch
-        {
-            Debug.LogWarning("Can't find player (sent by Breakable.cs)");
-        }
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
 
         UpdateTimer();
     }
 
+    ///////////////
+    // Abilities //
+    ///////////////
+
+    private void Heal(float value)
+    {
+        health += Mathf.Min(value, maxHealth - health);
+    }
+    private void Damage(float value)
+    {
+        health -= value;
+        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        // AudioPlayer.Playsound(hitSound);
+    }
     public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!canDamage || attackerType != AttackerType.player) return;
+        if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
 
-        Health -= damage;
-        //instantiate damege text
-        // AudioPlayer.Playsound(hitSound);
+        Damage(damage);
 
-        DamageTimer = 0.2f;
+        SetTimer(TimerType.Damage, 0.2f);
     }
+
+    ////////////
+    // Update //
+    ////////////
 
     private void UpdateTimer()
     {
-        DamageTimer = Mathf.Max(0, DamageTimer - Time.deltaTime);
+        foreach (TimerType timerType in timerList.Keys)
+        {
+            timerList[timerType] -= Time.deltaTime;
+        }
     }
+
+    ////////////////
+    // Properties //
+    ////////////////
 
     private void KillObject()
     {
@@ -101,4 +101,13 @@ public class Breakable : MonoBehaviour, IDamageable
 
         Destroy(gameObject);
     }
+    public void SetTimer(TimerType timerType, float value)
+    {
+        timerList[timerType] = value;
+    }
+    public bool IsTimerEnd(TimerType timerType)
+    {
+        return timerList[timerType] <= 0;
+    }
+
 }

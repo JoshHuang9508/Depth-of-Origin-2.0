@@ -1,17 +1,12 @@
+using System.Collections.Generic;
 using NUnit;
+using NUnit.Framework;
 using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour, IDamageable
 {
-    [Header("Status")]
-    [SerializeField] private float health, shieldHealth;
-    public bool haveShield, canActive, canMove, canAttack, canBeDamaged, canDodge, isHit;
-
     [Header("Datas")]
     public EnemySO enemy;
-
-    [Header("Weapon")]
-    [SerializeField] private WeaponSO currentWeapon;
 
     [Header("Audio")]
     [SerializeField] private AudioClip hitSound;
@@ -24,151 +19,79 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject itemDropper;
 
-    //Runtime data
+    // Status
+    public float health { get; private set; }
+    public float shieldHealth { get; private set; }
+
+    // Effection
+    public List<Effection> effectionList = new();
+    private float maxHealth_e, walkSpeed_e, strength_e, defence_e, critRate_e, critDamage_e;
+
+    // Weapon
+    private WeaponSO weapon;
+
+    // Flags
+    public bool isActive, haveShield;
+
+    // Timer
+    public enum TimerType { Move, Attack, Damage, Dodge, Hit }
+    private Dictionary<TimerType, float> timerList = new()
+    {
+        { TimerType.Move, 0 },
+        { TimerType.Attack, 0 },
+        { TimerType.Damage, 0 },
+        { TimerType.Dodge, 0 },
+        { TimerType.Hit, 0 }
+    };
+
+    // Runtime data
     private PlayerBehaviour player;
     private GameObject target;
-    private Vector2 currentPos;
-    private Vector2 targetPos;
-    private Vector2 diraction;
+
+    // Direction | will change to A* Pathfinding
+    private Vector2 currentPos, targetPos, diraction;
     private float facingAngle;
-    private float MoveTimer
-    {
-        get
-        {
-            return MoveTimer;
-        }
-        set
-        {
-            MoveTimer = Mathf.Max(MoveTimer, value);
-            canMove = MoveTimer <= 0;
-        }
-    }
-    private float AttackTimer
-    {
-        get
-        {
-            return AttackTimer;
-        }
-        set
-        {
-            AttackTimer = Mathf.Max(AttackTimer, value);
-            canAttack = AttackTimer <= 0;
-        }
-    }
-    private float DamageTimer
-    {
-        get
-        {
-            return DamageTimer;
-        }
-        set
-        {
-            DamageTimer = Mathf.Max(DamageTimer, value);
-            canBeDamaged = DamageTimer <= 0;
-        }
-    }
-    private float DodgeTimer
-    {
-        get
-        {
-            return DodgeTimer;
-        }
-        set
-        {
-            DodgeTimer = Mathf.Max(DodgeTimer, value);
-            canDodge = DodgeTimer <= 0;
-        }
-    }
-    private float HitTimer
-    {
-        get
-        {
-            return HitTimer;
-        }
-        set
-        {
-            HitTimer = Mathf.Max(HitTimer, value);
-            isHit = HitTimer <= 0;
-        }
-    }
-
-
-
-    public float Health
-    {
-        get
-        {
-            return health;
-        }
-        set
-        {
-            health = Mathf.Max(0, value);
-
-            if (health <= 0) KillEnemy();
-        }
-    }
-
-    public float ShieldHealth
-    {
-        get
-        {
-            return shieldHealth;
-        }
-        set
-        {
-            shieldHealth = Mathf.Max(0, value);
-
-            haveShield = shieldHealth > 0;
-        }
-    }
 
     private void Start()
     {
         health = enemy.maxHealth;
         shieldHealth = enemy.maxShieldHealth;
         haveShield = enemy.haveShield;
-        currentWeapon = enemy.weapon;
-        canActive = true;
+        weapon = enemy.weapon;
+        isActive = true;
 
         if (enemy.isBoss) gameObject.tag = "Boss";
     }
 
     private void Update()
     {
-        try
-        {
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            target = player.gameObject;
-        }
-        catch
-        {
-            Debug.LogWarning("Can't find player (sent by enemyBehaviour.cs)");
-        }
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
+        target = player?.gameObject ?? null;
 
-        animator.enabled = !isHit;
+        animator.enabled = !IsTimerEnd(TimerType.Hit);
 
-        //update timer
         UpdateTimer();
         // UpdateWeapon();
-        if (player != null) UpdateDirection();
+        UpdateDirection();
 
         //actions
-        if (canActive)
+        if (isActive)
         {
-            if (canMove) Moving();
-            if (canAttack && Vector3.Distance(targetPos, currentPos) < enemy.attackField)
+            if (IsTimerEnd(TimerType.Move)) Move();
+            if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null)
             {
-                if (currentWeapon != null)
-                {
-                    AttackTimer = currentWeapon.attackSpeed;
-                    Attacking(currentWeapon);
-                }
+                SetTimer(TimerType.Attack, weapon.attackSpeed);
+                Attack(weapon);
             }
         }
     }
 
+    ///////////////
+    // Abilities //
+    ///////////////
+
     // Change to A* Pathfinding
-    private void Moving()
+    private void Move()
     {
         entitySprite.flipX = (currentPos.x - targetPos.x) > 0.2;
 
@@ -222,8 +145,28 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 break;
         }
     }
-
-    private void Attacking(WeaponSO weapon)
+    private void Heal(float value)
+    {
+        health += Mathf.Min(value, enemy.maxHealth - health);
+    }
+    private void Damage(float value)
+    {
+        health -= value;
+        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        // AudioPlayer.Playsound(hitSound);
+    }
+    private void ShieldDamage(float value)
+    {
+        shieldHealth -= value;
+        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        // AudioPlayer.Playsound(hitSound);
+    }
+    private void Dodge(float value)
+    {
+        // SetDamageText(transform.position, 0, DamageTextDisplay.DamageTextType.Dodge);
+        // AudioPlayer.Playsound(dodgeSound);
+    }
+    private void Attack(WeaponSO weapon)
     {
         if (weapon == null) return;
 
@@ -237,17 +180,16 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 break;
         }
     }
-
     public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!canBeDamaged || attackerType != AttackerType.player) return;
+        if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
 
         if (Random.Range(0f, 100f) <= enemy.dodgeRate)
         {
-            player.SetDamageText(transform.position, 0, DamageTextDisplay.DamageTextType.Dodge);
+            Dodge(damage);
 
-            DodgeTimer = 1f;
-            DamageTimer = 0.2f;
+            SetTimer(TimerType.Dodge, 1f);
+            SetTimer(TimerType.Damage, 0.2f);
         }
         else
         {
@@ -257,44 +199,46 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
             if (haveShield)
             {
-                ShieldHealth -= trueDamage;
-
-                // // AudioPlayer.Playsound(shieldHitSound);
+                ShieldDamage(trueDamage);
             }
             else if (!haveShield)
             {
-                Health -= trueDamage;
-
+                Damage(trueDamage);
                 currentRb.velocity = trueKnockbackForce;
-                // AudioPlayer.Playsound(hitSound);
 
-                MoveTimer = trueKnockbackTime;
-                AttackTimer = trueKnockbackTime;
-                HitTimer = trueKnockbackTime;
+                SetTimer(TimerType.Hit, trueKnockbackTime);
+                SetTimer(TimerType.Attack, trueKnockbackTime);
+                SetTimer(TimerType.Move, trueKnockbackTime);
             }
 
-            player.SetDamageText(transform.position, damage / (1 + (0.001f * enemy.defence)), isCrit ? DamageTextDisplay.DamageTextType.DamageCrit : DamageTextDisplay.DamageTextType.Damage);
-
-            DamageTimer = 0.2f;
+            SetTimer(TimerType.Damage, 0.2f);
         }
     }
 
+    ////////////
+    // Update //
+    ////////////
+
     private void UpdateTimer()
     {
-        MoveTimer = Mathf.Max(0, MoveTimer - Time.deltaTime);
-        AttackTimer = Mathf.Max(0, AttackTimer - Time.deltaTime);
-        DamageTimer = Mathf.Max(0, DamageTimer - Time.deltaTime);
-        DodgeTimer = Mathf.Max(0, DodgeTimer - Time.deltaTime);
-        HitTimer = Mathf.Max(0, HitTimer - Time.deltaTime);
+        foreach (TimerType timerType in timerList.Keys)
+        {
+            if (timerList[timerType] > 0) timerList[timerType] -= Time.deltaTime;
+        }
     }
-
     private void UpdateDirection()
     {
+        if (target == null) return;
+
         currentPos = transform.position;
         targetPos = target.transform.position;
         diraction = (targetPos - currentPos).normalized;
         facingAngle = Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg;
     }
+
+    ////////////////
+    // Properties //
+    ////////////////
 
     public void KillEnemy()
     {
@@ -312,5 +256,13 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         // AudioPlayer.Playsound(deadSound);
 
         Destroy(gameObject);
+    }
+    public void SetTimer(TimerType timerType, float value)
+    {
+        timerList[timerType] = value;
+    }
+    public bool IsTimerEnd(TimerType timerType)
+    {
+        return timerList[timerType] <= 0;
     }
 }

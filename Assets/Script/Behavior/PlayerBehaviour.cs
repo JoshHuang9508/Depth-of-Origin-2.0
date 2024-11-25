@@ -6,32 +6,20 @@ using UserInterface;
 using System;
 using TMPro;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 public class PlayerBehaviour : MonoBehaviour, IDamageable
 {
     [Header("Status")]
-    public float health;
-    public int coins = 0;
     public List<Key> keyList = new();
-    public List<Effection> effectionList = new();
-    public bool isActive;
-    public bool canMove;
-    public bool canAttack;
-    public bool canBeDamaged;
-    public bool canSprint;
-    public bool canHeal;
-    public bool isHit;
-    public bool isWalkSpeedMutiply;
-    public bool isInterfaceOpen;
 
     [Header("Datas")]
     public InventorySO backpackData;
     public InventorySO equipmentData;
     public InventorySO keyData;
     public InventorySO shopData;
-    // KeyData
 
-    [Header("Key Settings")]
+    [Header("KeyCode")]
     public KeyCode sprintKey;
     public KeyCode backpackKey;
     public KeyCode usePotionKey;
@@ -41,9 +29,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     public KeyCode interactKey;
     public KeyCode pauseKey;
 
-    [Header("Weapon")]
-    [SerializeField] private WeaponSO currentWeapon;
-
     [Header("Attributes")]
     [SerializeField] private float maxHealth;
     [SerializeField] private float walkSpeed;
@@ -52,23 +37,15 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     [SerializeField] private float critRate;
     [SerializeField] private float critDamage;
 
-    [Header("Effections")]
-    [SerializeField] private float maxHealth_e;
-    [SerializeField] private float walkSpeed_e;
-    [SerializeField] private float strength_e;
-    [SerializeField] private float defence_e;
-    [SerializeField] private float critRate_e;
-    [SerializeField] private float critDamage_e;
-
     [Header("Audio")]
     [SerializeField] private AudioClip hitSound;
 
     [Header("UI")]
-    public Interface backpackUI;
-    public Interface shopUI;
-    public PauseMenu pauseUI;
-    public DeathMenu deathUI;
-    public CamEffect camEffect;
+    [SerializeField] private Interface backpackUI;
+    [SerializeField] private Interface shopUI;
+    [SerializeField] private PauseMenu pauseUI;
+    [SerializeField] private DeathMenu deathUI;
+    [SerializeField] public CamEffect camEffect;
 
     [Header("References")]
     [SerializeField] private Animator animator;
@@ -81,91 +58,34 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     [SerializeField] private GameObject itemDropperReference;
     [SerializeField] private GameObject dialogObjectReference;
 
+    // Status
+    public float health { get; private set; }
+    public int coins { get; private set; }
+
+    // Effection
+    public List<Effection> effectionList = new();
+    private float maxHealth_e, walkSpeed_e, strength_e, defence_e, critRate_e, critDamage_e;
+
+    // Weapon
+    private WeaponSO currentWeapon;
+
+    // Flags
+    public bool isActive, isInterfaceOpen;
+
     // Timer
-    private float MoveTimer
+    public enum TimerType { Move, Attack, Damage, Sprint, Heal, WalkSpeedMutiply, Hit }
+    private Dictionary<TimerType, float> timerList = new()
     {
-        get
-        {
-            return MoveTimer;
-        }
-        set
-        {
-            MoveTimer = Mathf.Max(MoveTimer, value);
-            canMove = MoveTimer <= 0;
-        }
-    }
-    private float AttackTimer
-    {
-        get
-        {
-            return AttackTimer;
-        }
-        set
-        {
-            AttackTimer = Mathf.Max(AttackTimer, value);
-            canAttack = AttackTimer <= 0;
-        }
-    }
-    private float DamageTimer
-    {
-        get
-        {
-            return DamageTimer;
-        }
-        set
-        {
-            DamageTimer = Mathf.Max(DamageTimer, value);
-            canBeDamaged = DamageTimer <= 0;
-        }
-    }
-    private float SprintTimer
-    {
-        get
-        {
-            return SprintTimer;
-        }
-        set
-        {
-            SprintTimer = Mathf.Max(SprintTimer, value);
-            canSprint = SprintTimer <= 0;
-        }
-    }
-    private float HealTimer
-    {
-        get
-        {
-            return HealTimer;
-        }
-        set
-        {
-            HealTimer = Mathf.Max(HealTimer, value);
-            canHeal = HealTimer <= 0;
-        }
-    }
-    private float HitTimer
-    {
-        get
-        {
-            return HitTimer;
-        }
-        set
-        {
-            HitTimer = Mathf.Max(HitTimer, value);
-            isHit = HitTimer <= 0;
-        }
-    }
-    private float WalkSpeedMutiplyTimer
-    {
-        get
-        {
-            return WalkSpeedMutiplyTimer;
-        }
-        set
-        {
-            WalkSpeedMutiplyTimer = Mathf.Max(WalkSpeedMutiplyTimer, value);
-            isWalkSpeedMutiply = WalkSpeedMutiplyTimer > 0;
-        }
-    }
+        { TimerType.Move, 0 },
+        { TimerType.Attack, 0 },
+        { TimerType.Damage, 0 },
+        { TimerType.Sprint, 0 },
+        { TimerType.Heal, 0 },
+        { TimerType.WalkSpeedMutiply, 0 },
+        { TimerType.Hit, 0 }
+    };
+
+    // Timer Getter
     public float MaxHealth { get { return maxHealth + maxHealth_e; } }
     public float WalkSpeed { get { return walkSpeed * ((100 + walkSpeed_e) / 100); } }
     public float Strength { get { return strength + strength_e; } }
@@ -176,6 +96,8 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     // Runtime data
     private GameObject dialog;
     private TMP_Text dialogText;
+
+    // Direction
     private Vector2 mousePos, currentPos, diraction;
     private float facingAngle;
 
@@ -195,7 +117,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        animator.SetBool("isHit", isHit);
+        animator.SetBool("isHit", IsTimerEnd(TimerType.Hit));
 
         //update
         UpdateStates();
@@ -208,39 +130,33 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         //actions
         if (isActive)
         {
-            if (canHeal && health != MaxHealth)
+            if (IsTimerEnd(TimerType.Heal) && health != MaxHealth)
             {
-                HealTimer = 5;
-                ModifyHealth(MaxHealth * 0.05f);
+                SetTimer(TimerType.Heal, 0.5f);
+                Heal(MaxHealth * 0.05f);
             };
-            if (canMove) Move();
-            if (canSprint && canMove && Input.GetKeyDown(sprintKey)) Sprint();
-            if (canAttack && Input.GetKeyDown(meleeWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
-            if (canAttack && Input.GetKeyDown(rangedWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
+            if (IsTimerEnd(TimerType.Attack) && Input.GetKey(useWeaponKey) && currentWeapon != null)
+            {
+                SetTimer(TimerType.Attack, currentWeapon.attackSpeed);
+                Attack(currentWeapon);
+            }
+            if (IsTimerEnd(TimerType.Move)) Move();
+            if (IsTimerEnd(TimerType.Sprint) && Input.GetKeyDown(sprintKey)) Sprint();
+            if (Input.GetKeyDown(meleeWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(3).item) SetWeapon(1); else SetWeapon(0);
+            if (Input.GetKeyDown(rangedWeaponKey)) if (currentWeapon != equipmentData.GetItemAt(4).item) SetWeapon(2); else SetWeapon(0);
             if (Input.GetKeyDown(usePotionKey) && equipmentData.GetItemAt(5).item != null)
             {
                 SetEffection(equipmentData.GetItemAt(5).item as PotionSO);
                 equipmentData.RemoveItem(5, 1);
             }
-            if (canAttack && Input.GetKey(useWeaponKey) && currentWeapon != null)
-            {
-                AttackTimer = currentWeapon.attackSpeed;
-                Attack(currentWeapon);
-            }
-            if (Input.GetKeyDown(backpackKey))
-            {
-                ToggleBackpackUI();
-            }
-            if (Input.GetKeyDown(pauseKey))
-            {
-                TogglePauseMenu();
-            }
+            if (Input.GetKeyDown(backpackKey)) ToggleBackpackUI();
+            if (Input.GetKeyDown(pauseKey)) TogglePauseMenu();
         }
     }
 
-    //////
-    //UI//
-    //////
+    ////////
+    // UI //
+    ////////
 
     public enum UIOption
     {
@@ -335,9 +251,9 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         shopUI.Close();
     }
 
-    /////////////
-    //functions//
-    /////////////
+    ///////////////
+    // Abilities //
+    ///////////////
 
     private void Attack(WeaponSO weapon = null)
     {
@@ -353,7 +269,21 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
                 break;
         }
     }
-
+    private void Heal(float value)
+    {
+        health += Mathf.Min(value, MaxHealth - health);
+        SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.Heal);
+        camEffect.PlayCamEffect(CamEffect.CamEffectType.Heal);
+        // AudioPlayer.Playsound(healSound);
+    }
+    private void Damage(float value)
+    {
+        health -= value;
+        SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        camEffect.PlayCamEffect(CamEffect.CamEffectType.Hit);
+        // AudioPlayer.Playsound(hitSound);
+        _ = MainCamera.Shake(0.1f, 0.2f);
+    }
     private void Move()
     {
         animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
@@ -367,42 +297,37 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         float maxStrenthRaw = Mathf.Abs(csc) < Mathf.Abs(sec) ? Mathf.Abs(csc) : Mathf.Abs(sec);
         float inputStrenthRaw = Mathf.Sqrt(X * X + Y * Y);
         float percentage = inputStrenthRaw / maxStrenthRaw;
-        int walkSpeedMutiplyer = isWalkSpeedMutiply ? 2 : 1;
 
-        Vector2 movement = WalkSpeed * walkSpeedMutiplyer * percentage * new Vector2(X, Y).normalized;
+        Vector2 movement = WalkSpeed * percentage * new Vector2(X, Y).normalized;
 
         currentRb.velocity = movement;
     }
-
     private void Sprint()
     {
-        SprintTimer = 1f;
-        WalkSpeedMutiplyTimer = 0.1f;
-        DamageTimer = 0.1f;
+        currentRb.velocity *= 2;
+        SetTimer(TimerType.Sprint, 1f);
+        SetTimer(TimerType.WalkSpeedMutiply, 0.1f);
     }
-
     public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
     {
-        if (!canBeDamaged || !isActive || attackerType != AttackerType.enemy) return;
+        if (!IsTimerEnd(TimerType.Damage) || !isActive || attackerType != AttackerType.enemy) return;
 
         float trueDamage = damage / (1 + (0.001f * Defence));
         Vector2 trueKnockbackForce = knockbackForce / (1 + (0.001f * Defence));
         float trueKnockbackTime = knockbackTime / (1f + (0.001f * Defence));
 
-        ModifyHealth(-trueDamage);
+        Damage(trueDamage);
         currentRb.velocity = trueKnockbackForce;
-        SetDamageText(transform.position, trueDamage, DamageTextDisplay.DamageTextType.PlayerHit);
-        // AudioPlayer.Playsound(hitSound);
-        MainCamera.Shake(0.1f, 0.2f);
 
-        MoveTimer = trueKnockbackTime;
-        HealTimer = 20;
-        DamageTimer = 0.2f;
+        SetTimer(TimerType.Hit, 0.1f);
+        SetTimer(TimerType.Damage, 0.2f);
+        SetTimer(TimerType.Move, trueKnockbackTime);
+        SetTimer(TimerType.Heal, 20f);
     }
 
-    //////////
-    //Update//
-    //////////
+    ////////////
+    // Update //
+    ////////////
 
     private void UpdateStates()
     {
@@ -438,19 +363,13 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         //check overhealing
         if (health > MaxHealth) health = MaxHealth;
     }
-
     private void UpdateTimer()
     {
-        //update timer
-        MoveTimer = Mathf.Max(0, MoveTimer - Time.deltaTime);
-        AttackTimer = Mathf.Max(0, AttackTimer - Time.deltaTime);
-        DamageTimer = Mathf.Max(0, DamageTimer - Time.deltaTime);
-        SprintTimer = Mathf.Max(0, SprintTimer - Time.deltaTime);
-        HealTimer = Mathf.Max(0, HealTimer - Time.deltaTime);
-        WalkSpeedMutiplyTimer = Mathf.Max(0, WalkSpeedMutiplyTimer - Time.deltaTime);
-        HitTimer = Mathf.Max(0, HitTimer - Time.deltaTime);
+        foreach (TimerType timerType in timerList.Keys)
+        {
+            timerList[timerType] -= Time.deltaTime;
+        }
     }
-
     // private void UpdateKeyList()
     // {
     //     //update key list
@@ -464,7 +383,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     //     }
     //     keyList.Remove(indexOfKeyList != -1 ? keyList[indexOfKeyList] : null);
     // }
-
     private void UpdateEffectionList()
     {
         //update effection list
@@ -479,7 +397,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         }
         effectionList.Remove(indexOfEffectionList != -1 ? effectionList[indexOfEffectionList] : null);
     }
-
     private void UpdateMousePos()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -488,11 +405,8 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         facingAngle = Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg;
     }
 
-
-
-
     ////////////////
-    //Modification//
+    // Properties //
     ////////////////
 
     public void SetEquipment(int index)
@@ -531,12 +445,10 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             backpackData.AddItem(equipmentData.AddItemTo(backpackData.RemoveItem(index, -1), 5));
         }
     }
-
     public void UnEquipment(int index)
     {
         equipmentData.AddItemTo(backpackData.AddItem(equipmentData.RemoveItem(index, -1)), index);
     }
-
     public void SetEffection(PotionSO edibleItem)
     {
         int indexOfEffectionList = 0;
@@ -563,9 +475,8 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             }
         }
 
-        if (edibleItem.E_heal != 0) ModifyHealth(edibleItem.E_heal);
+        if (edibleItem.E_heal != 0) Heal(edibleItem.E_heal);
     }
-
     public void SetWeapon(int index)
     {
         switch (index)
@@ -583,7 +494,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
 
         equipmentDisplay.SetEquipmentDisplay(index);
     }
-
     public void PlayAnimator(string animatorName)
     {
         switch (animatorName)
@@ -593,7 +503,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
                 break;
         }
     }
-
     public void KillPlayer()
     {
         ToggleDeathMenu(UIOption.open);
@@ -618,7 +527,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         }
         ModifyCoin(-coins);
     }
-
     public void RevivePlayer()
     {
         //enable player object
@@ -627,7 +535,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         characterSprite.enabled = true;
         isActive = true;
     }
-
     public void DropItem(InventorySO inventory, int index, int quantity)
     {
         ItemDropper ItemDropper = Instantiate(
@@ -638,12 +545,10 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             ).GetComponent<ItemDropper>();
         ItemDropper.DropItem(inventory.RemoveItem(index, quantity));
     }
-
     public void SetActive(bool value)
     {
         isActive = value;
     }
-
     public async Task SetDialog(string[] dialogLines)
     {
         SetActive(false);
@@ -666,7 +571,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         dialogText.text = "";
         dialog.SetActive(false);
     }
-
     public void SetDamageText(Vector3 position, float value, DamageTextDisplay.DamageTextType type)
     {
         var damageText = Instantiate(
@@ -678,24 +582,18 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
 
         damageText.SetDisplay(value, type);
     }
-
     public void ModifyCoin(int value)
     {
         coins += value;
     }
-
-    public void ModifyHealth(float value)
+    public void SetTimer(TimerType timerType, float value)
     {
-        health += value;
-
-        if (value < 0) camEffect.PlayCamEffect(CamEffect.CamEffectType.Hit);
-        if (value > 0) camEffect.PlayCamEffect(CamEffect.CamEffectType.Heal);
-
-        if (health > MaxHealth) health = MaxHealth;
-        if (health <= 0) KillPlayer();
+        timerList[timerType] = value;
     }
-
-
+    public bool IsTimerEnd(TimerType timerType)
+    {
+        return timerList[timerType] <= 0;
+    }
 }
 
 [Serializable]
