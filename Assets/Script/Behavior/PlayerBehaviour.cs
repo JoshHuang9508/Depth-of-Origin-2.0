@@ -365,8 +365,11 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     }
     private void UpdateTimer()
     {
-        foreach (TimerType timerType in timerList.Keys)
+        List<TimerType> keys = new(timerList.Keys);
+
+        for (int i = 0; i < keys.Count; i++)
         {
+            TimerType timerType = keys[i];
             timerList[timerType] -= Time.deltaTime;
         }
     }

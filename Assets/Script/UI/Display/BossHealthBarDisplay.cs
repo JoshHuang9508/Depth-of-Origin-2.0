@@ -21,7 +21,7 @@ public class BossHealthBarDisplay : MonoBehaviour
 
     void Update()
     {
-        boss = GameObject.FindWithTag("Boss").GetComponent<EnemyBehavior>();
+        boss = GameObject.FindWithTag("Boss")?.GetComponent<EnemyBehavior>() ?? null;
 
         if (boss != null && Vector3.Distance(player.transform.position, boss.transform.position) <= 15)
         {

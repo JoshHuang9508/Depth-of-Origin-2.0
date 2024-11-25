@@ -548,19 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03f8458ee537474c956c9755e0c6295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  coins: 0
   keyList: []
-  effectionList: []
-  isActive: 0
-  canMove: 0
-  canAttack: 0
-  canBeDamaged: 0
-  canSprint: 0
-  canHeal: 0
-  canHit: 0
-  isWalkSpeedMutiply: 0
-  isInterfaceOpen: 0
   backpackData: {fileID: 11400000, guid: eb0377a7f3fb1ee49b9a9fd32dd76585, type: 2}
   equipmentData: {fileID: 11400000, guid: f8aedf2ea14a94e2f98cf6113f6d7e68, type: 2}
   keyData: {fileID: 0}
@@ -573,19 +561,12 @@ MonoBehaviour:
   rangedWeaponKey: 50
   interactKey: 101
   pauseKey: 27
-  currentWeapon: {fileID: 0}
   maxHealth: 100
   walkSpeed: 6
   strength: 0
   defence: 0
   critRate: 5
   critDamage: 50
-  maxHealth_e: 0
-  walkSpeed_e: 0
-  strength_e: 0
-  defence_e: 0
-  critRate_e: 0
-  critDamage_e: 0
   hitSound: {fileID: 8300000, guid: e96b3471e0115490695dfadd2552a369, type: 3}
   backpackUI: {fileID: 1389329436604755146}
   shopUI: {fileID: 8410755319345371705}
@@ -601,6 +582,9 @@ MonoBehaviour:
   damageTextReference: {fileID: 8842133498016202654, guid: 1ece5649299024e42bb29bc9f2f0ef8f, type: 3}
   itemDropperReference: {fileID: 4800655640655451192, guid: 72b490c07dabaf343bea163bbd9936d1, type: 3}
   dialogObjectReference: {fileID: 6383876599670681586, guid: f0b84136927864e46a5e0f0158c677e3, type: 3}
+  effectionList: []
+  isActive: 0
+  isInterfaceOpen: 0
 --- !u!1 &653134237024041325
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,10 +2789,10 @@ RectTransform:
   - {fileID: 2326198907990449109}
   m_Father: {fileID: 337995281005740089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -100}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2952145256025655017
 CanvasRenderer:
@@ -3650,7 +3634,7 @@ MonoBehaviour:
   m_margin: {x: -8.998444, y: 0, z: -0.00021362305, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4763792810703488350
@@ -7180,11 +7164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df084ab1db6cc434aa378c39d56cacfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothing: 0
-  offset: {x: 0, y: 0, z: 0}
-  isFollowing_x: 1
-  isFollowing_y: 1
-  newPosition: {x: 0, y: 0, z: 0}
+  smoothing: 3
+  offset: {x: 0, y: 0, z: -10}
   mainCamera: {fileID: 3050201460876570058}
   target: {fileID: 664553951490728858}
   mapBounds: {fileID: 0}
@@ -7503,7 +7484,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2308376323747479514}
         m_TargetAssemblyTypeName: DeathMenuController, Assembly-CSharp
-        m_MethodName: BackToTitle
+        m_MethodName: TitleBtnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -221,9 +221,12 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
     private void UpdateTimer()
     {
-        foreach (TimerType timerType in timerList.Keys)
+        List<TimerType> keys = new(timerList.Keys);
+
+        for (int i = 0; i < keys.Count; i++)
         {
-            if (timerList[timerType] > 0) timerList[timerType] -= Time.deltaTime;
+            TimerType timerType = keys[i];
+            timerList[timerType] -= Time.deltaTime;
         }
     }
     private void UpdateDirection()
