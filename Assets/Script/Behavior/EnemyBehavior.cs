@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using NUnit;
-using NUnit.Framework;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour, IDamageable
@@ -31,26 +30,28 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     private WeaponSO weapon;
 
     // Flags
-    public bool isActive, haveShield;
+    public bool isActive, haveShield, isPlayerMove;
 
     // Timer
-    public enum TimerType { Move, Attack, Damage, Dodge, Hit }
+    public enum TimerType { Move, Attack, Damage, Dodge, Hit, Path }
     private Dictionary<TimerType, float> timerList = new()
     {
         { TimerType.Move, 0 },
         { TimerType.Attack, 0 },
         { TimerType.Damage, 0 },
         { TimerType.Dodge, 0 },
-        { TimerType.Hit, 0 }
+        { TimerType.Hit, 0 },
+        { TimerType.Path, 0 }
     };
 
     // Runtime data
     private PlayerBehaviour player;
     private GameObject target;
 
-    // Direction | will change to A* Pathfinding
-    private Vector2 currentPos, targetPos, diraction;
-    private float facingAngle;
+    // Path | will change to A* Pathfinding
+    private Vector2 currentPos, targetPos;
+    private List<Vector2> path;
+    private Coroutine pathFollower = null;
 
     private void Start()
     {
@@ -69,15 +70,16 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         target = player?.gameObject ?? null;
 
         animator.enabled = !IsTimerEnd(TimerType.Hit);
+        entitySprite.flipX = (targetPos - currentPos).normalized.x > 0;
 
         UpdateTimer();
         // UpdateWeapon();
-        UpdateDirection();
+        UpdatePos();
 
         //actions
         if (isActive)
         {
-            if (IsTimerEnd(TimerType.Move)) Move();
+            if (IsTimerEnd(TimerType.Move) && Vector2.Distance(targetPos, currentPos) <= enemy.chaseField) Move();
             if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null)
             {
                 SetTimer(TimerType.Attack, weapon.attackSpeed);
@@ -93,55 +95,23 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     // Change to A* Pathfinding
     private void Move()
     {
-        entitySprite.flipX = (currentPos.x - targetPos.x) > 0.2;
-
         switch (enemy.walkType)
         {
             case EnemySO.WalkType.Melee:
-
-                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField && Vector3.Distance(targetPos, currentPos) > enemy.attackField)
+                if (IsTimerEnd(TimerType.Path))
                 {
-                    currentRb.MovePosition(currentPos + enemy.walkSpeed * Time.deltaTime * diraction);
-
-                    animator.SetBool("ismove", true);
-                    animator.SetBool("ischase", true);
+                    if (pathFollower != null) StopCoroutine(pathFollower);
+                    SetTimer(TimerType.Path, 2f);
+                    path = PathfindingManager.FindPath(currentPos, targetPos, enemy.chaseField, 0.4f);
+                    pathFollower = StartCoroutine(FollowPath());
                 }
-                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
-                {
-                    currentRb.velocity = Vector2.zero;
-
-                    animator.SetBool("ismove", false);
-                    animator.SetBool("ischase", false);
-                }
-                else if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField && Vector3.Distance(targetPos, currentPos) < enemy.attackField)
-                {
-                    currentRb.velocity = Vector2.zero;
-
-                    animator.SetBool("ismove", false);
-                    animator.SetBool("ischase", false);
-                }
+                // animator.SetBool("ismove", true);
+                // animator.SetBool("ischase", true);
                 break;
-
             case EnemySO.WalkType.Sniper:
 
-                if (Vector3.Distance(targetPos, currentPos) < enemy.chaseField)
-                {
-                    currentRb.MovePosition(currentPos - enemy.walkSpeed * Time.deltaTime * diraction);
-
-                    animator.SetBool("ismove", true);
-                    animator.SetBool("ischase", true);
-                }
-                else if (Vector3.Distance(targetPos, currentPos) > enemy.chaseField)
-                {
-                    currentRb.velocity = Vector2.zero;
-
-                    animator.SetBool("ismove", false);
-                    animator.SetBool("ischase", false);
-                }
-                break;
 
             case EnemySO.WalkType.None:
-
                 break;
         }
     }
@@ -214,6 +184,24 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             SetTimer(TimerType.Damage, 0.2f);
         }
     }
+    private IEnumerator FollowPath()
+    {
+        int currentIndex = 0;
+
+        while (currentIndex < path.Count - 1)
+        {
+            Vector2 nextPos = path != null && path.Count > 0 ? path[currentIndex + 1] : currentPos;
+            Vector2 direction = (nextPos - currentPos).normalized;
+
+            while (Vector2.Distance(currentPos, nextPos) > 0.1f)
+            {
+                currentRb.MovePosition(currentPos + enemy.walkSpeed * Time.deltaTime * direction);
+                yield return null;
+            }
+
+            currentIndex++;
+        }
+    }
 
     ////////////
     // Update //
@@ -229,14 +217,13 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             timerList[timerType] -= Time.deltaTime;
         }
     }
-    private void UpdateDirection()
+    private void UpdatePos()
     {
         if (target == null) return;
 
+        if (targetPos != (Vector2)target.transform.position) isPlayerMove = true;
         currentPos = transform.position;
         targetPos = target.transform.position;
-        diraction = (targetPos - currentPos).normalized;
-        facingAngle = Mathf.Atan2(diraction.y, diraction.x) * Mathf.Rad2Deg;
     }
 
     ////////////////
