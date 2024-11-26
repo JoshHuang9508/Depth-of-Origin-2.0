@@ -14,7 +14,6 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [Header("References")]
     [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer entitySprite;
-    [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject itemDropper;
 

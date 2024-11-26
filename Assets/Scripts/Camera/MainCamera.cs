@@ -10,11 +10,7 @@ public class MainCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private MainCamera mainCamera;
     [SerializeField] private Transform target;
-    [SerializeField] private Collider2D mapBounds;
-
-    // Flags
-    private bool isFollowing_x = true;
-    private bool isFollowing_y = true;
+    [SerializeField] private Rigidbody2D currentRb;
 
     // Static instance
     static MainCamera globalMainCamera;
@@ -28,28 +24,10 @@ public class MainCamera : MonoBehaviour
     {
         if (target == null) return;
 
-        mapBounds = GameObject.FindWithTag("WorldEdge")?.GetComponent<Collider2D>() ?? null;
+        // Vector3 newPosition = Vector3.Lerp(transform.position, target.transform.position + offset, smoothing);
+        Vector3 newPosition = target.transform.position + offset;
 
-        Vector3 newPosition = Vector3.Lerp(transform.position, target.transform.position + offset, smoothing);
-
-        if (mapBounds != null)
-        {
-            Vector2 targetPos_x = new(newPosition.x, 0);
-            Vector2 targetPos_y = new(0, newPosition.y);
-
-            isFollowing_x = mapBounds.bounds.Contains(targetPos_x);
-            isFollowing_y = mapBounds.bounds.Contains(targetPos_y);
-
-            transform.position = new Vector3(
-                isFollowing_x ? newPosition.x : transform.position.x,
-                isFollowing_y ? newPosition.y : transform.position.y,
-                -10
-            );
-        }
-        else
-        {
-            transform.position = newPosition;
-        }
+        currentRb.MovePosition(newPosition);
     }
 
     public static IEnumerator Shake(float duration, float magnitude)

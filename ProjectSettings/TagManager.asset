@@ -4,24 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Item
   - Wall
   - BreakableObject
-  - Interface
   - CameraHold
   - Entity
   - HitBox
   - Ground
   - Water
-  - PlayerHitBox
   - Shield
   - Object
   - WorldEdge
   - Boss
-  - AudioPlayer
   - SceneControl
-  - Load
+  - Test
   layers:
   - Default
   - TransparentFX
@@ -33,7 +29,7 @@ TagManager:
   - Wall
   - Object
   - Test
-  - 
+  - MapBound
   - 
   - 
   - 
