@@ -70,7 +70,7 @@ public class Pickable : MonoBehaviour
             }
             else if (item is KeySO key)
             {
-                player.keyList.Add(new Key { key = key, quantity = 1 });
+                player.keyData.AddItem(item, quantity);
             }
             else
             {

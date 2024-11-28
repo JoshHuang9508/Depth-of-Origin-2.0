@@ -25,7 +25,7 @@ namespace Inventory
             inventorySlots = new List<InventorySlot>();
             for (int i = 0; i < Size; i++)
             {
-                inventorySlots.Add(InventorySlot.emptySlot());
+                inventorySlots.Add(InventorySlot.EmptySlot());
             }
         }
 
@@ -78,14 +78,14 @@ namespace Inventory
                 int difAmount = (amount == -1) ? inventorySlots[index].quantity : amount;
 
                 InventorySlot returnSlot = new() { item = inventorySlots[index].item, quantity = difAmount };
-                inventorySlots[index] = (newAmount <= 0) ? InventorySlot.emptySlot() : inventorySlots[index].ChangeQuantity(newAmount);
+                inventorySlots[index] = (newAmount <= 0) ? InventorySlot.EmptySlot() : inventorySlots[index].ChangeQuantity(newAmount);
 
                 OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
 
                 return returnSlot;
             }
 
-            return InventorySlot.emptySlot();
+            return InventorySlot.EmptySlot();
         }
 
         //add item to another inventory at a specific slot. return those items that can't be added in.
@@ -113,7 +113,7 @@ namespace Inventory
                 else continue;
             }
 
-            return InventorySlot.emptySlot();
+            return InventorySlot.EmptySlot();
         }
 
         //add item to another inventory. return those items that can't be added in.
@@ -145,7 +145,7 @@ namespace Inventory
                 else continue;
             }
 
-            return InventorySlot.emptySlot();
+            return InventorySlot.EmptySlot();
         }
     }
 
@@ -155,15 +155,14 @@ namespace Inventory
         public ItemSO item;
         public int quantity;
 
-        public bool IsEmpty => item == null;
+        public readonly bool IsEmpty => item == null;
 
         public InventorySlot ChangeQuantity(int newQuantity) => new()
         {
             item = this.item,
             quantity = newQuantity,
         };
-
-        public static InventorySlot emptySlot() => new()
+        public static InventorySlot EmptySlot() => new()
         {
             item = null,
             quantity = 0,

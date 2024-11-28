@@ -5,69 +5,45 @@ using Inventory;
 
 public class ItemDropper : MonoBehaviour
 {
-    [Header("Object Reference")]
+    [Header("References")]
     public GameObject itemModel;
+
+    // Static instance
+    static ItemDropper GItemDropper;
 
     private void Start()
     {
-        Destroy(gameObject, 5);
+        GItemDropper = this;
     }
-
-    public void DropCoins(List<Coins> coins = null)
+    public static void Drop(Vector2 position, List<Lootings> lootings = null)
     {
-        if (coins.Count == 0)
-        {
-            return;
-        }
+        Transform itemTransform = GameObject.FindWithTag("Item").transform;
 
-        foreach (Coins coin in coins)
-        {
-            for(int i = 0; i < coin.amount; i++)
-            {
-                var dropCoin = Instantiate(itemModel, transform.position, Quaternion.identity, transform.parent);
-
-                dropCoin.GetComponent<DropItemInitialize>().InitialDropItem(dropCoin, coin.coin, coin.amount, 100);
-            }
-        }
-    }
-
-    public void DropItems(List<Lootings> lootings = null)
-    {
-        if (lootings.Count == 0)
-        {
-            return;
-        }
+        if (lootings.Count == 0) return;
 
         foreach (Lootings looting in lootings)
         {
-            if(Random.Range(0, 100) < looting.chance)
-            {
-                for(int i = 0; i < looting.quantity; i++)
-                {
-                    var dropItem = Instantiate(itemModel, transform.position, Quaternion.identity, transform.parent);
+            if (Random.Range(0, 100) > looting.chance) continue;
 
-                    dropItem.GetComponent<DropItemInitialize>().InitialDropItem(dropItem, looting.looting, looting.quantity, 3);
-                }
+            for (int i = 0; i < looting.quantity; i++)
+            {
+                var dropItem = Instantiate(GItemDropper.itemModel, position, Quaternion.identity, itemTransform);
+                dropItem.GetComponent<DroppedItem>().Initialize(dropItem, looting.item, looting.quantity, 3);
             }
         }
     }
-
-    public void DropItem(InventorySlot inventoryItem)
+    public static void Drop(Vector2 position, ItemSO item, int quantity = 1)
     {
-        DropItem(inventoryItem.item, inventoryItem.quantity);
-    }
+        Transform itemTransform = GameObject.FindWithTag("Item").transform;
 
-    public void DropItem(ItemSO item, int quantity = 1)
-    {
         for (int i = 0; i < quantity; i++)
         {
-            var dropItem = Instantiate(itemModel, transform.position, Quaternion.identity, transform.parent);
-
-            dropItem.GetComponent<DropItemInitialize>().InitialDropItem(dropItem, item, 1, 3);
+            var dropItem = Instantiate(GItemDropper.itemModel, position, Quaternion.identity, itemTransform);
+            dropItem.GetComponent<DroppedItem>().Initialize(dropItem, item, 1, 3);
         }
     }
 
-    public void DropWrackages(List<GameObject> wreckages) 
+    public void DropWrackages(List<GameObject> wreckages)
     {
         if (wreckages.Count == 0)
         {
@@ -86,27 +62,14 @@ public class ItemDropper : MonoBehaviour
 [System.Serializable]
 public class Lootings
 {
-    public ItemSO looting;
+    public ItemSO item;
     public int quantity;
     public float chance = 100;
 
-    public Lootings(ItemSO item, float chance = 100, int quantity = 1)
+    public Lootings(ItemSO _item, int _quantity = 1, float _chance = 100)
     {
-        this.looting = item;
-        this.quantity = quantity;
-        this.chance = chance;
-    }
-}
-
-[System.Serializable]
-public class Coins
-{
-    public CoinSO coin;
-    public int amount;
-
-    public Coins(CoinSO coin, int amount)
-    {
-        this.coin = coin;
-        this.amount = amount;
+        item = _item;
+        quantity = _quantity;
+        chance = _chance;
     }
 }

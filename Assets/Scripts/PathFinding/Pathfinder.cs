@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PathfindingManager : Manager
+public class Pathfinder : MonoBehaviour
 {
     public class Node
     {
@@ -24,9 +24,8 @@ public class PathfindingManager : Manager
     }
 
     // 地圖大小和障礙物
-    public int mapSize = 200;
     static float gridSize = 0.25f;
-    static private string ObstacleTag = "Wall";
+    static private string obstacleTag = "Wall";
     static private List<Vector2> directions = new()
     {
         new Vector2(0, gridSize),    // 上
@@ -39,17 +38,20 @@ public class PathfindingManager : Manager
         new Vector2(gridSize, -gridSize)    // 右下
     };
 
-    void Start()
-    {
-        isSetup = false;
-        isSetup = true;
-    }
-
     // void OnDrawGizmos()
     // {
     //     // 繪製搜尋範圍
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(start, maxDistance);
+    //     Gizmos.color = Color.blue; // 開放列表
+    //     foreach (var pos in openListVisual)
+    //     {
+    //         Gizmos.DrawSphere(pos, 0.2f);
+    //     }
+
+    //     Gizmos.color = Color.red; // 封閉列表
+    //     foreach (var pos in closedListVisual)
+    //     {
+    //         Gizmos.DrawCube(pos, Vector3.one * 0.2f);
+    //     }
     // }
 
     static public List<Vector2> FindPath(Vector2 start, Vector2 end, float maxDistance = 10, float hitBoxRadius = 0.5f)
@@ -93,6 +95,13 @@ public class PathfindingManager : Manager
                     currentNode = currentNode.Parent;
                 }
                 path.Reverse();
+
+                // 繪製最終路徑
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    Debug.DrawLine(path[i], path[i + 1], Color.green, 1);
+                }
+
                 return path;
             }
 
@@ -111,8 +120,7 @@ public class PathfindingManager : Manager
                 Collider2D collider = Physics2D.OverlapCircle(neighborPos, hitBoxRadius);
 
                 // 如果該節點是障礙物，跳過
-                if (collider != null && collider.CompareTag(ObstacleTag))
-                    continue;
+                if (collider != null && collider.CompareTag(obstacleTag)) continue;
 
                 // 如果該節點在封閉列表中，跳過
                 if (closedList.Contains(neighborPos)) continue;
@@ -126,8 +134,8 @@ public class PathfindingManager : Manager
 
                 // 如果鄰居在開放列表中且新的 G 值更大，跳過
                 Node existingNode = openList.Find(node => node.Position == neighborPos);
-                if (existingNode != null && neighborNode.G >= existingNode.G)
-                    continue;
+
+                if (existingNode != null && neighborNode.G >= existingNode.G) continue;
 
                 // 加入開放列表
                 if (existingNode == null)
@@ -139,9 +147,11 @@ public class PathfindingManager : Manager
                     existingNode.Parent = currentNode;
                     existingNode.G = neighborNode.G;
                 }
+
+                // 繪製鄰居節點
+                Debug.DrawLine(currentNode.Position, neighborPos, Color.yellow, 1);
             }
         }
-
         // 無法找到路徑
         return null;
     }

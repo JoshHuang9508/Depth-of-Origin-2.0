@@ -6,13 +6,9 @@ using UserInterface;
 using System;
 using TMPro;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 public class PlayerBehaviour : MonoBehaviour, IDamageable
 {
-    [Header("Status")]
-    public List<Key> keyList = new();
-
     [Header("Datas")]
     public InventorySO backpackData;
     public InventorySO equipmentData;
@@ -281,7 +277,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         health -= value;
         SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
         camEffect.PlayCamEffect(CamEffect.CamEffectType.Hit);
-        // AudioPlayer.Playsound(hitSound);
+        AudioPlayer.PlaySound(hitSound);
         _ = MainCamera.Shake(0.1f, 0.2f);
     }
     private void Move()
@@ -298,9 +294,9 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         float inputStrenthRaw = Mathf.Sqrt(X * X + Y * Y);
         float percentage = inputStrenthRaw / maxStrenthRaw;
 
-        Vector2 movement = WalkSpeed * percentage * new Vector2(X, Y).normalized;
+        Vector3 direction = new Vector3(X, Y).normalized;
 
-        currentRb.velocity = movement;
+        currentRb.MovePosition(transform.position + WalkSpeed * percentage * Time.deltaTime * direction);
     }
     private void Sprint()
     {
@@ -308,20 +304,20 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
         SetTimer(TimerType.Sprint, 1f);
         SetTimer(TimerType.WalkSpeedMutiply, 0.1f);
     }
-    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
+    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 kbForce, float kbTime)
     {
         if (!IsTimerEnd(TimerType.Damage) || !isActive || attackerType != AttackerType.enemy) return;
 
         float trueDamage = damage / (1 + (0.001f * Defence));
-        Vector2 trueKnockbackForce = knockbackForce / (1 + (0.001f * Defence));
-        float trueKnockbackTime = knockbackTime / (1f + (0.001f * Defence));
+        Vector2 trueKbForce = kbForce / (1 + (0.001f * Defence));
+        float trueKbTime = kbTime / (1f + (0.001f * Defence));
 
         Damage(trueDamage);
-        currentRb.velocity = trueKnockbackForce;
+        currentRb.velocity = trueKbForce;
 
-        SetTimer(TimerType.Hit, 0.1f);
-        SetTimer(TimerType.Damage, 0.2f);
-        SetTimer(TimerType.Move, trueKnockbackTime);
+        SetTimer(TimerType.Hit, trueKbTime);
+        SetTimer(TimerType.Damage, trueKbTime);
+        SetTimer(TimerType.Move, trueKbTime);
         SetTimer(TimerType.Heal, 20f);
     }
 
@@ -510,51 +506,41 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
     {
         ToggleDeathMenu(UIOption.open);
 
-        //disable player object
-        currentRb.bodyType = RigidbodyType2D.Static;
-        characterSprite.enabled = false;
+        // Disable player
+        enabled = false;
         isActive = false;
+        // currentRb.bodyType = RigidbodyType2D.Static;
+        // characterSprite.enabled = false;
 
-        //drop item
-        List<int> dropItemIndexList = new();
+        // Make lootings
+        List<Lootings> Lootings = new();
         for (int index = 0; index < backpackData.Size; index++)
         {
-            if (UnityEngine.Random.Range(0, 100) >= 50)
-            {
-                dropItemIndexList.Add(index);
-            }
+            if (UnityEngine.Random.Range(0, 100) < 50) continue;
+
+            int quantity = UnityEngine.Random.Range(0, backpackData.GetItemAt(index).quantity); // 0 ~ quantity
+            InventorySlot inventory = backpackData.RemoveItem(index, quantity);
+            Lootings.Add(new(inventory.item, inventory.quantity, 100));
         }
-        foreach (int index in dropItemIndexList)
-        {
-            DropItem(backpackData, index, -1);
-        }
+
+        // Drop items
+        ItemDropper.Drop(transform.position, Lootings);
+
+        // Drop coins
         ModifyCoin(-coins);
     }
     public void RevivePlayer()
     {
-        //enable player object
-        health = MaxHealth;
-        currentRb.bodyType = RigidbodyType2D.Dynamic;
-        characterSprite.enabled = true;
+        // Enable player
+        enabled = true;
         isActive = true;
-    }
-    public void DropItem(InventorySO inventory, int index, int quantity)
-    {
-        ItemDropper ItemDropper = Instantiate(
-            itemDropperReference,
-            transform.position,
-            Quaternion.identity,
-            GameObject.FindWithTag("Item").transform
-            ).GetComponent<ItemDropper>();
-        ItemDropper.DropItem(inventory.RemoveItem(index, quantity));
-    }
-    public void SetActive(bool value)
-    {
-        isActive = value;
+        health = MaxHealth;
+        // currentRb.bodyType = RigidbodyType2D.Dynamic;
+        // characterSprite.enabled = true;
     }
     public async Task SetDialog(string[] dialogLines)
     {
-        SetActive(false);
+        isActive = false;
         dialog.transform.position = transform.position + new Vector3(0, 1.5f, 0);
         dialog.SetActive(true);
 
@@ -570,7 +556,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable
             }
         }
 
-        SetActive(true);
+        isActive = true;
         dialogText.text = "";
         dialog.SetActive(false);
     }

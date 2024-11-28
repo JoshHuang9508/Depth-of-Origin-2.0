@@ -8,16 +8,15 @@ public class MainCamera : MonoBehaviour
     public Vector3 offset = Vector3.zero;
 
     [Header("References")]
-    [SerializeField] private MainCamera mainCamera;
     [SerializeField] private Transform target;
     [SerializeField] private Rigidbody2D currentRb;
 
     // Static instance
-    static MainCamera globalMainCamera;
+    static MainCamera GMainCamera;
 
     private void Start()
     {
-        globalMainCamera = mainCamera;
+        GMainCamera = this;
     }
 
     private void FixedUpdate()
@@ -25,28 +24,24 @@ public class MainCamera : MonoBehaviour
         if (target == null) return;
 
         // Vector3 newPosition = Vector3.Lerp(transform.position, target.transform.position + offset, smoothing);
-        Vector3 newPosition = target.transform.position + offset;
+        Vector3 newPosition = target.position + offset;
 
         currentRb.MovePosition(newPosition);
     }
 
     public static IEnumerator Shake(float duration, float magnitude)
     {
-        Vector3 originalPos = globalMainCamera.transform.localPosition;
-
+        Vector3 originalPos = GMainCamera.transform.localPosition;
         float elapsed = 0.0f;
 
         while (elapsed < duration)
         {
-            globalMainCamera.transform.localPosition = originalPos + new Vector3(Random.Range(-1f, 1f) * magnitude, Random.Range(-1f, 1f) * magnitude, originalPos.z);
-
+            GMainCamera.transform.localPosition = originalPos + new Vector3(Random.Range(-1f, 1f) * magnitude, Random.Range(-1f, 1f) * magnitude, originalPos.z);
             elapsed += Time.deltaTime;
-
             yield return null;
         }
 
-        globalMainCamera.transform.localPosition = originalPos;
-
+        GMainCamera.transform.localPosition = originalPos;
         yield return null;
     }
 }

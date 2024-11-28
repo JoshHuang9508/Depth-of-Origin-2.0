@@ -1,12 +1,10 @@
 using Inventory;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class DropItemInitialize : MonoBehaviour
+public class DroppedItem : MonoBehaviour
 {
-    [Header("Item")]
+    [Header("Data")]
     public ItemSO item;
 
     [Header("Reference")]
@@ -16,7 +14,7 @@ public class DropItemInitialize : MonoBehaviour
     [SerializeField] private Light2D backgroundLight2D;
     [SerializeField] private Animator animator;
 
-    //Runtime data
+    // Flags
     private bool isIntialed = false;
 
     private void Update()
@@ -26,8 +24,7 @@ public class DropItemInitialize : MonoBehaviour
             SetSpriteLight();
         }
     }
-
-    public void InitialDropItem(GameObject gameObject, ItemSO item, int quantity, float pickupDistant)
+    public void Initialize(GameObject gameObject, ItemSO item, int quantity, float pickupDistant)
     {
         this.item = item;
         if (item is CoinSO coin && coin.runtimeAnimatorController != null) animator.runtimeAnimatorController = coin.runtimeAnimatorController;
@@ -39,17 +36,14 @@ public class DropItemInitialize : MonoBehaviour
 
         isIntialed = true;
     }
-
     private void SetSpriteImage()
     {
         spriteRenderer.sprite = item.Image;
     }
-
     private void SetSpriteLight()
     {
         spriteLight2D.lightCookieSprite = item.Image;
     }
-
     private void SetBackgroundLight()
     {
         switch (item.rarity)
@@ -73,7 +67,6 @@ public class DropItemInitialize : MonoBehaviour
                 backgroundLight2D.color = new Color(2, 0, 0);
                 break;
         }
-
         backgroundLightObject.transform.position = spriteRenderer.bounds.center;
     }
 }

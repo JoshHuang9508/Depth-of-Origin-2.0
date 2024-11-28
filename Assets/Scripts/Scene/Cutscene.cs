@@ -6,11 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class Cutscene : MonoBehaviour
 {
+    [Header("Attributes")]
+    [SerializeField] private float fadeInDuration, fadeOutDuration;
+    [SerializeField] private float showTipTime = 1f;
+
+    [Header("References")]
     [SerializeField] private TMP_Text mainText;
     [SerializeField] private TMP_Text tipText;
     [SerializeField] private SceneLoader sceneLoader;
 
-    [SerializeField] string[] dialog = {
+    // Mabye change to ScriptableObject
+    [Header("Dialog")]
+    [SerializeField]
+    string[] dialog = {
         "You walked into forest.",
         "And the night comes.",
         "You hear lots of monster yieling.",
@@ -28,24 +36,17 @@ public class Cutscene : MonoBehaviour
         "YOU HAVE TO MOVE.",
         "TO YOUR END."
     };
-    [SerializeField] private float fadeInDuration,fadeOutDuration;
-    [SerializeField] private float showTipTime = 1f;
-
-    [SerializeField] private PlayerBehaviour player;
 
     private void Start()
     {
         mainText.text = "";
         tipText.text = "";
-        try { player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); } catch { }
         StartCoroutine(ShowMainText(0));
     }
 
     IEnumerator ShowMainText(int index)
     {
-        player.SetActive(false);
-
-        mainText.color = new Color(mainText.color.r, mainText.color.g, mainText.color.b,0f);
+        mainText.color = new Color(mainText.color.r, mainText.color.g, mainText.color.b, 0f);
         mainText.text = dialog[index];
         tipText.color = new Color(tipText.color.r, tipText.color.g, tipText.color.b, 0f);
         tipText.text = "-> Click to Continue <-";
@@ -80,7 +81,7 @@ public class Cutscene : MonoBehaviour
             yield return null;
         }
 
-        if(index != dialog.Length - 1)
+        if (index != dialog.Length - 1)
         {
             StartCoroutine(ShowMainText(index + 1));
         }
@@ -88,7 +89,6 @@ public class Cutscene : MonoBehaviour
         {
             //PlayerPrefs.SetInt("loadscene", 3);
             sceneLoader.Load();
-            player.SetActive(true);
         }
 
         yield break;

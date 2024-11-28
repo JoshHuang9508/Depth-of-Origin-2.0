@@ -15,24 +15,24 @@ MonoBehaviour:
   inventorySlots:
   - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
     quantity: 1
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
   - item: {fileID: 0}
     quantity: 0
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
   - item: {fileID: 0}
     quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: fda507ba55772364abb1308a8341a5c1, type: 2}
+    quantity: 1
   - item: {fileID: 0}
     quantity: 0
   - item: {fileID: 0}

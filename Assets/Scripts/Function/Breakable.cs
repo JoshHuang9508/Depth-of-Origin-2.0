@@ -6,22 +6,16 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour, IDamageable
 {
-    [Header("Datas")]
-
     [Header("Attributes")]
     [SerializeField] private float maxHealth;
 
     [Header("Lootings")]
-    [SerializeField] private List<Coins> coins;
+    [SerializeField] private List<Lootings> coins;
     [SerializeField] private List<Lootings> lootings;
-    [SerializeField] private List<GameObject> wreckage;
 
     [Header("Audios")]
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip breakSound;
-
-    [Header("References")]
-    [SerializeField] private GameObject itemDropper;
 
     // Status
     public float health { get; private set; }
@@ -55,9 +49,9 @@ public class Breakable : MonoBehaviour, IDamageable
     {
         health -= value;
         // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
-        // AudioPlayer.Playsound(hitSound);
+        AudioPlayer.PlaySound(hitSound);
     }
-    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
+    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 kbForce, float kbTime)
     {
         if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
 
@@ -85,23 +79,11 @@ public class Breakable : MonoBehaviour, IDamageable
     // Properties //
     ////////////////
 
-    private void KillObject()
+    public void KillObject()
     {
-        // drop items -> change this to a function
-        ItemDropper ItemDropper = Instantiate(
-            itemDropper,
-            transform.position,
-            Quaternion.identity,
-            GameObject.FindWithTag("Item").transform
-            ).GetComponent<ItemDropper>();
-
-        ItemDropper.DropItems(lootings);
-        ItemDropper.DropCoins(coins);
-        ItemDropper.DropWrackages(wreckage);
-
-        // ItemDropper.DropItem();
-        // AudioPlayer.Playsound(breakSound);
-
+        ItemDropper.Drop(transform.position, lootings);
+        ItemDropper.Drop(transform.position, coins);
+        AudioPlayer.PlaySound(breakSound);
         Destroy(gameObject);
     }
     public void SetTimer(TimerType timerType, float value)

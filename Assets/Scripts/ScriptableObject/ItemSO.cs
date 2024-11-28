@@ -67,7 +67,8 @@ namespace Inventory
         public void DropItem(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            player?.DropItem(inventory, index, -1);
+            InventorySlot inventorySlot = inventory.RemoveItem(index, -1);
+            ItemDropper.Drop(player.transform.position, inventorySlot.item, inventorySlot.quantity);
         }
     }
 

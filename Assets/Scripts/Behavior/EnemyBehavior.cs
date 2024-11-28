@@ -15,7 +15,6 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [SerializeField] private Rigidbody2D currentRb;
     [SerializeField] private SpriteRenderer entitySprite;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject itemDropper;
 
     // Status
     public float health { get; private set; }
@@ -29,7 +28,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     private WeaponSO weapon;
 
     // Flags
-    public bool isActive, haveShield, isPlayerMove;
+    public bool isActive, haveShield;
 
     // Timer
     public enum TimerType { Move, Attack, Damage, Dodge, Hit, Path }
@@ -69,21 +68,17 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         target = player?.gameObject ?? null;
 
         animator.enabled = IsTimerEnd(TimerType.Hit);
-        entitySprite.flipX = (targetPos - currentPos).normalized.x > 0;
+        entitySprite.flipX = (targetPos - currentPos).normalized.x < 0;
 
         UpdateTimer();
-        // UpdateWeapon();
         UpdatePos();
 
-        //actions
-        if (isActive)
+        if (!isActive) return;
+        if (IsTimerEnd(TimerType.Move) && Vector2.Distance(targetPos, currentPos) <= enemy.chaseField) Move();
+        if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null)
         {
-            if (IsTimerEnd(TimerType.Move) && Vector2.Distance(targetPos, currentPos) <= enemy.chaseField) Move();
-            if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null)
-            {
-                SetTimer(TimerType.Attack, weapon.attackSpeed);
-                Attack(weapon);
-            }
+            SetTimer(TimerType.Attack, weapon.attackSpeed);
+            Attack(weapon);
         }
     }
 
@@ -101,8 +96,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 {
                     if (pathFollower != null) StopCoroutine(pathFollower);
                     SetTimer(TimerType.Path, 2f);
-                    path = PathfindingManager.FindPath(currentPos, targetPos, enemy.chaseField, 0.4f);
-                    pathFollower = StartCoroutine(FollowPath());
+                    path = Pathfinder.FindPath(currentPos, targetPos, enemy.chaseField, 0.4f);
+                    if (path != null) pathFollower = StartCoroutine(FollowPath());
                 }
                 // animator.SetBool("ismove", true);
                 // animator.SetBool("ischase", true);
@@ -122,13 +117,13 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         health -= value;
         // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
-        // AudioPlayer.Playsound(hitSound);
+        AudioPlayer.PlaySound(hitSound);
     }
     private void ShieldDamage(float value)
     {
         shieldHealth -= value;
         // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
-        // AudioPlayer.Playsound(hitSound);
+        AudioPlayer.PlaySound(hitSound);
     }
     private void Dodge(float value)
     {
@@ -149,23 +144,22 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 break;
         }
     }
-    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 knockbackForce, float knockbackTime)
+    public void Damage(AttackerType attacker, float damage, bool isCrit, Vector2 kbForce, float kbTime)
     {
-        if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
+        if (!IsTimerEnd(TimerType.Damage) || !isActive || attacker != AttackerType.player) return;
+
+        float trueDamage = damage / (1 + (0.001f * enemy.defence));
+        Vector2 trueKbForce = kbForce / (1 + (0.001f * enemy.defence));
+        float trueKbTime = kbTime / (1 + (0.001f * enemy.defence));
 
         if (Random.Range(0f, 100f) <= enemy.dodgeRate)
         {
-            Dodge(damage);
+            Dodge(trueDamage);
 
             SetTimer(TimerType.Dodge, 1f);
-            SetTimer(TimerType.Damage, 0.2f);
         }
         else
         {
-            float trueDamage = damage / (1 + (0.001f * enemy.defence));
-            Vector2 trueKnockbackForce = knockbackForce / (1 + (0.001f * enemy.defence));
-            float trueKnockbackTime = knockbackTime / (1 + (0.001f * enemy.defence));
-
             if (haveShield)
             {
                 ShieldDamage(trueDamage);
@@ -173,15 +167,14 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             else if (!haveShield)
             {
                 Damage(trueDamage);
-                currentRb.velocity = trueKnockbackForce;
+                currentRb.velocity = trueKbForce;
 
-                SetTimer(TimerType.Hit, trueKnockbackTime);
-                SetTimer(TimerType.Attack, trueKnockbackTime);
-                SetTimer(TimerType.Move, trueKnockbackTime);
+                SetTimer(TimerType.Hit, trueKbTime);
+                SetTimer(TimerType.Attack, trueKbTime);
+                SetTimer(TimerType.Move, trueKbTime);
             }
-
-            SetTimer(TimerType.Damage, 0.2f);
         }
+        SetTimer(TimerType.Damage, 0.2f);
     }
     private IEnumerator FollowPath()
     {
@@ -220,7 +213,6 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         if (target == null) return;
 
-        if (targetPos != (Vector2)target.transform.position) isPlayerMove = true;
         currentPos = transform.position;
         targetPos = target.transform.position;
     }
@@ -231,19 +223,9 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
     public void KillEnemy()
     {
-        //drop items
-        ItemDropper ItemDropper = Instantiate(
-            itemDropper,
-            new Vector3(transform.position.x, transform.position.y, transform.position.z),
-            Quaternion.identity,
-            GameObject.FindWithTag("Item").transform
-            ).GetComponent<ItemDropper>();
-        ItemDropper.DropItems(enemy.lootings);
-        ItemDropper.DropCoins(enemy.coins);
-        ItemDropper.DropWrackages(enemy.wreckage);
-
-        // AudioPlayer.Playsound(deadSound);
-
+        ItemDropper.Drop(transform.position, enemy.lootings);
+        ItemDropper.Drop(transform.position, enemy.coins);
+        AudioPlayer.PlaySound(deadSound);
         Destroy(gameObject);
     }
     public void SetTimer(TimerType timerType, float value)

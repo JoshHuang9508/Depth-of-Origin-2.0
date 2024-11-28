@@ -28,19 +28,17 @@ public class EnemySO : ScriptableObject
     public WeaponSO weapon;
 
     [Header("Lootings")]
-    public List<Coins> coins;
+    public List<Lootings> coins;
     public List<Lootings> lootings;
-    public List<GameObject> wreckage;
 
     [Header("References")]
     public GameObject enemyObject;
-    public int angleOffset; // ?
 
+    // Enum
     public enum Difficulty
     {
         Easy, Normal, Hard, Difficult, Extreme
     }
-
     public enum WalkType
     {
         Melee, Sniper, None
