@@ -18,7 +18,7 @@ public class Breakable : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip breakSound;
 
     // Status
-    public float health { get; private set; }
+    public float Health { get; private set; }
 
     // Timer 
     public enum TimerType { Damage }
@@ -43,21 +43,21 @@ public class Breakable : MonoBehaviour, IDamageable
 
     private void Heal(float value)
     {
-        health += Mathf.Min(value, maxHealth - health);
+        Health += Mathf.Min(value, maxHealth - Health);
     }
     private void Damage(float value)
     {
-        health -= value;
-        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        Health -= Mathf.Min(value, 0);
+        DamageTextGenerator.SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
         AudioPlayer.PlaySound(hitSound);
+        if (Health <= 0) Kill();
     }
-    public void Damage(AttackerType attackerType, float damage, bool isCrit, Vector2 kbForce, float kbTime)
+    public void Kill()
     {
-        if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
-
-        Damage(damage);
-
-        SetTimer(TimerType.Damage, 0.2f);
+        ItemDropper.Drop(transform.position, lootings);
+        ItemDropper.Drop(transform.position, coins);
+        AudioPlayer.PlaySound(breakSound);
+        Destroy(gameObject);
     }
 
     ////////////
@@ -79,12 +79,13 @@ public class Breakable : MonoBehaviour, IDamageable
     // Properties //
     ////////////////
 
-    public void KillObject()
+    public void TakeDamage(AttackerType attackerType, float damage, bool isCrit, Vector2 kbForce, float kbTime)
     {
-        ItemDropper.Drop(transform.position, lootings);
-        ItemDropper.Drop(transform.position, coins);
-        AudioPlayer.PlaySound(breakSound);
-        Destroy(gameObject);
+        if (!IsTimerEnd(TimerType.Damage) || attackerType != AttackerType.player) return;
+
+        Damage(damage);
+
+        SetTimer(TimerType.Damage, 0.2f);
     }
     public void SetTimer(TimerType timerType, float value)
     {
@@ -94,5 +95,4 @@ public class Breakable : MonoBehaviour, IDamageable
     {
         return timerList[timerType] <= 0;
     }
-
 }

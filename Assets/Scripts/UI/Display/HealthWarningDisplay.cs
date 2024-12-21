@@ -23,6 +23,6 @@ public class HealthWarningDisplay : MonoBehaviour
 
     private void SetDisplay()
     {
-        fill.color = gradient.Evaluate(player.health / player.MaxHealth);
+        fill.color = gradient.Evaluate(player.Health / player.MaxHealth);
     }
 }

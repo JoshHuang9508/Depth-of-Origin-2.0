@@ -66,7 +66,7 @@ public class Pickable : MonoBehaviour
         {
             if (item is CoinSO coin)
             {
-                player.ModifyCoin(coin.amount);
+                player.ModifyBalance(coin.amount);
             }
             else if (item is KeySO key)
             {

@@ -19,6 +19,6 @@ public class CoinDisplay : MonoBehaviour
 
     private void SetDisplay()
     {
-        coinCounterText.text = $"x{player.coins}";
+        coinCounterText.text = $"x{player.Coins}";
     }
 }

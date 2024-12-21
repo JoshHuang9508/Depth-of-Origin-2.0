@@ -21,31 +21,16 @@ public class EquipmentDisplay : MonoBehaviour
 
     private void SetDisplay()
     {
-        meleeWeaponImage.sprite = player.equipmentData.GetItemAt(3).item != null ? player.equipmentData.GetItemAt(3).item.Image : null;
+        meleeWeaponImage.sprite = player.equipmentData.GetItemAt(3).item?.Image;
         meleeWeaponImage.color = player.equipmentData.GetItemAt(3).item != null ? new Color(255, 255, 255, 255) : new Color(255, 255, 255, 0);
-        rangedWeaponImage.sprite = player.equipmentData.GetItemAt(4).item != null ? player.equipmentData.GetItemAt(4).item.Image : null;
+        rangedWeaponImage.sprite = player.equipmentData.GetItemAt(4).item?.Image;
         rangedWeaponImage.color = player.equipmentData.GetItemAt(4).item != null ? new Color(255, 255, 255, 255) : new Color(255, 255, 255, 0);
-        potionImage.sprite = player.equipmentData.GetItemAt(5).item != null ? player.equipmentData.GetItemAt(5).item.Image : null;
+        potionImage.sprite = player.equipmentData.GetItemAt(5).item?.Image;
         potionImage.color = player.equipmentData.GetItemAt(5).item != null ? new Color(255, 255, 255, 255) : new Color(255, 255, 255, 0);
         potionAmountText.text = player.equipmentData.GetItemAt(5).quantity != 0 ? player.equipmentData.GetItemAt(5).quantity.ToString() : "";
-    }
 
-    public void SetEquipmentDisplay(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                meleeWeaponBorder.color = new Color(190, 0, 0, 0);
-                rangedWeaponBorder.color = new Color(190, 0, 0, 0);
-                break;
-            case 1:
-                meleeWeaponBorder.color = new Color(190, 0, 0, 255);
-                rangedWeaponBorder.color = new Color(190, 0, 0, 0);
-                break;
-            case 2:
-                meleeWeaponBorder.color = new Color(190, 0, 0, 0);
-                rangedWeaponBorder.color = new Color(190, 0, 0, 255);
-                break;
-        }
+        meleeWeaponBorder.color = player.WeaponIndex == 1 ? new Color(190, 0, 0, 255) : new Color(190, 0, 0, 0);
+        rangedWeaponBorder.color = player.WeaponIndex == 2 ? new Color(190, 0, 0, 255) : new Color(190, 0, 0, 0);
     }
 }
+

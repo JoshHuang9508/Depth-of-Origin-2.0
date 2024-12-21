@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class Interactable : MonoBehaviour
 {
@@ -56,14 +54,14 @@ public class Interactable : MonoBehaviour
             }
         }
     }
-    private async void CheckPlayerInRange()
+    private void CheckPlayerInRange()
     {
         if (playerInRange && interactable && Input.GetKeyDown(player.interactKey))
         {
             if (requireKey)
             {
                 if (HaveKey()) interactAction.Invoke();
-                else await player.SetDialog(new string[] { "(You need a key to open this.)" });
+                else player.PlayDialog(name, new string[] { "(You need a key to open this.)" });
             }
             else
             {

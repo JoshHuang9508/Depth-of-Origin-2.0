@@ -40,7 +40,7 @@ public class DeathMenu : MonoBehaviour, IInterface
         //PlayerPrefs.SetInt("loadscene", 4);
 
         await Task.Delay(2000);
-        player.RevivePlayer();
+        player.Revive();
 
         IsActive = false;
         gameObject.SetActive(false);

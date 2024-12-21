@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
@@ -17,19 +18,17 @@ public class MainCamera : MonoBehaviour
     private void Start()
     {
         GMainCamera = this;
+        transform.position = target.position + offset;
     }
 
     private void FixedUpdate()
     {
         if (target == null) return;
 
-        // Vector3 newPosition = Vector3.Lerp(transform.position, target.transform.position + offset, smoothing);
-        Vector3 newPosition = target.position + offset;
-
-        currentRb.MovePosition(newPosition);
+        currentRb.MovePosition(target.position + offset);
     }
 
-    public static IEnumerator Shake(float duration, float magnitude)
+    public static async Task Shake(float duration, float magnitude)
     {
         Vector3 originalPos = GMainCamera.transform.localPosition;
         float elapsed = 0.0f;
@@ -38,10 +37,10 @@ public class MainCamera : MonoBehaviour
         {
             GMainCamera.transform.localPosition = originalPos + new Vector3(Random.Range(-1f, 1f) * magnitude, Random.Range(-1f, 1f) * magnitude, originalPos.z);
             elapsed += Time.deltaTime;
-            yield return null;
+            await Task.Yield();
         }
 
         GMainCamera.transform.localPosition = originalPos;
-        yield return null;
+        await Task.Yield();
     }
 }

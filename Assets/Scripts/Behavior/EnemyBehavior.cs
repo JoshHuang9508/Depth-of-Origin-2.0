@@ -8,8 +8,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     public EnemySO enemy;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip hitSound;
-    [SerializeField] private AudioClip deadSound;
+    [SerializeField] private AudioClip hitSound, deadSound, dodgeSound;
 
     [Header("References")]
     [SerializeField] private Rigidbody2D currentRb;
@@ -17,8 +16,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [SerializeField] private Animator animator;
 
     // Status
-    public float health { get; private set; }
-    public float shieldHealth { get; private set; }
+    public float Health { get; private set; }
+    public float ShieldHealth { get; private set; }
 
     // Effection
     public List<Effection> effectionList = new();
@@ -53,8 +52,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        health = enemy.maxHealth;
-        shieldHealth = enemy.maxShieldHealth;
+        Health = enemy.maxHealth;
+        ShieldHealth = enemy.maxShieldHealth;
         haveShield = enemy.haveShield;
         weapon = enemy.weapon;
         isActive = true;
@@ -65,7 +64,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     private void Update()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-        target = player?.gameObject ?? null;
+        target = player.gameObject;
 
         animator.enabled = IsTimerEnd(TimerType.Hit);
         entitySprite.flipX = (targetPos - currentPos).normalized.x < 0;
@@ -75,11 +74,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
 
         if (!isActive) return;
         if (IsTimerEnd(TimerType.Move) && Vector2.Distance(targetPos, currentPos) <= enemy.chaseField) Move();
-        if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null)
-        {
-            SetTimer(TimerType.Attack, weapon.attackSpeed);
-            Attack(weapon);
-        }
+        if (IsTimerEnd(TimerType.Attack) && Vector3.Distance(targetPos, currentPos) < enemy.attackField && weapon != null) Attack(weapon);
     }
 
     ///////////////
@@ -111,24 +106,26 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     }
     private void Heal(float value)
     {
-        health += Mathf.Min(value, enemy.maxHealth - health);
+        Health += Mathf.Min(value, enemy.maxHealth - Health);
     }
     private void Damage(float value)
     {
-        health -= value;
-        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        Health -= Mathf.Min(value, 0);
+        DamageTextGenerator.SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
         AudioPlayer.PlaySound(hitSound);
+        if (Health <= 0) Kill();
     }
     private void ShieldDamage(float value)
     {
-        shieldHealth -= value;
-        // SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
+        ShieldHealth -= Mathf.Min(value, 0);
+        DamageTextGenerator.SetDamageText(transform.position, value, DamageTextDisplay.DamageTextType.PlayerHit);
         AudioPlayer.PlaySound(hitSound);
+        if (ShieldHealth <= 0) haveShield = false;
     }
     private void Dodge(float value)
     {
-        // SetDamageText(transform.position, 0, DamageTextDisplay.DamageTextType.Dodge);
-        // AudioPlayer.Playsound(dodgeSound);
+        DamageTextGenerator.SetDamageText(transform.position, 0, DamageTextDisplay.DamageTextType.Dodge);
+        AudioPlayer.PlaySound(dodgeSound);
     }
     private void Attack(WeaponSO weapon)
     {
@@ -143,38 +140,15 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 // RangedAttack(weapon);
                 break;
         }
+
+        SetTimer(TimerType.Attack, weapon.attackSpeed);
     }
-    public void Damage(AttackerType attacker, float damage, bool isCrit, Vector2 kbForce, float kbTime)
+    private void Kill()
     {
-        if (!IsTimerEnd(TimerType.Damage) || !isActive || attacker != AttackerType.player) return;
-
-        float trueDamage = damage / (1 + (0.001f * enemy.defence));
-        Vector2 trueKbForce = kbForce / (1 + (0.001f * enemy.defence));
-        float trueKbTime = kbTime / (1 + (0.001f * enemy.defence));
-
-        if (Random.Range(0f, 100f) <= enemy.dodgeRate)
-        {
-            Dodge(trueDamage);
-
-            SetTimer(TimerType.Dodge, 1f);
-        }
-        else
-        {
-            if (haveShield)
-            {
-                ShieldDamage(trueDamage);
-            }
-            else if (!haveShield)
-            {
-                Damage(trueDamage);
-                currentRb.velocity = trueKbForce;
-
-                SetTimer(TimerType.Hit, trueKbTime);
-                SetTimer(TimerType.Attack, trueKbTime);
-                SetTimer(TimerType.Move, trueKbTime);
-            }
-        }
-        SetTimer(TimerType.Damage, 0.2f);
+        ItemDropper.Drop(transform.position, enemy.lootings);
+        ItemDropper.Drop(transform.position, enemy.coins);
+        AudioPlayer.PlaySound(deadSound);
+        Destroy(gameObject);
     }
     private IEnumerator FollowPath()
     {
@@ -221,12 +195,37 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     // Properties //
     ////////////////
 
-    public void KillEnemy()
+    public void TakeDamage(AttackerType attacker, float damage, bool isCrit, Vector2 kbForce, float kbTime)
     {
-        ItemDropper.Drop(transform.position, enemy.lootings);
-        ItemDropper.Drop(transform.position, enemy.coins);
-        AudioPlayer.PlaySound(deadSound);
-        Destroy(gameObject);
+        if (!IsTimerEnd(TimerType.Damage) || !isActive || attacker != AttackerType.player) return;
+
+        float trueDamage = damage / (1 + (0.001f * enemy.defence));
+        Vector2 trueKbForce = kbForce / (1 + (0.001f * enemy.defence));
+        float trueKbTime = kbTime / (1 + (0.001f * enemy.defence));
+
+        if (Random.Range(0f, 100f) <= enemy.dodgeRate)
+        {
+            Dodge(trueDamage);
+
+            SetTimer(TimerType.Dodge, 1f);
+        }
+        else
+        {
+            if (haveShield)
+            {
+                ShieldDamage(trueDamage);
+            }
+            else if (!haveShield)
+            {
+                Damage(trueDamage);
+                currentRb.velocity = trueKbForce;
+
+                SetTimer(TimerType.Hit, trueKbTime);
+                SetTimer(TimerType.Attack, trueKbTime);
+                SetTimer(TimerType.Move, trueKbTime);
+            }
+        }
+        SetTimer(TimerType.Damage, 0.2f);
     }
     public void SetTimer(TimerType timerType, float value)
     {

@@ -1,10 +1,7 @@
 using Inventory;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new projectile", menuName = "Items/Projectile")]
 public class ProjectileSO : ItemSO, IDestoryable, ISellable, IBuyable, IDroppable
 {
     [Header("Attributes")]

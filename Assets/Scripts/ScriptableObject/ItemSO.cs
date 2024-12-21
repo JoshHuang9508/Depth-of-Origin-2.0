@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Inventory
@@ -27,41 +24,33 @@ namespace Inventory
         public void EquipObject(int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            player?.SetEquipment(index);
+            player.SetEquipment(index);
         }
 
         public void UnequipObject(int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            player?.UnEquipment(index);
+            player.UnEquipment(index);
         }
 
         public void ConsumeObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>(); ;
-            player?.SetEffection((PotionSO)inventory.GetItemAt(index).item);
+            player.SetEffection((PotionSO)inventory.GetItemAt(index).item);
             inventory.RemoveItem(index, 1);
         }
 
         public void SellObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            player?.ModifyCoin(sellPrice);
+            player.ModifyBalance(sellPrice);
             inventory.RemoveItem(index, 1);
         }
 
         public void BuyObject(InventorySO inventory, int index)
         {
             PlayerBehaviour player = GameObject.FindWithTag("Player").GetComponent<PlayerBehaviour>();
-            if (player.coins < buyPrice)
-            {
-                Debug.Log("You don't have enough money!"); // Chnage this to a UI message
-            }
-            else
-            {
-                player?.ModifyCoin(-buyPrice);
-                player.backpackData.AddItem(inventory.GetItemAt(index));
-            }
+            if (player.ModifyBalance(-buyPrice)) Debug.Log("You don't have enough money!"); // Chnage this to a UI message
         }
 
         public void DropItem(InventorySO inventory, int index)

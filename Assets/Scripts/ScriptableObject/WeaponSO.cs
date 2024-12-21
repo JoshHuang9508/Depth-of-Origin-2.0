@@ -1,10 +1,7 @@
 using Inventory;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new weapon", menuName = "Items/Weapon")]
 public class WeaponSO : ItemSO, IDestoryable, ISellable, IBuyable, IDroppable
 {
     [Header("Attributes")]
